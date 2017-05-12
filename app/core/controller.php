@@ -95,7 +95,7 @@
 			$method = Config::Get('DefaultMethod');
 			if(file_exists('app/controllers/'.$controller.'.php'))
 			{
-				require_once 'app/controllers'.Config::Get('NotfoundController').'.php';
+				require_once 'app/controllers/'.Config::Get('NotfoundController').'.php';
 				$controller = new $controller();
 				if(method_exists($controller, $method) && is_callable($controllerName, $method))
 				{
