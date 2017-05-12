@@ -1,7 +1,6 @@
 <?PHP
 	class MenuModel extends model
 	{
-		private $areaNames;
 		public $items = [];
 		
 		public function __construct()
@@ -20,6 +19,12 @@
 		public function getAreaNames() {
 			$testModel = $this->model('DatabaseTestModel');
 			$testModel->getAreas();
+		}
+
+		public function setAreasInMenu($areaNames) {
+			foreach ($areaNames as $areaName => $arename) {
+				# code...
+			}
 		}
 	}
 ?>
