@@ -1,0 +1,32 @@
+//@parent:main.scss
+#top-link-block{
+	opacity: 0;
+}
+
+#top-link-block{
+	font-size: 56px;
+	z-index: 99999;
+	-webkit-transition: visibility 1s, opacity 1s ease;
+    -moz-transition: visibility 1s, opacity 1s ease;
+    -o-transition: visibility 1s, opacity 1s ease;
+    -ms-transition: visibility 1s, opacity 1s ease;
+    transition: visibility 1s, opacity 1s ease;
+	position: fixed; /* keeps it on the bottom once in view */
+    bottom: 10px; /* height of link element */
+    right: 35px; /* padding from the left side of the window */
+	a{
+		color: #993300;
+		&:hover{
+			color: #802b00;
+		}
+	}
+}
+
+#top-link-block.affix-top {
+	visibility: hidden;
+	opacity: 0;
+}
+#top-link-block.affix {
+	visibility: visible;
+	opacity: 1;
+}

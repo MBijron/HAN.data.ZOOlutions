@@ -1,0 +1,6 @@
+<items>
+	<item type="css">owl.carousel.css</item>
+	<item type="css">owl.transitions.css</item>
+	<item type="css">owl.theme.css</item>
+	<item type="js">owl.carousel.min.js</item>
+</items>

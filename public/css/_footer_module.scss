@@ -1,0 +1,43 @@
+//@parent:main.scss
+
+footer
+{
+	padding: 50px 0;
+	background-color: #3A3A3A;
+	color: white;
+	border-top: solid 5px #993300;
+	text-align: left;
+	h2, h1, h3, h4, h5 {
+		color: #993300;
+	}
+	h2 {
+		font-size: 20px;
+		font-weight: bold;
+	}
+	p{
+		color: #E6E6E6;
+	}
+	a{
+		color: #993300;
+		&:hover{
+			text-decoration: none;
+			color: #802b00;
+		}
+	}
+	ul{
+		margin: 0;
+		padding: 0;
+		li{
+			list-style-type: none;
+			list-style-position: inside;
+			margin-bottom: 5px;
+			a{
+				color: #E6E6E6;
+				&:hover{
+					color: #E6E6E6;
+				}
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,79 @@
+//@parent:main.scss
+h1{
+	color: #993300;
+	font-weight: bold;
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+h2{
+	color: #993300;
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+a{
+	color: #993300;
+	&:hover{
+		text-decoration: none;
+		color: #802b00;
+	}
+}
+
+
+.red{
+	color: #993300;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.content-bar{
+	padding: 50px 0;
+}
+
+.content-grey{
+	background-color: #3A3A3A;
+}
+
+.content-main{
+	padding-bottom: 100px;
+}
+
+#intro { 
+    background: url(../img/laptop.jpg) 50% 0 fixed; 
+    height: auto;  
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 100px 0;
+	color: #E6E6E6;
+	h1{
+		color: white;
+	}
+}
+
+.btn-primary{
+	background: #993300;
+	border-color: #802b00;
+	&:hover, &:focus{
+		background: #802b00;
+		border-color: #802b00;
+	}
+	&:active{
+		&:hover{
+			background: #802b00;
+			border-color: #802b00;
+		}
+	}
+}
+
+#tools-slider{
+	.item{
+		margin-left: 30px;
+		margin-right: 30px;
+	}
+}

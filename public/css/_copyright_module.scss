@@ -1,0 +1,17 @@
+//@parent:main.scss
+
+#copyright{
+	background: #171717;
+	color: white;
+	padding: 10px 0;
+	margin: 0;
+	p{
+		padding: 0;
+		margin: 0;
+		a{
+			color: white;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+	}
+}

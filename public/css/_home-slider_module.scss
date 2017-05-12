@@ -1,0 +1,81 @@
+//@parent:main.scss
+
+#home-slider {
+	height: 400px;
+	overflow: hidden;
+	@include respond-to("md"){
+		height: 600px;
+	}
+	> .owl-wrapper-outer{
+		height: 100%;
+		> .owl-wrapper{
+			> .owl-item{
+				&.active{
+					> .item{
+						h1{
+							margin-left: 0px;
+							opacity: 1;
+							-webkit-transition: 2s;
+							-moz-transition: 2s;
+							-o-transition: 2s;
+							-ms-transition: 2s;
+							transition: 2s;
+							transition-delay: 1s;
+						}
+						p{
+							margin-left: 0px;
+							opacity: 1;
+							-webkit-transition: 2s;
+							-moz-transition: 2s;
+							-o-transition: 2s;
+							-ms-transition: 2s;
+							transition: 2s;
+							transition-delay: 2s;
+						}
+					}
+				}
+				height: 600px;
+				display: block;
+				@include respond-to("md"){
+					height: 600px;
+				}
+				> .item{
+					height: 100%;
+					display: block;
+					background-size: cover;
+					background-position: bottom;
+					padding: 40px;
+					padding-top: 80px;
+					color: white;
+					@include respond-to("md"){
+						height: 600px;
+					}
+					h1{
+						color: #FFF;
+						width: 100%;
+						opacity: 0;
+						padding: 0;
+						margin: 0;
+						margin-left: 100px;
+					}
+					p{
+						color: #FFF;
+						width: 100%;
+						opacity: 0;
+						margin-left: 100px;
+					}
+				}
+			}
+		}
+	}
+	
+	.owl-pagination{
+    position: relative;
+    top: -40px;
+	.owl-page{
+		span{
+			background: white !important;
+		}
+	}
+}
+}
