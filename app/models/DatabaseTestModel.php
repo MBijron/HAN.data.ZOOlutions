@@ -12,16 +12,9 @@
 		{
 			
 		}
-		
-		public function showDatabase()
-		{
-			krumo($this->database->executeQuery('SELECT * FROM ANIMAL')->fetchAll(PDO::FETCH_OBJ));
-			die();
-		}
-
 
 		public function getAreas() {
-			krumo($this->database->executeQuery('SELECT * FROM AREA')->fetchAll(PDO::FETCH_OBJ));
+			return $this->database->executeQuery('SELECT * FROM AREA')->fetchAll(PDO::FETCH_OBJ);
 		}
 	}
 ?>
