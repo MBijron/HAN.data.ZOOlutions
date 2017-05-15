@@ -11,11 +11,11 @@ class AuthModel extends model
 		
 	}
 	
-	public function isValidUser($username, $password)
+	public function isValidUser($emailaddress, $password)
 	{
-		$password = hash('sha512', $password);
-		$prepared = [$password, $username];
-		$query = 'SELECT COUNT(*) FROM `users` WHERE `password`=? AND `username`=?';
+		// $password = hash('sha512', $password);
+		$prepared = [$password, $emailaddress];
+		$query = "SELECT COUNT(*) FROM EMPLOYEE WHERE password=? AND emailaddress=?";
 		$result = $this->database->executeQuery($query, $prepared);
 		$usersFound = $result->fetchColumn();
 		if($usersFound > 0)
@@ -25,16 +25,17 @@ class AuthModel extends model
 		return false;
 	}
 	
-	public function login($username, $password)
+	public function login($emailaddress, $password)
 	{
-		$password = hash('sha512', $password);
-		$prepared = [$password, $username];
-		$query = 'SELECT * FROM `users`
-		INNER JOIN `user_types` ON users.type=user_types.user_typeID
-		WHERE `password`=? AND `username`=?';
+		// $password = hash('sha512', $password);
+		$prepared = [$password, $emailaddress];
+		$query = "	SELECT EMPLOYEEID, EMPLOYEE.ROLEID, AREAID, EMAILADDRESS, FIRSTNAME, LASTNAME, USERLEVEL
+					FROM EMPLOYEE
+					INNER JOIN ROLE ON EMPLOYEE.ROLEID = ROLE.ROLEID
+					WHERE password=? AND emailaddress=?";
 		$result = $this->database->executeQuery($query, $prepared);
 		$user = $result->fetch(PDO::FETCH_OBJ);
-		$userLevel = $user->level;
+		$userLevel = $user->USERLEVEL;
 		
 		$this->createUser($userLevel, $user);
 		$this->onLogin();
