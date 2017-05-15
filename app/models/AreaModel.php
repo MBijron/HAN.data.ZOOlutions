@@ -1,5 +1,5 @@
 <?PHP
-	class DatabaseTestModel extends model
+	class AreaModel extends model
 	{
 		public $items = [];
 		

@@ -13,8 +13,8 @@
 		public function register() {}
 
 		public function getAreaNames() {
-			$testModel = $this->model('DatabaseTestModel');
-			return $testModel->getAreas();
+			$AreaModel = $this->model('AreaModel');
+			return $AreaModel->getAreas();
 		}
 
 		public function showAreas() {
