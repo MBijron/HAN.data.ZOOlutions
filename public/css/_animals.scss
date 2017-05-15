@@ -1,0 +1,27 @@
+//@parent:main.scss
+//@hidden:false
+
+.animals{
+	.animal-info-block{
+		border: grey 2px solid;
+		overflow: hidden;
+		padding: 20px;
+		margin: 5px;
+		.animal-info-image{
+			img{
+			}
+		}
+		.animal-info-text{
+			table{
+				tbody{
+					tr{
+						td{
+							padding: 4px;
+							border: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
