@@ -92,7 +92,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="food">Select list:</label>
-							<select class="form-control" id="food" name="food" required>
+							<select class="form-control selectpicker" id="food" name="food"  data-live-search="true" required>
 								{foreach from=$food item=fooditem}
 									<option>{$fooditem->FOODNAME}</option>
 								{/foreach}
