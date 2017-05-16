@@ -12,9 +12,11 @@ $js_bundle = [
 
 $library_bundle = [
 	'jquery',
+	'jquery.redirect',
 	'krumo',
 	'bootstrap',
-	'font awesome'
+	'font awesome',
+	'fancybox'
 ];
 
 ?>

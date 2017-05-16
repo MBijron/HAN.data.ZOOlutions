@@ -232,4 +232,18 @@ footer ul li a:hover {
   padding: 4px;
   border: 0; }
 
+.icon-button {
+  font-size: 30px;
+  color: black;
+  margin: 0 10px; }
+
+#fancybox-popup-form {
+  display: none; }
+
+.clickable-row {
+  cursor: hand; }
+
+.logout {
+  float: right; }
+
 /*# sourceMappingURL=main.css.map */
