@@ -14,7 +14,8 @@
 		}
 
 		public function getAreas() {
-			return $this->database->executeQuery('SELECT * FROM AREA')->fetchAll(PDO::FETCH_OBJ);
+			$query = "SELECT * FROM AREA";
+			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 	}
 ?>
