@@ -39,3 +39,7 @@
 .clickable-row{
 	cursor: hand;
 }
+
+.fancybox-opened, .fancybox-inner{
+	overflow: visible !important;
+}

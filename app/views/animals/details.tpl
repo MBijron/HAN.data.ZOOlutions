@@ -1,7 +1,7 @@
 <section class="animals">
 	<div class="container">
 		<div class="row">
-			<h1>Nutrition management of {$animal->ANIMALNAME}</h1>
+			<h1>Details of {$animal->ANIMALNAME}</h1>
 			<div class="animal-info-block">
 				<div class="col-sm-3 animal-info-image hidden-sm hidden-xs">
 					<img src="/public/img/placeholder.png" alt="preview" class="img-responsive">
