@@ -16,7 +16,8 @@ $library_bundle = [
 	'krumo',
 	'bootstrap',
 	'font awesome',
-	'fancybox'
+	'fancybox',
+	'bootstrap-select-1.12.2'
 ];
 
 ?>

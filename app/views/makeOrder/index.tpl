@@ -1,6 +1,5 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="../../../public/libraries/bootstrap-select-1.12.2/dist/js/bootstrap-select.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="../../../public/libraries/bootstrap-select-1.12.2/dist/css/bootstrap-select.css">
+<script src="../../../public/libraries/bootstrap-select-1.12.2/dist/js/bootstrap-select.js"></script> -->
 
 <section class="makeOrder">
 	<div class="container">
@@ -22,9 +21,14 @@
 
 				<div class="form-inline">
 					<label for="makeOrderForm"><h2>Food</h2></label>
-					<select class="selectpicker" data-live-search="true">
-						<option>Hot Dog, Fries and a Soda</option>
-					</select>
+
+					<div class="form-group">
+						<select class="selectpicker" data-live-search="true">
+							{foreach from=$food item=$foodname}
+								<option value="{$foodname->FOODNAME}">{$foodname->FOODNAME}</option>
+							{/foreach}
+						</select>
+					</div>
 				</div>
 			</form>
 		</div>

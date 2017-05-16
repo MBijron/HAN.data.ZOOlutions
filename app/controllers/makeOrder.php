@@ -3,11 +3,14 @@
 
 		public function index() {
 			$areaModel = $this->model('AreaModel');
-			$areas = $areaModel->getAreas();
+			$makeOrderModel = $this->model('makeOrderModel');
 			$menuModel = $this->model('MenuModel');
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
-			$this->view('makeOrder/index', ['areas' => $areas]);
-		}
 
+			$areas = $areaModel->getAreas();
+			$food = $makeOrderModel->getFood();
+
+			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
+		}
 	}
 ?>

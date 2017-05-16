@@ -1,6 +1,6 @@
 <?PHP
-	class AreaModel extends model
-	{
+	class MakeOrderModel extends model
+	{		
 		public function __construct()
 		{
 			parent::__construct();
@@ -11,8 +11,8 @@
 			
 		}
 
-		public function getAreas() {
-			$query = "SELECT * FROM AREA";
+		public function getFood() {
+			$query = "SELECT * FROM FOOD";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 	}

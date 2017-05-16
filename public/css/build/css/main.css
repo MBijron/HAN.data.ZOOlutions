@@ -234,8 +234,16 @@ footer {
     padding: 4px;
     border: 0; }
 
-.makeOrder input {
-  margin-left: 10px; }
+.icon-button {
+  font-size: 30px;
+  color: black;
+  margin: 0 10px; }
 
-.makeOrder select {
-  margin-left: 10px; }
+#fancybox-popup-form {
+  display: none; }
+
+.clickable-row {
+  cursor: hand; }
+
+.makeOrder h2 {
+  margin-right: 10px; }
