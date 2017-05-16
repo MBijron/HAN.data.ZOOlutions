@@ -33,9 +33,6 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="pull-right">
-					<a href="/animals/details/{$animal->ANIMALID}"><button type="button" class="btn btn-primary">Details</button></a>
-					</div>
 				</div>
 			</div>
 		</div>

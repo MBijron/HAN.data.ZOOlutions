@@ -36,7 +36,6 @@
 							</div>
 							<div class="pull-right">
 							<a href="/animals/details/{$animal->ANIMALID}"><button type="button" class="btn btn-primary">Details</button></a>
-							<a href="/animals/nutritionManagement/{$animal->ANIMALID}"><button type="button" class="btn btn-primary">Nutrition management</button></a>
 							</div>
 						</div>
 					</div>
