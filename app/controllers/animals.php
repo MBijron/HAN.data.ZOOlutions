@@ -66,7 +66,6 @@
 					$animalModel->deleteAnimalFood($_POST["date"], $_POST["food"], $_POST["quantity"], $_POST["animalid"]);
 					$this->redirect('animals/details/' . $_POST["animalid"]);
 				}
-				
 			}
 		}
 	}

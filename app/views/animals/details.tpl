@@ -50,10 +50,16 @@
 								</thead>
 								<tbody>
 									{foreach from=$nutrition item=dietitem}
+									{assign "markupstart" ""}
+									{assign "markupend" ""}
+									{if $dietitem->currentDiet == 1}
+										{assign "markupstart" "<b>"}
+										{assign "markupend" "</b>"}
+									{/if}
 										<tr class="clickable-row">
-											<td>{$dietitem->DIETSTART}</td>
-											<td>{$dietitem->FOODNAME}</td>
-											<td>{$dietitem->AMOUNT} {$dietitem->UNIT}</td>
+											<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
+											<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
+											<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}{$markupend}</td>
 										</tr>
 									{/foreach}
 							</table>
