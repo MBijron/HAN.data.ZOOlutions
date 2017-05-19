@@ -42,31 +42,33 @@
 					<h2>Feeding information</h2>
 					<div class="animal-info-block">
 						<div class="animal-info-text">
-							<table class="table" id="nutrition-table">
-								<thead>
-									<th>From</th>
-									<th>Food</th>
-									<th>Quantity</th>
-								</thead>
-								<tbody>
-									{foreach from=$nutrition item=dietitem}
-									{assign "markupstart" ""}
-									{assign "markupend" ""}
-									{if $dietitem->currentDiet == 1}
-										{assign "markupstart" "<b>"}
-										{assign "markupend" "</b>"}
-									{/if}
-										<tr class="clickable-row">
-											<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
-											<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
-											<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}{$markupend}</td>
-										</tr>
-									{/foreach}
-							</table>
+							<div class="selectable-table">
+								<table class="table selectable-table" id="nutrition-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}">
+									<thead>
+										<th>From</th>
+										<th>Food</th>
+										<th>Quantity</th>
+									</thead>
+									<tbody>
+										{foreach from=$nutrition item=dietitem}
+										{assign "markupstart" ""}
+										{assign "markupend" ""}
+										{if $dietitem->currentDiet == 1}
+											{assign "markupstart" "<b>"}
+											{assign "markupend" "</b>"}
+										{/if}
+											<tr class="clickable-row">
+												<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
+												<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
+												<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}{$markupend}</td>
+											</tr>
+										{/foreach}
+								</table>
+							</div>
 						</div>
 					</div>
 					<a href="#"><i class="fa fa-plus-square-o icon-button add-diet" aria-hidden="true"></i></a>
-					<a href="#"><i class="fa fa-minus-square-o pull-right icon-button remove-diet" aria-hidden="true"></i></a>
+					<a href="#" class="submit" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table"><i class="fa fa-minus-square-o pull-right icon-button remove-diet" aria-hidden="true"></i>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -122,19 +124,6 @@
 			$.fancybox([
 				{ href : '#fancybox-popup-form' }
 			]);
-		});
-		$('#nutrition-table').on('click', '.clickable-row', function(event) {
-			$(this).addClass('active').siblings().removeClass('active');
-		});
-		$('.remove-diet').click(function() {
-			if($('#nutrition-table .active').html() == null)
-			{
-				alert('Please select a diet item');
-			}
-			else
-			{
-				$.redirect("/animals/removefood", { date: $($('#nutrition-table .active').children()[0]).text(), food: $($('#nutrition-table .active').children()[1]).text(), quantity: parseInt($($('#nutrition-table .active').children()[2]).text()), animalid: '{$animal->ANIMALID}', token: '{$token}'})
-			}
 		});
 		
 	</script>

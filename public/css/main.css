@@ -57,6 +57,9 @@ a:hover {
   margin-left: 30px;
   margin-right: 30px; }
 
+table tbody tr.active.clickable-row td {
+  background-color: lightgrey; }
+
 section {
   padding: 50px 0; }
 
@@ -241,7 +244,7 @@ footer ul li a:hover {
   display: none; }
 
 .clickable-row {
-  cursor: hand; }
+  cursor: pointer; }
 
 .fancybox-opened, .fancybox-inner {
   overflow: visible !important; }
