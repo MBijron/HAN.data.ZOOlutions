@@ -1,4 +1,6 @@
 // add your custom js here
+$.fn.hasAttr = function(attr) { var attribVal = this.attr(attr); return (attribVal !== undefined) && (attribVal !== false); };
+
 $(document).ready(function() {
  
 	$window = $(window);
@@ -87,26 +89,31 @@ $(document).ready(function() {
 	});
 	
 	$('.submit').click(function() {
+		//initialize some variables
 		var items = [];
 		var headers = [];
 		var url = $(this).attr('data-redirect-url');
 		var tableid = '#' + $(this).attr('data-table-ref');
 		var extraData = $(tableid).attr('data-extra-fields').split(',');
 		
+		//get all the selected row values
 		$($(tableid).find('.active')).children().each(function() {
 			items.push($(this).text());
 		});
 		
+		//get all the table header texts
 		$($(tableid).find('thead tr')).children().each(function() {
 			headers.push($(this).text().replace(' ', '_'));
 		});
 		
+		//check if a row was selected
 		if(items.length <= 0)
 		{
 			alert('Please select a row');
 			return;
 		}
 		
+		//create and fill an object with all the data from the table
 		var object = {};
 		
 		for(var i = 0; i < headers.length; i++)
@@ -114,11 +121,19 @@ $(document).ready(function() {
 			object[headers[i]] = items[i];
 		}
 		
+		//add all the extra data from the attribute to the object
 		extraData.forEach(function(item, index) {
 			item = item.split(':');
 			object[item[0].trim()] = item[1].trim();
 		});
 		
+		//check if the tr has a specific url to go to
+		if($($(tableid).find('.active')).hasAttr('data-redirect-url'))
+		{
+			url = $($(tableid).find('.active')).attr('data-redirect-url');
+		}
+		
+		//redirect the user to the given url with the object properties as post values
 		$.redirect(url, object);
 	});
  

@@ -11,14 +11,16 @@
 					</thead>
 					<tbody>
 						{foreach from=$orderrequests item=orderrequest}
-							<tr class="clickable-row">
+							<tr class="clickable-row"  data-redirect-url="/ordersList/details/{$orderrequest->ORDERREQUESTID}">
 								<td>{$orderrequest->ORDERREQUESTNAME}</td>
 								<td>{$orderrequest->ORDERREQUESTDATE}</td>
 								<td>{$orderrequest->ORDERREQUESTSTATUS}</td>
 							</tr>
 						{/foreach}
+					</tbody>
 				</table>
-				<button class="submit" data-redirect-url="/ordersList/test" data-table-ref="orderrequest-table">Combine orders</button>
+				<a href="/ordersList/combined"><button>Combine orders</button></a>
+				<button class="submit float-right" data-table-ref="orderrequest-table">Details</button>
 			</div>
 		</div>
 	</div>
