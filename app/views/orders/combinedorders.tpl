@@ -47,12 +47,15 @@
 			</div>
 			<script>
 				$('.add-button').click(function() {
+					//get the class of the item you want to add (the food name)
 					var rowClass = $($(this).parent().parent().prev().prev()).attr('class');
+					//get the form to duplicate
 					var form = '<tr class="'+rowClass+'">' + $($(this).parent().parent().prev().prev()).html() + '</tr>';
+					//get the amount of input fiels allready present to determain the new class names
 					var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
-					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1));
-					console.log(rowClass);
-					
+					//add one to all classnames
+					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1));;
+					//add the new form
 					$($(this).parent().parent().prev().prev()).after(form);
 				});
 			</script>
