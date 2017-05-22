@@ -15,5 +15,10 @@
 			$query = "SELECT * FROM FOOD";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
+
+		public function getUnit($foodid) {
+			$query = "	SELECT UNIT FROM FOOD WHERE FOODID = ?";
+			return $this->database->executeQuery($query, [$foodid])->fetchColumn();
+		}
 	}
 ?>

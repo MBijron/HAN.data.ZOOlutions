@@ -3,3 +3,21 @@
 		margin-right: 10px;
 	}
 }
+
+#foodInArea {
+	position: relative;
+	bottom: 20px;
+}
+
+.addRemoveFood {
+	padding-top: 20px;
+	@include respond-to(xs)
+	{
+		padding-top: 65px;
+	}
+}
+
+#removeFoodButton {
+	margin-left: 10px;
+}
+
