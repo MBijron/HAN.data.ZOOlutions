@@ -4,9 +4,37 @@
 	}
 }
 
+.orderTable {
+	width: 100%;
+	margin-top: 20px;
+	font-size: 20px;
+	border-top: 2px solid grey;
+
+	th {
+		width: 50%;
+	}
+
+	td {
+		width: 50%;
+		font-size: 14px;
+	}
+}
+
 #foodInArea {
 	position: relative;
 	bottom: 20px;
+}
+
+#ordername {
+	width: 100%;
+
+	@include respond-to(xs) {
+		width: 60%;
+	}
+}
+
+#submitButton {
+	float: right;
 }
 
 .addRemoveFood {
@@ -21,3 +49,6 @@
 	margin-left: 10px;
 }
 
+#unit {
+	padding-top: 6px;
+}
