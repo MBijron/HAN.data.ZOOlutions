@@ -6,42 +6,45 @@
 				<h2>Order</h2>
 				<div class="animal-info-block">
 					<div class="animal-info-text">
-						<table class="table">
-							<thead>
-								<th>Food</th>
-								<th>Quantity</th>
-								<th>Supplier</th>
-								<th>Delivery date</th>
-							</thead>
-							<tbody>
-								{foreach from=$orderrequests item=orderitem}
-									<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-										<td>{$orderitem->FOODNAME}</td>
-										<td>{$orderitem->TOTALAMOUNT} {$orderitem->UNIT}</td>
-									</tr>
-									<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-										<td></td>
-										<td><input type="number" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Quantity_1" required></td>
-										<td>
-											<select name="{$orderitem->FOODNAME|replace:'\'':''}_Supplier_1" required>
-												{foreach from=$suppliers item=supplier}
-													<option>{$supplier->SUPPLIERNAME}</option>
-												{/foreach}
-											</select>
-										</td>
-										<td><input type="date" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Date_1" required></td>
-									</tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-									<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-										<td></td>
-										<td>Total: <span class="order-counter">0</span></td>
-									</tr>
-									<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-										<td></td>
-										<td><i class="fa fa-plus-square-o add-button" aria-hidden="true"></i></td>
-									</tr>
-								{/foreach}
-							</tbody>
-						</table>
+						<form method="post">
+							<table class="table">
+								<thead>
+									<th>Food</th>
+									<th>Quantity</th>
+									<th>Supplier</th>
+									<th>Delivery date</th>
+								</thead>
+								<tbody>
+									{foreach from=$orderrequests item=orderitem}
+										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+											<td>{$orderitem->FOODNAME}</td>
+											<td class="{$orderitem->FOODNAME|replace:'\'':''}_MAX_AMOUNT">{$orderitem->TOTALAMOUNT} {$orderitem->UNIT}</td>
+										</tr>
+										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$orderitem->FOODNAME|replace:'\'':''}_Foodname_1"></td>
+											<td><input type="number" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Quantity_1" class="{$orderitem->FOODNAME|replace:'\'':''}_Quantity" onchange="updateCounter(this)" required></td>
+											<td>
+												<select name="{$orderitem->FOODNAME|replace:'\'':''}_Supplier_1" required>
+													{foreach from=$suppliers item=supplier}
+														<option>{$supplier->SUPPLIERNAME}</option>
+													{/foreach}
+												</select>
+											</td>
+											<td><input type="date" value="2000-01-01" name="{$orderitem->FOODNAME|replace:'\'':''}_Date_1" required></td>
+										</tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+											<td></td>
+											<td>Total: <span class="{$orderitem->FOODNAME|replace:'\'':''}_ORDER_COUNTER">0</span></td>
+										</tr>
+										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+											<td></td>
+											<td><i class="fa fa-plus-square-o add-button" aria-hidden="true"></i> <i class="fa fa-minus-square-o remove-button" aria-hidden="true"></i></td>
+										</tr>
+									{/foreach}
+								</tbody>
+							</table>
+							<input type="submit">
+						</form>
 					</div>
 				</div>
 			</div>
@@ -54,10 +57,46 @@
 					//get the amount of input fiels allready present to determain the new class names
 					var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
 					//add one to all classnames
-					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1));;
+					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1)).replace(rowClass+'_Foodname_'+childrenCount, rowClass+'_Foodname_'+(childrenCount + 1));
 					//add the new form
 					$($(this).parent().parent().prev().prev()).after(form);
 				});
+				$('.remove-button').click(function() {
+					var rowClass = $($(this).parent().parent().prev().prev()).attr('class');
+					var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
+					if(childrenCount > 1)
+					{
+						$(this).parent().parent().prev().prev().remove();
+					}
+				});
+				function updateCounter(selector)
+				{
+					var total = 0;
+					var rowClass = $($(selector).parent().parent()).attr('class');
+					var maxAmount = parseInt($($(selector).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).text())
+					var currentAmount = parseInt($(selector).val());
+					console.log(currentAmount);
+					$(selector).parent().parent().parent().children('.' + rowClass).each(function(index, item){
+						var input = $(item).find('.' + rowClass + '_Quantity');
+						if(input.length)
+						{
+							if(input.val() != '')
+							{
+								total += parseInt(input.val());
+							}
+						}
+					});
+					if(total > maxAmount)
+					{
+						currentAmount -= total - maxAmount;
+						$(selector).val(currentAmount)
+						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(maxAmount);
+					}
+					else
+					{
+						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(total);
+					}
+				}
 			</script>
 			<div class="col-md-4">
 				<h2>Suppliers</h2>
