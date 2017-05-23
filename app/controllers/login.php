@@ -29,7 +29,7 @@
 				else
 				{
 					$_SESSION['loginError'] = true;
-					$this->redirect('login');
+					$this->redirect('login?logout=false');
 				}
 			}
 		}

@@ -8,7 +8,7 @@
 					<div class="form">
 						<form action="{$url_root}login/start" method="post">
 							<h2>Login</h2><br />
-							<input class="form-control" id="emailaddress" type="text" name="emailaddress" placeholder="Emailaddress" required autofocus/><br />
+							<input class="form-control" id="emailaddress" type="email" name="emailaddress" placeholder="Emailaddress" required autofocus/><br />
 							<input class="form-control" id="password" type="password" name="password" placeholder="Password" required /><br />
 							<input type="hidden" name="token" value="{$token}" />
 							{if $error == true}

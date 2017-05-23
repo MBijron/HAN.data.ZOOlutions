@@ -2,9 +2,11 @@
 	class makeOrder extends Controller {
 
 		public function index() {
-			if (isset($_GET['test'])) {
-				echo "HALOOOOAOFAOSFOAF";
+			if (!isset($_SESSION['user'])) {
+				header("Location: /login?logout=false");
 			}
+
+			$ordername = "";
 
 			$areaModel = $this->model('AreaModel');
 			$makeOrderModel = $this->model('makeOrderModel');
@@ -12,6 +14,22 @@
 
 			$areas = $areaModel->getAreas();
 			$food = $makeOrderModel->getFood();
+
+
+			if (isset($_POST['submitOrder'])) {
+				date_default_timezone_set('Europe/Amsterdam');
+
+				if (!isset($_POST['ordername']) || trim($_POST['ordername']) == '') {
+					$ordername = $makeOrderModel->getAreaName($_POST['areaSelector']) . " " . date('h:i:s');
+				} else {
+					$ordername = $_POST['ordername'];
+				}
+
+				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $ordername, $_POST['foodId'], $_POST['foodQuantity']);
+
+				header("location: /ordersList");
+			}
+			
 
 			$this->view('general/menu', ['menu_items' => $menuModel->items]);
 			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
@@ -21,15 +39,5 @@
 			$makeOrderModel = $this->model('makeOrderModel');
 			echo $makeOrderModel->getUnit($_POST['foodid']);
 		}
-
-		// public function addFood() {
-		// 	// $foodArray[] = [ 'foodId' => $_POST['foodid'], 'foodname' => $_POST['quantity'] ];
-		// 	$foodArray = ['foodid' => 1];
-		// 	return "<select name='color4' size='5'>
-		// 				foreach ($foodArray as $key => $value) {
-		// 					<option value='$key'>$value</option>
-		// 				}
-		// 			</select>";
-		// }
 	}
 ?>
