@@ -12,7 +12,8 @@
 		}
 
 		public function getFood() {
-			$query = "SELECT * FROM FOOD";
+			$query = "	SELECT * FROM FOOD
+						ORDER BY FOODNAME";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 

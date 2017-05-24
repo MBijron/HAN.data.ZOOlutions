@@ -9,6 +9,7 @@
 	margin-top: 20px;
 	font-size: 20px;
 	border-top: 2px solid grey;
+	border-bottom: 2px solid grey;
 
 	th {
 		width: 50%;
@@ -16,8 +17,12 @@
 
 	td {
 		width: 50%;
-		font-size: 14px;
+		font-size: 16px;
 	}
+}
+
+.addRemoveFood {
+	padding-top: 20px;
 }
 
 #foodInArea {
@@ -35,14 +40,6 @@
 
 #submitButton {
 	float: right;
-}
-
-.addRemoveFood {
-	padding-top: 20px;
-	@include respond-to(xs)
-	{
-		padding-top: 65px;
-	}
 }
 
 #removeFoodButton {

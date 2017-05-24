@@ -31,6 +31,7 @@
 
 			var selectedFood = $("#foodSelector option:selected").html();
 			var quantity = $("#quantityInput").val();
+			var unit = document.getElementById('unit').innerText;
 			var index = 0;
 
 			if (foodArray.length > 0) {
@@ -42,11 +43,11 @@
 					} 
 
 					if (index == foodArray.length) {
-						foodArray.push([selectedFood, quantity, $("#foodSelector").val()]);
+						foodArray.push([selectedFood, quantity, $("#foodSelector").val(), unit]);
 					}
 				}
 			} else {
-				foodArray.push([selectedFood, quantity, $("#foodSelector").val()]);
+				foodArray.push([selectedFood, quantity, $("#foodSelector").val(), unit]);
 			}
 
 			$.ajax({
@@ -146,19 +147,15 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="form-inline col-md-3 addRemoveFood">
-						<button type="button" class="btn btn-default" onclick="addFood();"><span class="glyphicon glyphicon-plus-sign"></span></button>
-						<button type="button" class="btn btn-default pull-right" id="removeFoodButton" onclick="removeFood();"><span class="glyphicon glyphicon-minus-sign"></span></button>
-					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-12" id="foodList">
 						<table class="selectable-table orderTable" id="orderTable">
 							<thead>
-								<th><h4>Food</h4></th>
-								<th><h4>Quantity</h4></th>
+								<th><h4><b>Food</b></h4></th>
+								<th><h4><b>Quantity</b></h4></th>
+								<th><h4><b>Unit</b></h4></th>
 							</thead>
 							<tbody id="orderTableBody">
 								
@@ -167,8 +164,13 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-12">
+				<div class="row addRemoveFood">
+					<div class="col-md-3 col-xs-5">
+						<button type="button" class="btn btn-default" onclick="addFood();"><span class="glyphicon glyphicon-plus-sign"></span></button>
+						<button type="button" class="btn btn-default pull-right" onclick="removeFood();"><span class="glyphicon glyphicon-minus-sign"></span></button>
+					</div>
+
+					<div class="col-md-9 col-xs-7">
 						<button type="submit" class="btn btn-default glyphicon glyphicon-ok" name="submitOrder" id="submitButton"></button>
 					</div>
 				</div>

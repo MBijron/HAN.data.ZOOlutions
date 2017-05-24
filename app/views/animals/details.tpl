@@ -60,7 +60,7 @@
 											<tr class="clickable-row">
 												<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
 												<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
-												<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}{$markupend}</td>
+												<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}/d{$markupend}</td>
 											</tr>
 										{/foreach}
 								</table>

@@ -261,12 +261,16 @@ footer {
   width: 100%;
   margin-top: 20px;
   font-size: 20px;
-  border-top: 2px solid grey; }
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey; }
   .orderTable th {
     width: 50%; }
   .orderTable td {
     width: 50%;
-    font-size: 14px; }
+    font-size: 16px; }
+
+.addRemoveFood {
+  padding-top: 20px; }
 
 #foodInArea {
   position: relative;
@@ -281,13 +285,6 @@ footer {
 
 #submitButton {
   float: right; }
-
-.addRemoveFood {
-  padding-top: 20px;
-  /* Custom, iPhone Retina */ }
-  @media (min-width: 480px) {
-    .addRemoveFood {
-      padding-top: 65px; } }
 
 #removeFoodButton {
   margin-left: 10px; }

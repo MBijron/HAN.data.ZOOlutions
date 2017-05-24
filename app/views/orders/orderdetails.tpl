@@ -1,10 +1,18 @@
 <section class="animals">
 	<div class="container">
 		<div class="row">
-			<h1>{$orderrequest->ORDERREQUESTNAME}</h1>
+			<div class="col-md-12">
+				<h1>{$orderrequest->ORDERREQUESTNAME}</h1>
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-md-6">
-				<h2>Requested food</h2>
-				<div  class="animal-info-block">
+				<div class="col-md-12">
+					<h2>Requested food</h2>
+				</div>
+
+				<div class="animal-info-block col-md-12">
 					<table class="table">
 						<thead>
 							<th>Food</th>
@@ -21,9 +29,13 @@
 					</table>
 				</div>
 			</div>
+				
 			<div class="col-md-6">
-				<h2>Information</h2>
-				<div class="animal-info-block">
+				<div class="col-md-12">
+					<h2>Information</h2>
+				</div>
+
+				<div class="animal-info-block col-md-12">
 					<div class="animal-info-text">
 						<table class="table">
 							<thead>

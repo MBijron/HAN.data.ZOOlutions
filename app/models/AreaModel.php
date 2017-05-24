@@ -12,7 +12,8 @@
 		}
 
 		public function getAreas() {
-			$query = "SELECT * FROM AREA";
+			$query = "	SELECT * FROM AREA
+						ORDER BY AREANAME";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 	}
