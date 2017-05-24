@@ -1,45 +1,54 @@
 <section class="animals">
 	<div class="container">
 		<div class="row">
-			<h1>Details of {$animal->ANIMALNAME}</h1>
-			<div class="animal-info-block">
-				<div class="col-sm-3 animal-info-image hidden-sm hidden-xs">
-					<img src="/public/img/placeholder.png" alt="preview" class="img-responsive">
-				</div>
-				<div class="col-sm-9">
-					<div class="animal-info-text">
-						<table class="table">
-							<tbody>
-								<tr>
-									<td>Animal name</td>
-									<td>{$animal->ANIMALNAME}</td>
-								</tr>
-								<tr>
-									<td>Gender</td>
-									<td>{$animal->GENDER}</td>
-								</tr>
-								<tr>
-									<td>Species</td>
-									<td>{$animal->SPECIESEN}</td>
-								</tr>
-								<tr>
-									<td>Birth date</td>
-									<td>{$animal->BIRTHDATE}</td>
-								</tr>
-								<tr>
-									<td>Area</td>
-									<td>{$animal->AREANAME}</td>
-								</tr>
-							</tbody>
-						</table>
+			<div class="col-md-12">
+				<h1>Details of {$animal->ANIMALNAME}</h1>
+			</div>
+
+			<div class="col-md-12">
+				<div class="animal-info-block">
+					<div class="col-sm-3 animal-info-image hidden-sm hidden-xs">
+						<img src="/public/img/placeholder.png" alt="preview" class="img-responsive">
+					</div>
+					<div class="col-sm-9">
+						<div class="animal-info-text">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td>Animal name</td>
+										<td>{$animal->ANIMALNAME}</td>
+									</tr>
+									<tr>
+										<td>Gender</td>
+										<td>{$animal->GENDER}</td>
+									</tr>
+									<tr>
+										<td>Species</td>
+										<td>{$animal->SPECIESEN}</td>
+									</tr>
+									<tr>
+										<td>Birth date</td>
+										<td>{$animal->BIRTHDATE}</td>
+									</tr>
+									<tr>
+										<td>Area</td>
+										<td>{$animal->AREANAME}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-md-6">
-				<div class="row">
+				<div class="col-md-12">
 					<h2>Feeding information</h2>
+				</div>
+
+				<div class="col-md-12">
 					<div class="animal-info-block">
 						<div class="animal-info-text">
 							<div class="selectable-table">
@@ -63,23 +72,33 @@
 												<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}/d{$markupend}</td>
 											</tr>
 										{/foreach}
+									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-					<a href="#"><i class="fa fa-plus-square-o icon-button add-diet" aria-hidden="true"></i></a>
-					<a href="#" class="submit" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table"><i class="fa fa-minus-square-o pull-right icon-button remove-diet" aria-hidden="true"></i>
+
+					<button type="button" class="btn btn-default add-diet"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+					<button type="submit" class="btn btn-default submit pull-right remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
+						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
+					</button>
 				</div>
 			</div>
+
 			<div class="col-md-6">
-				<div class="row">
+				<div class="col-md-12">
 					<h2>Veterinary record</h2>
+				</div>
+
+				<div class="col-md-12">
 					<div class="animal-info-block">
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<div id="fancybox-popup-form">
 		<h2>Add an item to the diet of {$animal->ANIMALNAME}</h2>
         <div class="container">
@@ -109,8 +128,7 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group pull-right">
-							<label for="submit" class="btn"><i class="fa fa-plus-square-o icon-button fancybox" aria-hidden="true"></i></label>
-							<input id="submit" type="submit" value="Go" class="hidden" />
+							<button type="submit" for="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></label>
 						</div>
 					</div>
 				</div>
