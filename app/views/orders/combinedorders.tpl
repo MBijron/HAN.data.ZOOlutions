@@ -22,7 +22,7 @@
 										</tr>
 										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
 											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$orderitem->FOODNAME|replace:'\'':''}_Foodname_1"></td>
-											<td><input type="number" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Quantity_1" class="{$orderitem->FOODNAME|replace:'\'':''}_Quantity" onchange="updateCounter(this)" required></td>
+											<td><input type="number" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Quantity_1" class="{$orderitem->FOODNAME|replace:'\'':''}_Quantity" onchange="updateCounter(this)"></td>
 											<td>
 												<select name="{$orderitem->FOODNAME|replace:'\'':''}_Supplier_1" required>
 													{foreach from=$suppliers item=supplier}
@@ -30,7 +30,7 @@
 													{/foreach}
 												</select>
 											</td>
-											<td><input type="date" value="2000-01-01" name="{$orderitem->FOODNAME|replace:'\'':''}_Date_1" required></td>
+											<td><input type="date" value="{$orderdate}" name="{$orderitem->FOODNAME|replace:'\'':''}_Date_1" required></td>
 										</tr class="{$orderitem->FOODNAME|replace:'\'':''}">
 										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
 											<td></td>
@@ -57,6 +57,7 @@
 					//get the amount of input fiels allready present to determain the new class names
 					var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
 					//add one to all classnames
+					var 
 					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1)).replace(rowClass+'_Foodname_'+childrenCount, rowClass+'_Foodname_'+(childrenCount + 1));
 					//add the new form
 					$($(this).parent().parent().prev().prev()).after(form);

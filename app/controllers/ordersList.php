@@ -27,19 +27,23 @@
 		{
 			if(isset($_POST) && count($_POST) > 0)
 			{
-				krumo($_POST);
-				die();
+				$orderCombinedModel = $this->model('OrderCombinedModel');
+				$sortedPostData = $orderCombinedModel->sortPostData();
+				$orderArray = $orderCombinedModel->getSupplierList($sortedPostData);
+				//$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
+				foreach($orderArray as $name => $items)
+				{
+					$orderCombinedModel->createOrder($name, $items);
+				}
+				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
 			}
-			else
-			{
-				$menuModel = $this->model('MenuModel');
-				$orderModel = $this->model('OrderModel');
-				$this->view('general/menu', ['menu_items' => $menuModel->items]);
-				$this->view('general/backtotop');
-				$this->view('orders/combinedorders', ['orderrequests' => $orderModel->getCombinedOrderRequestDetails(), 'suppliers' => $orderModel->getSuppliers()]);
-				$this->view('general/footer');
-				$this->view('general/copyright', ['end_date' => date('Y') + 1]);
-			}
+			$menuModel = $this->model('MenuModel');
+			$orderModel = $this->model('OrderModel');
+			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/backtotop');
+			$this->view('orders/combinedorders', ['orderrequests' => $orderModel->getCombinedOrderRequestDetails(), 'suppliers' => $orderModel->getSuppliers(), 'orderdate' => date('Y-m-d', strtotime(date('Y-m-d') . ' +1 Weekday'))]);
+			$this->view('general/footer');
+			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
 		
 		public function test()

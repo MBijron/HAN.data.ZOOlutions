@@ -8,6 +8,7 @@
 			$this->smarty->registerPlugin('function','send_not_found', [$this, 'smarty_send_not_found']);
 			$this->smarty->registerPlugin('function', 'render_widget', [$this, 'smarty_render_widget']);
 			$this->smarty->registerPlugin('function', 'generate_token', [$this, 'smarty_generate_token']);
+			$this->smarty->registerPlugin('function', 'generate_token_raw', [$this, 'smarty_generate_raw_token']);
 			$this->smarty->registerPlugin('block', 'require_user_level', [$this, 'smarty_require_user_level']);
 		}
 		
@@ -223,11 +224,21 @@
 			header('HTTP/1.0 404 Not Found');
 		}
 		
-		public function smarty_generate_token()
+		private function generateToken()
 		{
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
 			$_SESSION['token'] = $token;
-			return '<input type="hidden" name="token" value="'.$token.'" />';
+			return $token;
+		}
+		
+		public function smarty_generate_token()
+		{
+			return '<input type="hidden" name="token" value="'. $this->generateToken() .'" />';
+		}
+		
+		public function smarty_generate_raw_token()
+		{
+			return $this->generateToken();
 		}
 		
 		public function smarty_require_user_level($params, $content, $smarty, &$repeat)
