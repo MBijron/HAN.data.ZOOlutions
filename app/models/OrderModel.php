@@ -34,7 +34,7 @@ class OrderModel extends model
 	
 	public function getOrderRequestDetails($id)
 	{
-		$query = 'SELECT B.FOODID, C.FOODNAME, C.UNIT, B.AMOUNT FROM ORDERREQUESTROW B INNER JOIN FOOD C ON B.FOODID=C.FOODID WHERE B.ORDERREQUESTID=?';
+		$query = 'SELECT B.FOODID, C.FOODNAME, C.UNIT, B.AMOUNTREQUESTED FROM ORDERREQUESTROW B INNER JOIN FOOD C ON B.FOODID=C.FOODID WHERE B.ORDERREQUESTID=?';
 		$result = $this->database->executeQuery($query, [ $id ])->fetchAll(PDO::FETCH_OBJ);
 		return $result;
 	}

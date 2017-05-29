@@ -22,7 +22,7 @@
 							{foreach from=$orderrequestrows item=row}
 								<tr>
 									<td>{$row->FOODNAME}</td>
-									<td>{$row->AMOUNT} {$row->UNIT}</td>
+									<td>{$row->AMOUNTREQUESTED} {$row->UNIT}</td>
 								</tr>
 							{/foreach}
 						</tbody>

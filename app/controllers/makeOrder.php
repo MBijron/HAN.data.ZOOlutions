@@ -6,17 +6,21 @@
 				header("Location: /login?logout=false");
 			}
 
-			$ordername = "";
-
 			$areaModel = $this->model('AreaModel');
-			$makeOrderModel = $this->model('makeOrderModel');
 			$menuModel = $this->model('MenuModel');
+			$makeOrderModel = $this->model('makeOrderModel');
 
 			$areas = $areaModel->getAreas();
 			$food = $makeOrderModel->getFood();
 
+			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
+			$this->view('general/footer');
+			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
+		}
 
-			if (isset($_POST['submitOrder'])) {
+		public function addFood() {
+			if ($this->validateToken()) {
 				date_default_timezone_set('Europe/Amsterdam');
 
 				if (!isset($_POST['ordername']) || trim($_POST['ordername']) == '') {
@@ -25,16 +29,11 @@
 					$ordername = $_POST['ordername'];
 				}
 
+				$makeOrderModel = $this->model('makeOrderModel');
 				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $ordername, $_POST['foodId'], $_POST['foodQuantity']);
 
-				header("location: /ordersList");
+				$this->redirect('ordersList');
 			}
-			
-
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
-			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
-			$this->view('general/footer');
-			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
 
 		public function getUnit() {

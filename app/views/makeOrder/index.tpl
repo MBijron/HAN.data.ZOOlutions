@@ -104,7 +104,7 @@
 
 <section class="makeOrder">
 	<div class="container">
-		<form name="makeOrderForm" id="makeOrderForm" method="POST" action="/makeOrder">
+		<form name="makeOrderForm" id="makeOrderForm" method="POST" action="/makeOrder/addFood">
 			<div class="col-md-8 col-sm-12">
 				<div class="row">
 					<div class="form-inline col-md-12">
@@ -175,6 +175,8 @@
 					</div>
 				</div>
 			</div>
+
+			{generate_token}
 		</form>
 
 		<!-- Modal -->

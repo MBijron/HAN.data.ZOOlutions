@@ -3,6 +3,10 @@
 	{	
 		public function index($area)
 		{
+			if (!isset($_SESSION['user'])) {
+				header("Location: /login?logout=false");
+			}
+
 			$animalModel = $this->model('AnimalModel');
 			if($animalModel->areaExists($area))
 			{
@@ -22,6 +26,10 @@
 		
 		public function details($animalId)
 		{
+			if (!isset($_SESSION['user'])) {
+				header("Location: /login?logout=false");
+			}
+			
 			$animalModel = $this->model('AnimalModel');
 			if($animalModel->animalExists($animalId))
 			{

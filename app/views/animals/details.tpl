@@ -102,7 +102,7 @@
 	<div id="fancybox-popup-form">
 		<h2>Add an item to the diet of {$animal->ANIMALNAME}</h2>
         <div class="container">
-			<form action="/animals/addfood" method="post">
+			<form action="/animals/addfood" method="post" name="submit">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
@@ -113,17 +113,25 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="food">Select list:</label>
-							<select class="form-control selectpicker" id="food" name="food"  data-live-search="true" required>
+							<select class="form-control selectpicker" id="food" name="food" onchange="refreshUnit();" data-live-search="true" required>
 								{foreach from=$food item=fooditem}
-									<option>{$fooditem->FOODNAME}</option>
+									<option value="{$fooditem->FOODID}">{$fooditem->FOODNAME}</option>
 								{/foreach}
 							</select>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label for="amount">Amount</label>
 							<input type="numeric" class="form-control" id="amount" name="amount" required>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="col-md-12">
+							<label for="amount" id="unitLabel">Unit</label>
+						</div>
+						<div class="col-md-12">
+							<label id="unit">kg</label>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -143,6 +151,22 @@
 				{ href : '#fancybox-popup-form' }
 			]);
 		});
-		
+
+		function refreshUnit() {
+			var foodId = $("#food").val();
+
+		    $.ajax({
+		        url: "/makeOrder/getUnit",
+		        type: "POST",
+		        dataType:"html",
+	    		data: { foodid: foodId },
+		        success: function(data) {
+		        	document.getElementById("unit").innerHTML = data;
+		        }
+		    });
+		}
+
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("date")[0].setAttribute('min', today);
 	</script>
 </section>

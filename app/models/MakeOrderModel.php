@@ -29,7 +29,7 @@
 
 			for ($i=0; $i < count($foodId); $i++) {
 				$insertRows = " INSERT INTO ORDERREQUESTROW
-								VALUES (?, ? ,?)";
+								VALUES (?, ?, ?, 0.00)";
 				$this->database->executeQuery($insertRows, [$orderRequestId, $foodId[$i], $quantity[$i]]);
 			}
 		}

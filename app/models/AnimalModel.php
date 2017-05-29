@@ -66,21 +66,10 @@ class AnimalModel extends model
 		return $result;
 	}
 	
-	public function getFoodId($foodname)
+	public function addAnimalFood($animalId, $foodid, $foodamount, $startdate)
 	{
-		$query = 'SELECT FOODID FROM FOOD WHERE FOODNAME=?';
-		$result = $this->database->executeQuery($query, [ $foodname ])->fetchObject();
-		return $result == null ? null : $result->FOODID;
-	}
-	
-	public function addAnimalFood($animalId, $foodname, $foodamount, $startdate)
-	{
-		$id = $this->getFoodId($foodname);
-		if($id != null)
-		{
-			$query = 'INSERT INTO DIET (ANIMALID, FOODID, DIETSTART, AMOUNT) VALUES (?, ?, ?, ?)';
-			$this->database->executeQuery($query, [$animalId, $id, $startdate, $foodamount]);
-		}
+		$query = 'INSERT INTO DIET (ANIMALID, FOODID, DIETSTART, AMOUNT) VALUES (?, ?, ?, ?)';
+		$this->database->executeQuery($query, [$animalId, $foodid, $startdate, $foodamount]);
 	}
 	
 	public function deleteAnimalFood($dietstart, $foodname, $amount, $animalid)

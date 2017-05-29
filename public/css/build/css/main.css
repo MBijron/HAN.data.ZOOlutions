@@ -70,8 +70,6 @@ img {
   padding: 0; }
 
 footer {
-  position: relative;
-  top: 155px;
   background-color: #3A3A3A;
   color: white;
   border-top: solid 5px #993300;
@@ -101,8 +99,6 @@ footer {
           color: #E6E6E6; }
 
 #copyright {
-  position: relative;
-  top: 153px;
   background: #171717;
   color: white;
   padding: 10px 0;

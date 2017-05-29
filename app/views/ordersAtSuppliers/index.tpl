@@ -1,11 +1,11 @@
-<section class="animals">
+<section class="ordersAtSuppliers">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1>All order requests</h1>
+				<h1>All orders</h1>
 			</div>
 			<div class="selectable-table col-md-12">
-				<table class="table selectable-table" id="orderrequest-table" data-extra-fields="token: biep">
+				<table class="table selectable-table" id="order-table">
 					<thead>
 						<th>Order name</th>
 						<th>Date</th>
