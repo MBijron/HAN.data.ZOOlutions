@@ -28,4 +28,5 @@
 	require_once 'core/template.php';
 	require_once 'libraries/krumo/class.krumo.php';
 	require_once 'libraries/smarty/Smarty.class.php';
+	require_once 'libraries/YaLinqo/init.php';
 ?>

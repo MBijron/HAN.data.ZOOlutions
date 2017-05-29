@@ -16,27 +16,28 @@
 								</thead>
 								<tbody>
 									{foreach from=$orderrequests item=orderitem}
-										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+										{assign "sanitizedName" $orderitem->FOODNAME|replace:'\'':''|replace:' ':''}
+										<tr class="{$sanitizedName}">
 											<td>{$orderitem->FOODNAME}</td>
-											<td class="{$orderitem->FOODNAME|replace:'\'':''}_MAX_AMOUNT">{$orderitem->TOTALAMOUNT} {$orderitem->UNIT}</td>
+											<td class="{$sanitizedName}_MAX_AMOUNT">{$orderitem->TOTALAMOUNT} {$orderitem->UNIT}</td>
 										</tr>
-										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$orderitem->FOODNAME|replace:'\'':''}_Foodname_1"></td>
-											<td><input type="number" value="" name="{$orderitem->FOODNAME|replace:'\'':''}_Quantity_1" class="{$orderitem->FOODNAME|replace:'\'':''}_Quantity" onchange="updateCounter(this)"></td>
+										<tr class="{$sanitizedName}">
+											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$sanitizedName}_Foodname_1"></td>
+											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" class="{$sanitizedName}_Quantity" onchange="updateCounter(this)"></td>
 											<td>
-												<select name="{$orderitem->FOODNAME|replace:'\'':''}_Supplier_1" required>
+												<select name="{$sanitizedName}_Supplier_1" required>
 													{foreach from=$suppliers item=supplier}
 														<option>{$supplier->SUPPLIERNAME}</option>
 													{/foreach}
 												</select>
 											</td>
-											<td><input type="date" value="{$orderdate}" name="{$orderitem->FOODNAME|replace:'\'':''}_Date_1" required></td>
-										</tr class="{$orderitem->FOODNAME|replace:'\'':''}">
-										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+											<td><input type="date" value="{$orderdate}" name="{$sanitizedName}_Date_1" required></td>
+										</tr class="{$sanitizedName}">
+										<tr class="{$sanitizedName}">
 											<td></td>
-											<td>Total: <span class="{$orderitem->FOODNAME|replace:'\'':''}_ORDER_COUNTER">0</span></td>
+											<td>Total: <span class="{$sanitizedName}_ORDER_COUNTER">0</span></td>
 										</tr>
-										<tr class="{$orderitem->FOODNAME|replace:'\'':''}">
+										<tr class="{$sanitizedName}">
 											<td></td>
 											<td><i class="fa fa-plus-square-o add-button" aria-hidden="true"></i> <i class="fa fa-minus-square-o remove-button" aria-hidden="true"></i></td>
 										</tr>
