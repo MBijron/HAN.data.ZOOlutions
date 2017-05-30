@@ -68,29 +68,53 @@
 				<div class="col-md-12">
 					<table class="table">
 						<thead>
-							<th>Food</th>
+							<th>Supplies</th>
 							<th>Ordered</th>
 							<th>Delivered</th>
+							<th>Missing supplies</th>
 						</thead>
 						<tbody>						
 							{foreach from=$orderRows item=$row}
 								{assign "markupstart" ""}
 								{assign "markupend" ""}
+								{assign "missingSupplies" $row->AMOUNTORDERED - $row->AMOUNTDELIVERED}
 
 								{if $row->AMOUNTDELIVERED < $row->AMOUNTORDERED AND $order->STATUS == 'Incomplete delivery'}
 									{assign "markupstart" "<p style='color:red;'>"}
 									{assign "markupend" "</p>"}
 								{/if}
 								<tr>
-									<td>{$markupstart}	{$row->FOODNAME}								{$markupend}</td>
-									<td>{$markupstart}	{$row->AMOUNTORDERED} 			 {$row->UNIT}	{$markupend}</td>
-									<td>{$markupstart}	{$row->AMOUNTDELIVERED|floatval} {$row->UNIT}	{$markupend}</td>
+									<td>{$row->FOODNAME}										</td>
+									<td>{$row->AMOUNTORDERED|number_format:2} 	{$row->UNIT}	</td>
+									<td>{$row->AMOUNTDELIVERED|number_format:2} {$row->UNIT}	</td>
+									<td>{$markupstart} {$missingSupplies|number_format:2} {$row->UNIT} {$markupend}</td>
 								</tr>
 							{/foreach}
 						</tbody>
 					</table>
 				</div>
 			</div>
+
+			{if $order->STATUS == "Incomplete delivery"}
+				<div class="col-md-5">
+					<div class="col-xs-12">
+						<h2>Process missing supplies</h2>
+					</div>
+
+					<form action="/ordersAtSuppliers/fixIncompleteDelivery/{$order->ORDERID}" method="post">
+						<div class="form-group col-xs-12 form-inline">
+							<label>New delivery date</label>
+							<input type="date" class="form-control" name="deliveryDate" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}">
+							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save"></span></button>
+						</div>
+
+						<!-- <div class="form-group col-xs-12">
+							<label for="newOrder">Create new order from missing supplies.</label>
+							<button type="submit"></button>
+						</div> -->
+					</form>
+				</div>
+			{/if}
 
 			{if $checkOrder == "true"}
 				<div class="col-md-5">
@@ -131,7 +155,7 @@
 			{else if $order->STATUS == "Awaiting Delivery"}
 				<div class="col-md-12">
 					<div class="col-md-12">
-						<form action="/ordersAtSuppliers/markAsReceived/{$orderDetails[0]->ORDERID}">
+						<form action="/ordersAtSuppliers/markAsReceived/{$orderDetails[0]->ORDERID}" method="post">
 							<button type="submit" class="btn btn-default">Mark as Received</button>
 						</form>
 					</div>

@@ -53,8 +53,13 @@
 		public function markAsReceived($orderID) {
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
 			$ordersAtSuppliersModel->markAsReceived($orderID);
-			
+
 			$this->redirect("ordersAtSuppliers");
+		}
+
+		public function fixIncompleteDelivery($orderID) {
+			echo $orderID;
+			echo $_POST['deliveryDate'];
 		}
 
 	}

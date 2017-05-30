@@ -107,7 +107,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="date">Date</label>
-							<input type="date" class="form-control" id="date" name="date" required>
+							<input type="date" class="form-control" id="date" name="date" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}" required>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -165,8 +165,5 @@
 		        }
 		    });
 		}
-
-		var today = new Date().toISOString().split('T')[0];
-		document.getElementsByName("date")[0].setAttribute('min', today);
 	</script>
 </section>
