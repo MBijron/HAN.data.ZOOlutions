@@ -1,0 +1,20 @@
+<?PHP
+class class_name extends model
+{
+	function __construct()
+	{
+		parent::__construct();
+	}
+	
+	public function register()
+	{
+		
+	}
+	
+	/*public function example($variable)
+	{
+		$query = 'SELECT * FROM TABLE WHERE COLUMN=?';
+		$result = $this->database->executeQuery($query, [ $$variable ])->fetchAll(PDO::FETCH_OBJ);
+		return $result;
+	}*/
+}

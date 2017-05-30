@@ -1,0 +1,5 @@
+This is the framework terminal. You can use the following commands:
+
+create controller <directory> [name] 	| this can be used to create a controller, the directory is optional
+create model [name] 			| this can be used to create a model
+create view [directory] [name] 		| this can be used to create a view
