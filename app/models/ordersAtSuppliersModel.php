@@ -26,11 +26,32 @@
 		}
 
 		public function getOrderRows($id) {
-			$query = "	SELECT O.ORDERID, F.FOODID, F.FOODNAME, O.AMOUNTORDERED, F.UNIT
+			$query = "	SELECT O.ORDERID, F.FOODID, F.FOODNAME, O.AMOUNTORDERED, O.AMOUNTDELIVERED, F.UNIT
 						FROM ORDERROW O
 							INNER JOIN FOOD F ON O.FOODID = F.FOODID
 						WHERE ORDERID = ?";
 			return $this->database->executeQuery($query, [$id])->fetchAll(PDO::FETCH_OBJ);
+		}
+
+		public function markAsReceived($orderID) {
+			$query = "	UPDATE [ORDER]
+						SET STATUS = 'Received'
+						WHERE ORDERID = ?";
+			$this->database->executeQuery($query, [$orderID]);
+		}
+
+		public function insertDeliveredSupplies($supplies) {
+			$this->markAsReceived($supplies[0][0]);
+
+			for ($i=0; $i < count($supplies); $i++) { 
+				$query = "	UPDATE ORDERROW
+							SET AMOUNTDELIVERED = (SELECT AMOUNTDELIVERED FROM ORDERROW WHERE ORDERID = ? AND FOODID = ?) + ?
+							WHERE ORDERID = ? AND FOODID = ?";
+				$this->database->executeQuery($query, [ $supplies[$i][0], $supplies[$i][1], $supplies[$i][2], $supplies[$i][0], $supplies[$i][1] ]);
+			}
+
+			$sp = "EXEC CheckGoods ?";
+			$this->database->executeQuery($sp, [ $supplies[0][0] ]);
 		}
 
 	}

@@ -34,5 +34,28 @@
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
 
+		public function checkOrder() {
+			if (!empty($_POST['orderID']) && !empty($_POST['foodID']) && !empty($_POST['quantity'])) {
+
+				$supplies = [];
+
+				for ($i=0; $i < count($_POST['foodID']); $i++) { 
+					$supplies[] = [ $_POST['orderID'], $_POST['foodID'][$i], $_POST['quantity'][$i] ];
+				}
+
+				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies);
+
+				$this->redirect("ordersAtSuppliers");
+			}
+		}
+
+		public function markAsReceived($orderID) {
+			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+			$ordersAtSuppliersModel->markAsReceived($orderID);
+			
+			$this->redirect("ordersAtSuppliers");
+		}
+
 	}
 ?>

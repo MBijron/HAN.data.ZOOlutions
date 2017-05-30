@@ -109,8 +109,7 @@ $(document).ready(function() {
 		//check if a row was selected
 		if(items.length <= 0)
 		{
-			alert('Please select a row');
-			return;
+			$("#noSelectedRowAlert").modal();
 		}
 		
 		//create and fill an object with all the data from the table

@@ -284,4 +284,9 @@ footer {
   padding-top: 6px; }
 
 #deliveredFood {
-  padding-bottom: 10px; }
+  padding-top: 5px; }
+
+#checkOrder {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #E5E5E5; }

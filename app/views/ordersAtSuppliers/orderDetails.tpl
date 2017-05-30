@@ -53,7 +53,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<div class="col-md-12">
 					<h2>Ordered supplies</h2>
 				</div>
@@ -62,13 +62,15 @@
 					<table class="table">
 						<thead>
 							<th>Food</th>
-							<th>Quantity</th>
+							<th>Ordered</th>
+							<th>Delivered</th>
 						</thead>
 						<tbody>						
 							{foreach from=$orderRows item=$row}
 								<tr>
 									<td>{$row->FOODNAME}</td>
 									<td>{$row->AMOUNTORDERED} {$row->UNIT}</td>
+									<td>{$row->AMOUNTDELIVERED|floatval} {$row->UNIT}</td>
 								</tr>
 							{/foreach}
 						</tbody>
@@ -77,35 +79,47 @@
 			</div>
 
 			{if $checkOrder == "true"}
-				<div class="col-md-6">
+				<div class="col-md-5">
 					<div class="col-md-12">
 						<h2>Delivered supplies</h2>
+						<p>Fill in the amount of delivered supplies.</p>
 					</div>
 
 					<form action="/ordersAtSuppliers/checkOrder" method="post">
 
 						{foreach from=$orderRows item=$orderitem}
-							<div class="col-md-12" id="deliveredFood">
-								<div class="col-md-4">
-									<p>{$orderitem->FOODNAME}</p>
+							<div class="col-xs-12" id="deliveredFood">
+								<div class="col-xs-4">
+									<p>{$orderitem->FOODNAME}</p>									
+									<input type="hidden" name="foodID[]" value="{$orderitem->FOODID}">
 								</div>
 								
-								<div class="col-md-4">
-									<input type="text" class="form-control" name="quantity">
+								<div class="col-xs-5">
+									<input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="{$orderitem->AMOUNTDELIVERED|floatval}" required>
 								</div>
 
-								<div class="col-md-4">
+								<div class="col-xs-3">
 									<p>{$orderitem->UNIT}</p>
 								</div>
 							</div>
 						{/foreach}
 
+						<div class="col-xs-12" id="checkOrder">
+							<button class="btn btn-default pull-right" type="submit">Check order</button>
+						</div>
+
+						<input type="hidden" name="orderID" value="{$orderitem->ORDERID}">
+
 					</form>
 
+				</div>
+			{else}
+				<div class="col-md-12">
 					<div class="col-md-12">
-						<button class="btn btn-default pull-right">Check order</button>
+						<form action="/ordersAtSuppliers/markAsReceived/{$orderDetails[0]->ORDERID}">
+							<button type="submit" class="btn btn-default">Mark as Received</button>
+						</form>
 					</div>
-
 				</div>
 			{/if}
 
