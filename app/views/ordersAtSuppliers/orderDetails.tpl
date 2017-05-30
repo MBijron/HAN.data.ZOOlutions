@@ -42,10 +42,17 @@
 						</thead>
 						<tbody>								
 							{foreach from=$orderDetails item=order}
+								{assign "markupstart" ""}
+								{assign "markupend" ""}
+
+								{if $order->STATUS == 'Incomplete delivery'}
+									{assign "markupstart" "<p style='color:red;'>"}
+									{assign "markupend" "</p>"}
+								{/if}
 								<tr>
 									<td>{$order->ORDERDATE}</td>
 									<td>{$order->DELIVERYDATE}</td>
-									<td>{$order->STATUS}</td>
+									<td>{$markupstart} {$order->STATUS} {$markupend}</td>
 								</tr>
 							{/foreach}								
 						</tbody>
@@ -67,10 +74,17 @@
 						</thead>
 						<tbody>						
 							{foreach from=$orderRows item=$row}
+								{assign "markupstart" ""}
+								{assign "markupend" ""}
+
+								{if $row->AMOUNTDELIVERED < $row->AMOUNTORDERED AND $order->STATUS == 'Incomplete delivery'}
+									{assign "markupstart" "<p style='color:red;'>"}
+									{assign "markupend" "</p>"}
+								{/if}
 								<tr>
-									<td>{$row->FOODNAME}</td>
-									<td>{$row->AMOUNTORDERED} {$row->UNIT}</td>
-									<td>{$row->AMOUNTDELIVERED|floatval} {$row->UNIT}</td>
+									<td>{$markupstart}	{$row->FOODNAME}								{$markupend}</td>
+									<td>{$markupstart}	{$row->AMOUNTORDERED} 			 {$row->UNIT}	{$markupend}</td>
+									<td>{$markupstart}	{$row->AMOUNTDELIVERED|floatval} {$row->UNIT}	{$markupend}</td>
 								</tr>
 							{/foreach}
 						</tbody>
@@ -95,7 +109,8 @@
 								</div>
 								
 								<div class="col-xs-5">
-									<input type="number" class="form-control" name="quantity[]" id="quantity" placeholder="{$orderitem->AMOUNTDELIVERED|floatval}" required>
+									<input type="number" class="form-control" name="quantity[]" id="quantity" 
+											placeholder="{$orderitem->AMOUNTORDERED - $orderitem->AMOUNTDELIVERED|floatval}" required>
 								</div>
 
 								<div class="col-xs-3">
@@ -113,7 +128,7 @@
 					</form>
 
 				</div>
-			{else}
+			{else if $order->STATUS == "Awaiting Delivery"}
 				<div class="col-md-12">
 					<div class="col-md-12">
 						<form action="/ordersAtSuppliers/markAsReceived/{$orderDetails[0]->ORDERID}">

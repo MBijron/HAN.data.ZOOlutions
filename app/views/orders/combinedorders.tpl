@@ -23,7 +23,8 @@
 										</tr>
 										<tr class="{$sanitizedName}">
 											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$sanitizedName}_Foodname_1"></td>
-											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" class="{$sanitizedName}_Quantity" onchange="updateCounter(this)"></td>
+											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" 
+														class="{$sanitizedName}_Quantity form-control" onchange="updateCounter(this)"></td>
 											<td>
 												<select name="{$sanitizedName}_Supplier_1" required>
 													{foreach from=$suppliers item=supplier}
