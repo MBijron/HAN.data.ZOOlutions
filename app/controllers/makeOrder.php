@@ -30,7 +30,7 @@
 				}
 
 				$makeOrderModel = $this->model('makeOrderModel');
-				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $ordername, $_POST['foodId'], $_POST['foodQuantity']);
+				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $_POST['areaSelector'], $ordername, $_POST['foodId'], $_POST['foodQuantity']);
 
 				$this->redirect('ordersList');
 			}

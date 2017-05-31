@@ -57,9 +57,13 @@
 			$this->redirect("ordersAtSuppliers");
 		}
 
-		public function fixIncompleteDelivery($orderID) {
-			echo $orderID;
-			echo $_POST['deliveryDate'];
+		public function setNewDeliveryDate($orderID) {
+			$deliveryDate = $_POST['deliveryDate'];
+
+			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+			$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate);
+
+			$this->redirect("/ordersList");
 		}
 
 	}

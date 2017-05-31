@@ -101,7 +101,7 @@
 						<h2>Process missing supplies</h2>
 					</div>
 
-					<form action="/ordersAtSuppliers/fixIncompleteDelivery/{$order->ORDERID}" method="post">
+					<form action="/ordersAtSuppliers/setNewDeliveryDate/{$order->ORDERID}" method="post">
 						<div class="form-group col-xs-12 form-inline">
 							<label>New delivery date</label>
 							<input type="date" class="form-control" name="deliveryDate" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}">

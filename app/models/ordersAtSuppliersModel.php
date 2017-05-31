@@ -55,6 +55,14 @@
 			$this->database->executeQuery($sp, [ $supplies[0][0] ]);
 		}
 
+		public function setNewDeliveryDate($orderID, $deliveryDate) {
+			
+			// $query = "	UPDATE [ORDER]
+			// 			SET DELIVERYDATE = ?
+			// 			WHERE ORDERID = ?";
+			// $this->database->executeQuery($query, [$deliveryDate, $orderID]);
+		}
+
 	}
 
 ?>

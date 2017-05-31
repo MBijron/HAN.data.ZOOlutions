@@ -99,7 +99,16 @@
 	      array.splice(key, 1);
 
 	  return array;
-	};
+	}
+
+	function submitForm() {
+		if (foodArray.length == 0) {
+			alert("TEST");
+		} else {
+		    $("#makeOrderForm").submit();
+		}
+	}
+
 </script>
 
 <section class="makeOrder">
@@ -171,7 +180,7 @@
 					</div>
 
 					<div class="col-md-9 col-xs-7">
-						<button type="submit" class="btn btn-default glyphicon glyphicon-ok" name="submitOrder" id="submitButton"></button>
+						<button type="button" class="btn btn-default glyphicon glyphicon-ok" name="submitOrder" id="submitButton" onclick="submitForm();"></button>
 					</div>
 				</div>
 			</div>
