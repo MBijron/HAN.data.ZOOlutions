@@ -13,7 +13,7 @@ class OrderModel extends model
 	
 	public function getOrderRequests()
 	{
-		$query = 'SELECT * FROM ORDERREQUEST';
+		$query = 'SELECT * FROM ORDERREQUEST ORDer by ORDERREQUESTDATE DESC';
 		$result = $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		return $result;
 	}
@@ -39,7 +39,7 @@ class OrderModel extends model
 						INNER JOIN ORDERREQUESTROW B ON ORQ.ORDERREQUESTID = B.ORDERREQUESTID
 						INNER JOIN FOOD C ON B.FOODID = C.FOODID
 						INNER JOIN EMPLOYEE E ON ORQ.EMPLOYEEID = E.EMPLOYEEID
-						INNER JOIN AREA A ON E.AREAID = A.AREAID
+						LEFT JOIN AREA A ON E.AREAID = A.AREAID
 					WHERE B.ORDERREQUESTID = ?";
 		$result = $this->database->executeQuery($query, [ $id ])->fetchAll(PDO::FETCH_OBJ);
 		return $result;
