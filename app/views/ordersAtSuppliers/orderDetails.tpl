@@ -79,7 +79,7 @@
 								{assign "markupend" ""}
 								{assign "missingSupplies" $row->AMOUNTORDERED - $row->AMOUNTDELIVERED}
 
-								{if $row->AMOUNTDELIVERED < $row->AMOUNTORDERED AND $order->STATUS == 'Incomplete delivery'}
+								{if $row->AMOUNTDELIVERED < $row->AMOUNTORDERED AND $missingSupplies != 0}
 									{assign "markupstart" "<p style='color:red;'>"}
 									{assign "markupend" "</p>"}
 								{/if}
@@ -87,7 +87,7 @@
 									<td>{$row->FOODNAME}										</td>
 									<td>{$row->AMOUNTORDERED|number_format:2} 	{$row->UNIT}	</td>
 									<td>{$row->AMOUNTDELIVERED|number_format:2} {$row->UNIT}	</td>
-									<td>{$markupstart} {$missingSupplies|number_format:2} {$row->UNIT} {$markupend}</td>
+									<td>{if $order->STATUS == "Incomplete delivery"}{$markupstart}{/if} {$missingSupplies|number_format:2} {$row->UNIT} {$markupend}</td>
 								</tr>
 							{/foreach}
 						</tbody>
@@ -101,17 +101,29 @@
 						<h2>Process missing supplies</h2>
 					</div>
 
-					<form action="/ordersAtSuppliers/setNewDeliveryDate/{$order->ORDERID}" method="post">
-						<div class="form-group col-xs-12 form-inline">
-							<label>New delivery date</label>
-							<input type="date" class="form-control" name="deliveryDate" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}">
-							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save"></span></button>
+					<form action="/ordersAtSuppliers/fixIncompleteDelivery/?orderID={$order->ORDERID}" method="post">
+						<div class="col-xs-12">
+							<p>Choose a new delivery date for the missing supplies:</p>
 						</div>
 
-						<!-- <div class="form-group col-xs-12">
-							<label for="newOrder">Create new order from missing supplies.</label>
-							<button type="submit"></button>
-						</div> -->
+						<div class="form-group col-xs-12 form-inline">
+							<label>Delivery date</label>
+							<input type="date" class="form-control" name="deliveryDate" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}">
+						</div>
+
+						<div class="col-xs-12">
+							<button type="submit" class="btn btn-default" name="updateOrder">
+								<span class="glyphicon glyphicon-floppy-save"></span> Update the current order with a new delivery date
+							</button>
+						</div>
+
+						<div class="col-xs-12">
+							<button type="submit" class="btn btn-default" name="createNewOrder">
+								<span class="glyphicon glyphicon-floppy-save"></span> Create a new orderrequest for the missing supplies
+							</button>
+						</div>
+
+						<input type="hidden" name="supplierName" value="{$order->SUPPLIERNAME}">
 					</form>
 				</div>
 			{/if}
@@ -152,7 +164,7 @@
 					</form>
 
 				</div>
-			{else if $order->STATUS == "Awaiting Delivery"}
+			{else if $order->STATUS == "Awaiting delivery"}
 				<div class="col-md-12">
 					<div class="col-md-12">
 						<form action="/ordersAtSuppliers/markAsReceived/{$orderDetails[0]->ORDERID}" method="post">

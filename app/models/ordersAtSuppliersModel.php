@@ -36,7 +36,7 @@
 
 		public function markAsReceived($orderID) {
 			$query = "	UPDATE [ORDER]
-						SET STATUS = 'Received'
+						SET STATUS = 'Received', DELIVERYDATE = GETDATE()
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
@@ -56,11 +56,18 @@
 		}
 
 		public function setNewDeliveryDate($orderID, $deliveryDate) {
-			
-			// $query = "	UPDATE [ORDER]
-			// 			SET DELIVERYDATE = ?
-			// 			WHERE ORDERID = ?";
-			// $this->database->executeQuery($query, [$deliveryDate, $orderID]);
+			$query = "	UPDATE [ORDER]
+						SET DELIVERYDATE = ?, STATUS = 'Awaiting delivery'
+						WHERE ORDERID = ?";
+			$this->database->executeQuery($query, [$deliveryDate, $orderID]);
+		}
+
+		public function createNewOrder($orderID, $employeeID, $name) {
+			$query = "	EXEC CombineIncompleteGoods ?, ?, ?";
+			$this->database->executeQuery($query, [$orderID, $employeeID, $name]);
+
+			$query = "EXEC DeleteIncompleteGoods ?";
+			$this->database->executeQuery($query, [$orderID]);
 		}
 
 	}

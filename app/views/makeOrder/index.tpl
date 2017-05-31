@@ -27,7 +27,7 @@
 	}
 
 	function addFood() {
-		if ($("#quantityInput").val() != "") {
+		if ($("#quantityInput").val() != "" && $("#quantityInput").val() > 0) {
 
 			var selectedFood = $("#foodSelector option:selected").html();
 			var quantity = $("#quantityInput").val();
@@ -103,7 +103,7 @@
 
 	function submitForm() {
 		if (foodArray.length == 0) {
-			alert("TEST");
+			$("#noFoodAdded").modal();
 		} else {
 		    $("#makeOrderForm").submit();
 		}
@@ -149,7 +149,7 @@
 								<label for="makeOrderForm"><h2>Quantity</h2></label>
 							</div>
 							<div class="col-xs-8">
-								<input type="number" name="quantity" class="form-control" id="quantityInput">
+								<input type="number" name="quantity" class="form-control" id="quantityInput" min="1">
 							</div>
 							<div class="col-xs-4">
 								<label for="makeOrderForm" id="unit">kg</label>
@@ -194,11 +194,31 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Missing information</h4>
+						<h4 class="modal-title">Wrong information</h4>
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-warning">
-							Please fill in the quantity.
+							Please fill in the quantity and use a positive number.
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Oke</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="noFoodAdded" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Missing supplies</h4>
+					</div>
+					<div class="modal-body">
+						<div class="alert alert-warning">
+							There's no supplies added to the order.
 						</div>
 					</div>
 					<div class="modal-footer">

@@ -8,7 +8,7 @@
 			$currentStatus = document.getElementById("order-table").rows[selectedRow].cells[2].innerHTML;
 
 			if ($currentStatus.valueOf() == " Received ") {
-				window.location.href = '/ordersAtSuppliers/details/' + selectedRow + '?checkOrder=true';
+				window.location.href = '/ordersAtSuppliers/details/' + $("#orderId").val() + '?checkOrder=true';
 			} else {
 				$("#wrongStatus").modal();
 			}
@@ -46,6 +46,8 @@
 								<td>{$order->SUPPLIERNAME}</td>
 								<td>{$order->DELIVERYDATE}</td>
 								<td>{$markupstart} {$order->STATUS} {$markupend}</td>
+
+								<input type="hidden" name="orderId" id="orderId" value="{$order->ORDERID}">
 							</tr>
 						{/foreach}
 					</tbody>

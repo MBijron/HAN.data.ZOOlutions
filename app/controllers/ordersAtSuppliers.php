@@ -57,13 +57,23 @@
 			$this->redirect("ordersAtSuppliers");
 		}
 
-		public function setNewDeliveryDate($orderID) {
+		public function fixIncompleteDelivery() {
+			$orderID = $_GET['orderID'];
 			$deliveryDate = $_POST['deliveryDate'];
 
-			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-			$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate);
+			if (isset($_POST['updateOrder'])) {
+				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+				$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate);
 
-			$this->redirect("/ordersList");
+				$this->redirect("ordersAtSuppliers");
+			}
+
+			if (isset($_POST['createNewOrder'])) {
+				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+				$ordersAtSuppliersModel->createNewOrder($orderID, $_SESSION['user']->EMPLOYEEID, 'Incomplete order from: ' . $_POST['supplierName']);
+
+				$this->redirect("ordersList");
+			}
 		}
 
 	}
