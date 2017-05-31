@@ -9,7 +9,12 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="col-md-12">
-					<h2>Requested food from: {$orderrequestrows[0]->AREANAME}</h2>
+					{if $orderrequestrows[0]->AREANAME==null}
+						<h2>Requested food</h2>
+					{else}
+						<h2>Requested food from: {$orderrequestrows[0]->AREANAME}</h2>
+					{/if}
+					
 				</div>
 
 				<div class="animal-info-block col-md-12">
