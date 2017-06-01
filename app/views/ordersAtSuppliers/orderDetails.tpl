@@ -71,7 +71,7 @@
 							<th>Supplies</th>
 							<th>Ordered</th>
 							<th>Delivered</th>
-							<th>Missing supplies</th>
+							{if $order->STATUS != "Awaiting payment"} <th> Missing supplies </th> {/if}
 						</thead>
 						<tbody>						
 							{foreach from=$orderRows item=$row}
@@ -87,7 +87,13 @@
 									<td>{$row->FOODNAME}										</td>
 									<td>{$row->AMOUNTORDERED|number_format:2} 	{$row->UNIT}	</td>
 									<td>{$row->AMOUNTDELIVERED|number_format:2} {$row->UNIT}	</td>
-									<td>{if $order->STATUS == "Incomplete delivery"}{$markupstart}{/if} {$missingSupplies|number_format:2} {$row->UNIT} {$markupend}</td>
+									{if $order->STATUS != "Awaiting payment"} 
+										<td> 
+											{if $order->STATUS == "Incomplete delivery"}
+												{$markupstart} 
+											{/if} 
+												{$missingSupplies|number_format:2} {$row->UNIT} {$markupend} </td>
+									{/if}
 								</tr>
 							{/foreach}
 						</tbody>

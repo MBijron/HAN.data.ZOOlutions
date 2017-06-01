@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	var selectedRow;
+	var selectedOrderId;
 
 	function checkOrder() {
 		if (selectedRow == null) {
@@ -8,7 +9,7 @@
 			$currentStatus = document.getElementById("order-table").rows[selectedRow].cells[2].innerHTML;
 
 			if ($currentStatus.valueOf() == " Received ") {
-				window.location.href = '/ordersAtSuppliers/details/' + $("#orderId").val() + '?checkOrder=true';
+				window.location.href = '/ordersAtSuppliers/details/' + selectedOrderId + '?checkOrder=true';
 			} else {
 				$("#wrongStatus").modal();
 			}
@@ -17,6 +18,7 @@
 
 	function setSelectedRow(row) {
 		selectedRow = row.rowIndex;
+		selectedOrderId = row.getAttribute('value');
 	}
 </script>
 
@@ -42,12 +44,11 @@
 								{assign "markupstart" "<p style='color:red;'>"}
 								{assign "markupend" "</p>"}
 							{/if}
-							<tr class="clickable-row" onclick="setSelectedRow(this);" data-redirect-url="/ordersAtSuppliers/details/{$order->ORDERID}?checkOrder=false">
+							<tr class="clickable-row" onclick="setSelectedRow(this);" value="{$order->ORDERID}"
+									data-redirect-url="/ordersAtSuppliers/details/{$order->ORDERID}?checkOrder=false">
 								<td>{$order->SUPPLIERNAME}</td>
 								<td>{$order->DELIVERYDATE}</td>
 								<td>{$markupstart} {$order->STATUS} {$markupend}</td>
-
-								<input type="hidden" name="orderId" id="orderId" value="{$order->ORDERID}">
 							</tr>
 						{/foreach}
 					</tbody>

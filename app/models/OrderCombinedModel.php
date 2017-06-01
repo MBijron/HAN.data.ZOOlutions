@@ -26,7 +26,7 @@ class OrderCombinedModel extends model
 		$query = 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
 					OUTPUT inserted.ORDERID
 					VALUES ((SELECT SUPPLIERID FROM SUPPLIER WHERE SUPPLIERNAME = ?), ?, ?, ?)';
-		$result = $this->database->executeQuery($query, [ $supplierName, date('Y-m-d', strtotime(date('Y-m-d'))), $items[0]->Date, 'Awaiting Delivery' ])->fetch(PDO::FETCH_NUM)[0];
+		$result = $this->database->executeQuery($query, [ $supplierName, date('Y-m-d', strtotime(date('Y-m-d'))), $items[0]->Date, 'Awaiting delivery' ])->fetch(PDO::FETCH_NUM)[0];
 		foreach($items as $item)
 		{
 			$subquery = 'INSERT INTO ORDERROW (ORDERID, FOODID, AMOUNTORDERED, AMOUNTDELIVERED)
