@@ -77,4 +77,37 @@ class AnimalModel extends model
 		$query = 'DELETE FROM DIET WHERE DIETSTART=? AND FOODID=(SELECT FOODID FROM FOOD WHERE FOODNAME=?) AND AMOUNT=? AND ANIMALID=?';
 		$this->database->executeQuery($query, [$dietstart, $foodname, $amount, $animalid]);
 	}
+	
+	public function getVeterinaryRecord($animalid)
+	{
+		$query = 'SELECT V.RECORDDATE, V.NOTES, E.FIRSTNAME, E.LASTNAME, D.DIAGNOSIS, M.MEDICINENAME, P.STARTPRESCRIPTION, P.ENDPRESCRIPTION, P.PRESCRIPTIONID FROM VETERINARYRECORD V INNER JOIN EMPLOYEE E ON V.EMPLOYEEID=E.EMPLOYEEID LEFT JOIN DIAGNOSIS D ON V.DIAGNOSISID=D.DIAGNOSISID LEFT JOIN VETERINARYPRESCRIPTION VP ON V.ANIMALID=VP.ANIMALID AND V.RECORDDATE=VP.RECORDDATE LEFT JOIN PRESCRIPTION P ON VP.PRESCRIPTIONID=P.PRESCRIPTIONID LEFT JOIN MEDICINE M ON P.MEDICINEID=M.MEDICINEID WHERE V.ANIMALID=?';
+		$result = $this->database->executeQuery($query, [$animalid])->fetchAll(PDO::FETCH_OBJ);
+		return $result;
+	}
+	
+	public function getAllDiagnosis()
+	{
+		$query = 'SELECT * FROM DIAGNOSIS';
+		$result = $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
+		return $result;
+	}
+	
+	public function getAllMedicine()
+	{
+		$query = 'SELECT * FROM MEDICINE';
+		$result = $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
+		return $result;
+	}
+	
+	public function addVeterinary($animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employee)
+	{
+		$query = 'EXEC SP_InsertVeterinaryRecords ?, ?, ?, ?, ?, ?, ?';
+		$this->database->executeQuery($query, [$animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employee]);
+	}
+	
+	public function removeVeterinary($animalid, $recorddate, $prescriptionid)
+	{
+		$query = 'EXEC SP_DeleteVeterinaryRecord ?, ?, ?';
+		$this->database->executeQuery($query, [$prescriptionid, $animalid, $recorddate]);
+	}
 }
