@@ -3,13 +3,22 @@
 	var selectedOrderId;
 
 	function checkOrder() {
+
 		if (selectedRow == null) {
 			$("#noSelectedRowAlert").modal();
 		} else {
 			$currentStatus = document.getElementById("order-table").rows[selectedRow].cells[2].innerHTML;
 
-			if ($currentStatus.valueOf() == " Received ") {
-				window.location.href = '/ordersAtSuppliers/details/' + selectedOrderId + '?checkOrder=true';
+			if ($currentStatus.valueOf() == ' Received '
+				|| $currentStatus.valueOf() == ' Awaiting delivery ') {
+				$.ajax({
+			        url: "/ordersAtSuppliers/markAsReceived/" + selectedOrderId,
+			        type: "POST",
+			        dataType:"html",
+			        success: function() {
+			        	window.location.href = '/ordersAtSuppliers/details/' + selectedOrderId + '?checkOrder=true';
+			        }
+			    }); 
 			} else {
 				$("#wrongStatus").modal();
 			}
