@@ -5,7 +5,7 @@
 		{
 			$menuModel = $this->model('MenuModel');
 			$orderModel = $this->model('OrderModel');
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('general/backtotop');
 			$this->view('orders/orderlist', ['orderrequests' => $orderModel->getOrderRequests()]);
 			$this->view('general/footer');
@@ -16,7 +16,7 @@
 		{
 			$menuModel = $this->model('MenuModel');
 			$orderModel = $this->model('OrderModel');
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('general/backtotop');
 			$this->view('orders/orderdetails', ['orderrequestrows' => $orderModel->getOrderRequestDetails($id), 'orderrequest' => $orderModel->getOrderRequest($id)]);
 			$this->view('general/footer');
@@ -39,7 +39,7 @@
 			}
 			$menuModel = $this->model('MenuModel');
 			$orderModel = $this->model('OrderModel');
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('general/backtotop');
 			$this->view('orders/combinedorders', ['orderrequests' => $orderModel->getCombinedOrderRequestDetails(), 'suppliers' => $orderModel->getSuppliers(), 'orderdate' => date('Y-m-d', strtotime(date('Y-m-d') . ' +1 Weekday'))]);
 			$this->view('general/footer');

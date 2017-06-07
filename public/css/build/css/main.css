@@ -227,6 +227,9 @@ footer {
   visibility: visible;
   opacity: 1; }
 
+.animals button {
+  margin-left: 20px; }
+
 .animals .animal-info-block {
   border: grey 2px solid;
   overflow: hidden;
@@ -290,3 +293,9 @@ footer {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 2px solid #E5E5E5; }
+
+#userInfo {
+  position: relative;
+  bottom: 4px; }
+  #userInfo h2 {
+    font-size: 16px; }

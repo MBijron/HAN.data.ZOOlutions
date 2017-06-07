@@ -12,7 +12,7 @@
 			{
 				$animals = $animalModel->getAnimalsOfArea($area);
 				$menuModel = $this->model('MenuModel');
-				$this->view('general/menu', ['menu_items' => $menuModel->items]);
+				$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 				$this->view('general/backtotop');
 				$this->view('animals/index', ['area' => $area, 'animals' => $animals]);
 				$this->view('general/footer');
@@ -41,7 +41,7 @@
 				$diagnosis = $animalModel->getAllDiagnosis();
 				$medicine = $animalModel->getAllMedicine();
 				$menuModel = $this->model('MenuModel');
-				$this->view('general/menu', ['menu_items' => $menuModel->items]);
+				$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 				$this->view('general/backtotop');
 				$this->view('animals/details', ['animal' => $animal, 'nutrition' => $nutrition, 'food' => $food, 'veterinary' => $veterinary, 'diagnosis' => $diagnosis, 'medicine' => $medicine, 'token' => $securityModel->generateToken()]);
 				$this->view('general/footer');

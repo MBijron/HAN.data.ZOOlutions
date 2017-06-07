@@ -11,7 +11,7 @@
 
 			$orders = $ordersAtSuppliersModel->getOrdersAtSuppliers();
 
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('ordersAtSuppliers/index', ['orders' => $orders]);
 			$this->view('general/footer');
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
@@ -23,7 +23,7 @@
 			$orderDetails = $ordersAtSuppliersModel->getOrderDetails($id);
 			$orderRows = $ordersAtSuppliersModel->getOrderRows($id);
 
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user'] ]);
 
 			if ($_GET['checkOrder'] == "true") {
 				$this->view('ordersAtSuppliers/orderDetails', ['orderDetails' => $orderDetails, 'orderRows' => $orderRows, 'checkOrder' => 'true']);

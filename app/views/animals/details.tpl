@@ -79,7 +79,7 @@
 					</div>
 
 					<button type="button" class="btn btn-default add-diet"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-					<button type="submit" class="btn btn-default submit pull-right remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
+					<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
 						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 					</button>
 				</div>
@@ -125,7 +125,7 @@
 					</div>
 					
 					<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-					<button type="submit" class="btn btn-default submit pull-right remove-veterinary" data-redirect-url="/animals/removeveterinary" data-table-ref="veterinary-table">
+					<button type="submit" class="btn btn-default submit remove-veterinary" data-redirect-url="/animals/removeveterinary" data-table-ref="veterinary-table">
 						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 					</button>
 				</div>

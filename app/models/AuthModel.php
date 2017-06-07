@@ -29,7 +29,7 @@ class AuthModel extends model
 	{
 		// $password = hash('sha512', $password);
 		$prepared = [$password, $emailaddress];
-		$query = "	SELECT EMPLOYEEID, EMPLOYEE.ROLEID, AREAID, EMAILADDRESS, FIRSTNAME, LASTNAME, USERLEVEL
+		$query = "	SELECT EMPLOYEEID, EMPLOYEE.ROLEID, ROLE.ROLENAME, AREAID, EMAILADDRESS, FIRSTNAME, LASTNAME, USERLEVEL
 					FROM EMPLOYEE
 					INNER JOIN ROLE ON EMPLOYEE.ROLEID = ROLE.ROLEID
 					WHERE password=? AND emailaddress=?";

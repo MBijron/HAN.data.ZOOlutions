@@ -13,7 +13,7 @@
 			$areas = $areaModel->getAreas();
 			$food = $makeOrderModel->getFood();
 
-			$this->view('general/menu', ['menu_items' => $menuModel->items]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
 			$this->view('general/footer');
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
