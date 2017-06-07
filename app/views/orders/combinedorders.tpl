@@ -32,8 +32,7 @@
 													{/foreach}
 												</select>
 											</td>
-											<td><input type="date" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}" 
-														name="{$sanitizedName}_Date_1" required></td>
+											<td><input type="date" value="{$orderdate}" min="{$smarty.now|date_format:'%Y-%m-%d'}" name="{$sanitizedName}_Date_1" required></td>
 										</tr class="{$sanitizedName}">
 										<tr class="{$sanitizedName}">
 											<td></td>
