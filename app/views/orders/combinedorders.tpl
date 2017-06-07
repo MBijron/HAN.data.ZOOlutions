@@ -6,7 +6,7 @@
 				<h2>Order</h2>
 				<div class="animal-info-block">
 					<div class="animal-info-text">
-						<form method="post">
+						<form method="post" onkeypress="return event.keyCode != 13;">
 							<table class="table">
 								<thead>
 									<th>Food</th>
@@ -26,13 +26,13 @@
 											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" 
 														class="{$sanitizedName}_Quantity form-control" onchange="updateCounter(this)"></td>
 											<td>
-												<select name="{$sanitizedName}_Supplier_1" required>
+												<select name="{$sanitizedName}_Supplier_1" class="selectpicker" required>
 													{foreach from=$suppliers item=supplier}
 														<option>{$supplier->SUPPLIERNAME}</option>
 													{/foreach}
 												</select>
 											</td>
-											<td><input type="date" value="{$orderdate}" min="{$smarty.now|date_format:'%Y-%m-%d'}" name="{$sanitizedName}_Date_1" required></td>
+											<td><input type="date" class="form-control" value="{$orderdate}" min="{$smarty.now|date_format:'%Y-%m-%d'}" name="{$sanitizedName}_Date_1" required></td>
 										</tr class="{$sanitizedName}">
 										<tr class="{$sanitizedName}">
 											<td></td>
@@ -40,16 +40,24 @@
 										</tr>
 										<tr class="{$sanitizedName}">
 											<td></td>
-											<td><i class="fa fa-plus-square-o add-button" aria-hidden="true"></i> <i class="fa fa-minus-square-o remove-button" aria-hidden="true"></i></td>
+											<td>
+												<button type="button" class="btn btn-default add-button">
+													<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+												</button>
+												<button type="button" class="btn btn-default remove-button">
+													<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+												</button>
+											</td>
 										</tr>
 									{/foreach}
 								</tbody>
 							</table>
-							<input type="submit">
+							<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-saved"></span> Save orders</button>
 						</form>
 					</div>
 				</div>
 			</div>
+
 			<script>
 				$('.add-button').click(function() {
 					//get the class of the item you want to add (the food name)
@@ -101,6 +109,7 @@
 					}
 				}
 			</script>
+
 			<div class="col-md-4">
 				<h2>Suppliers</h2>
 				<div class="animal-info-block">

@@ -1,3 +1,9 @@
+<script type="text/javascript">
+	$('#confirm-delete').on('show.bs.modal', function(e) {
+	    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	});
+</script>
+
 <section class="ordersAtSuppliers">
 	<div class="container">
 		<div class="row">
@@ -134,6 +140,40 @@
 				</div>
 			{/if}
 
+			{if $order->STATUS == "Awaiting payment"}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-12">
+							<button class="btn btn-default" data-toggle="modal" data-target="#confirm-delete">
+							    Mark as Payed
+							</button>
+						</div>
+					</div>
+				</div>
+			{/if}
+
+				<!-- Modal -->
+				<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                Confirmation
+				            </div>
+				            <div class="modal-body">
+				                Are you sure you want to mark this order as Payed?
+				            </div>
+				            <div class="modal-footer">
+				                
+
+				                <form action="/ordersAtSuppliers/markAsPayed/{$orderDetails[0]->ORDERID}" method="post">
+				                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				                	<button class="btn btn-success btn-ok">Yes</button>
+				                </form>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
 			{if $checkOrder == "true"}
 				<div class="col-md-5">
 					<div class="col-md-12">
@@ -141,7 +181,7 @@
 						<p>Fill in the amount of delivered supplies.</p>
 					</div>
 
-					<form action="/ordersAtSuppliers/checkOrder" method="post">
+					<form action="/ordersAtSuppliers/checkOrder" method="post" onkeypress="return event.keyCode != 13;">
 
 						{foreach from=$orderRows item=$orderitem}
 							<div class="col-xs-12" id="deliveredFood">

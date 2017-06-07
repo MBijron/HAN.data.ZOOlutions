@@ -41,6 +41,13 @@
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
+		public function markAsPayed($orderID) {
+			$query = "	UPDATE [ORDER]
+						SET STATUS = 'Payed'
+						WHERE ORDERID = ?";
+			$this->database->executeQuery($query, [$orderID]);
+		}
+
 		public function insertDeliveredSupplies($supplies) {
 			$this->markAsReceived($supplies[0][0]);
 

@@ -57,6 +57,13 @@
 			$this->redirect("ordersAtSuppliers");
 		}
 
+		public function markAsPayed($orderID) {
+			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
+			$ordersAtSuppliersModel->markAsPayed($orderID);
+
+			$this->redirect("ordersAtSuppliers");
+		}
+
 		public function fixIncompleteDelivery() {
 			$orderID = $_GET['orderID'];
 			$deliveryDate = $_POST['deliveryDate'];
