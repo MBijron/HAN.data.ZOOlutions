@@ -34,25 +34,25 @@
 			return $this->database->executeQuery($query, [$id])->fetchAll(PDO::FETCH_OBJ);
 		}
 
-		public function markAsReceived($orderID) {
-			$query = "	UPDATE [ORDER]
+		public function markAsReceived($orderID, $permission) {
+			$query = $permission . "	UPDATE [ORDER]
 						SET STATUS = 'Received', DELIVERYDATE = GETDATE()
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
-		public function markAsPayed($orderID) {
-			$query = "	UPDATE [ORDER]
+		public function markAsPayed($orderID, $permission) {
+			$query = $permission . "	UPDATE [ORDER]
 						SET STATUS = 'Payed'
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
-		public function insertDeliveredSupplies($supplies) {
+		public function insertDeliveredSupplies($supplies, $permission) {
 			$this->markAsReceived($supplies[0][0]);
 
 			for ($i=0; $i < count($supplies); $i++) { 
-				$query = "	UPDATE ORDERROW
+				$query = $permission . "	UPDATE ORDERROW
 							SET AMOUNTDELIVERED = (SELECT AMOUNTDELIVERED FROM ORDERROW WHERE ORDERID = ? AND FOODID = ?) + ?
 							WHERE ORDERID = ? AND FOODID = ?";
 				$this->database->executeQuery($query, [ $supplies[$i][0], $supplies[$i][1], $supplies[$i][2], $supplies[$i][0], $supplies[$i][1] ]);
@@ -62,18 +62,18 @@
 			$this->database->executeQuery($sp, [ $supplies[0][0] ]);
 		}
 
-		public function setNewDeliveryDate($orderID, $deliveryDate) {
-			$query = "	UPDATE [ORDER]
+		public function setNewDeliveryDate($orderID, $deliveryDate, $permission) {
+			$query = $permission . "	UPDATE [ORDER]
 						SET DELIVERYDATE = ?, STATUS = 'Awaiting delivery'
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$deliveryDate, $orderID]);
 		}
 
-		public function createNewOrder($orderID, $employeeID, $name) {
-			$query = "	EXEC CombineIncompleteGoods ?, ?, ?";
+		public function createNewOrder($orderID, $employeeID, $name, $permission) {
+			$query = $permission . "	EXEC CombineIncompleteGoods ?, ?, ?";
 			$this->database->executeQuery($query, [$orderID, $employeeID, $name]);
 
-			$query = "EXEC DeleteIncompleteGoods ?";
+			$query = $permission . "EXEC DeleteIncompleteGoods ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 

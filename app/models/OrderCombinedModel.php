@@ -11,19 +11,19 @@ class OrderCombinedModel extends model
 		
 	}
 	
-	public function RemoveFoodFromOrderRequest($itemArray)
+	public function RemoveFoodFromOrderRequest($itemArray, $permission)
 	{
 		$food = $this->getFoodList($itemArray);
 		foreach($food as $foodName => $quantity)
 		{
-			$query = 'EXEC dbo.RemoveFromOrderRequests ?, ?';
+			$query = $permission . 'EXEC dbo.RemoveFromOrderRequests ?, ?';
 			$result = $this->database->executeQuery($query, [ $foodName, $quantity ]);
 		}
 	}
 	
-	public function createOrder($supplierName, $items)
+	public function createOrder($supplierName, $items, $permission)
 	{
-		$query = 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
+		$query = $permission . 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
 					OUTPUT inserted.ORDERID
 					VALUES ((SELECT SUPPLIERID FROM SUPPLIER WHERE SUPPLIERNAME = ?), ?, ?, ?)';
 		$result = $this->database->executeQuery($query, [ $supplierName, date('Y-m-d', strtotime(date('Y-m-d'))), $items[0]->Date, 'Awaiting delivery' ])->fetch(PDO::FETCH_NUM)[0];
