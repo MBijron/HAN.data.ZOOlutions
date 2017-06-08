@@ -18,8 +18,17 @@
 		}
 
 		public function getUnits() {
-			$query = "	SELECT UNIT, CONVERSIONFACTOR FROM UNIT";
+			$query = "	SELECT UNIT FROM UNIT";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
+		}
+
+		public function getAllowedUnits($foodId) {
+			$query = "	SELECT AU.UNIT, U.CONVERSIONFACTOR
+						FROM FOOD F
+							INNER JOIN ALLOWEDUNIT AU ON F.FOODID = AU.FOODID
+							INNER JOIN UNIT U ON U.UNIT = AU.UNIT
+						WHERE F.FOODID = ?";
+			return $this->database->executeQuery($query, [$foodId])->fetchAll(PDO::FETCH_OBJ);
 		}
 
 		public function makeOrderRequest($userId, $areaId, $ordername, $foodId, $quantity) {
