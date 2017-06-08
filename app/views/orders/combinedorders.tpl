@@ -23,7 +23,7 @@
 										</tr>
 										<tr class="{$sanitizedName}">
 											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$sanitizedName}_Foodname_1"></td>
-											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" min="0" max="{$orderitem->TOTALAMOUNT|intval}" step="any" 
+											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" min="0.0" max="{$orderitem->TOTALAMOUNT|intval}" step="0.01" 
 														class="{$sanitizedName}_Quantity form-control" onchange="updateCounter(this)"></td>
 											<td>
 												<select name="{$sanitizedName}_Supplier_1" class="form-control" required>
@@ -84,8 +84,8 @@
 				{
 					var total = 0;
 					var rowClass = $($(selector).parent().parent()).attr('class');
-					var maxAmount = parseInt($($(selector).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).text())
-					var currentAmount = parseInt($(selector).val());
+					var maxAmount = parseFloat($($(selector).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).text())
+					var currentAmount = parseFloat($(selector).val());
 					console.log(currentAmount);
 					$(selector).parent().parent().parent().children('.' + rowClass).each(function(index, item){
 						var input = $(item).find('.' + rowClass + '_Quantity');
@@ -93,7 +93,7 @@
 						{
 							if(input.val() != '')
 							{
-								total += parseInt(input.val());
+								total += parseFloat(input.val());
 							}
 						}
 					});
