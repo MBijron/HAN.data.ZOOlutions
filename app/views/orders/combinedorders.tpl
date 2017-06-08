@@ -26,13 +26,13 @@
 											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" 
 														class="{$sanitizedName}_Quantity form-control" onchange="updateCounter(this)"></td>
 											<td>
-												<select name="{$sanitizedName}_Supplier_1" class="selectpicker" required>
+												<select name="{$sanitizedName}_Supplier_1" class="form-control" required>
 													{foreach from=$suppliers item=supplier}
 														<option>{$supplier->SUPPLIERNAME}</option>
 													{/foreach}
 												</select>
 											</td>
-											<td><input type="date" class="form-control" value="{$orderdate}" min="{$smarty.now|date_format:'%Y-%m-%d'}" name="{$sanitizedName}_Date_1" required></td>
+											<td><input type="date" class="form-control" value="{$orderdate}" min="{$smarty.now|date_format:'%Y-%m-%d'}" name="{$sanitizedName}_Date_1" data-provide="datepicker" required></td>
 										</tr class="{$sanitizedName}">
 										<tr class="{$sanitizedName}">
 											<td></td>

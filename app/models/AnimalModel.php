@@ -78,13 +78,6 @@ class AnimalModel extends model
 		$this->database->executeQuery($query, [$dietstart, $foodname, $amount, $animalid]);
 	}
 	
-	public function getVeterinaryRecord($animalid)
-	{
-		$query = 'SELECT V.RECORDDATE, V.NOTES, E.FIRSTNAME, E.LASTNAME, D.DIAGNOSIS, M.MEDICINENAME, P.STARTPRESCRIPTION, P.ENDPRESCRIPTION, P.PRESCRIPTIONID FROM VETERINARYRECORD V INNER JOIN EMPLOYEE E ON V.EMPLOYEEID=E.EMPLOYEEID LEFT JOIN DIAGNOSIS D ON V.DIAGNOSISID=D.DIAGNOSISID LEFT JOIN VETERINARYPRESCRIPTION VP ON V.ANIMALID=VP.ANIMALID AND V.RECORDDATE=VP.RECORDDATE LEFT JOIN PRESCRIPTION P ON VP.PRESCRIPTIONID=P.PRESCRIPTIONID LEFT JOIN MEDICINE M ON P.MEDICINEID=M.MEDICINEID WHERE V.ANIMALID=?';
-		$result = $this->database->executeQuery($query, [$animalid])->fetchAll(PDO::FETCH_OBJ);
-		return $result;
-	}
-	
 	public function getAllDiagnosis()
 	{
 		$query = 'SELECT * FROM DIAGNOSIS';
@@ -109,5 +102,12 @@ class AnimalModel extends model
 	{
 		$query = 'EXEC SP_DeleteVeterinaryRecord ?, ?, ?';
 		$this->database->executeQuery($query, [$prescriptionid, $animalid, $recorddate]);
+	}
+	
+	public function getVeterinaryRecord($id)
+	{
+		$query = 'SELECT VR.RECORDDATE, E.FIRSTNAME, E.LASTNAME, D.DIAGNOSIS, M.MEDICINENAME, P.STARTPRESCRIPTION, P.ENDPRESCRIPTION, VR.NOTES FROM VETERINARYRECORD VR LEFT JOIN PRESCRIPTION P ON VR.VETERINARYRECORDID=P.VETERINARYRECORDID LEFT JOIN MEDICINE M ON P.MEDICINEID=M.MEDICINEID INNER JOIN EMPLOYEE E ON VR.EMPLOYEEID=E.EMPLOYEEID LEFT JOIN DIAGNOSIS D ON VR.DIAGNOSISID=D.DIAGNOSISID WHERE VR.ANIMALID=?';
+		$result = $this->database->executeQuery($query, [ $id ])->fetchAll(PDO::FETCH_OBJ);
+		return $result;
 	}
 }
