@@ -147,7 +147,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="food">Select list:</label>
-							<select class="form-control selectpicker" id="food" name="food" onchange="refreshUnit();" data-live-search="true" required>
+							<select class="form-control selectpicker" id="food" name="food" data-live-search="true" required>
 								{foreach from=$food item=fooditem}
 									<option value="{$fooditem->FOODID}">{$fooditem->FOODNAME}</option>
 								{/foreach}
@@ -165,7 +165,11 @@
 							<label for="amount" id="unitLabel">Unit</label>
 						</div>
 						<div class="col-md-12">
-							<label id="unit">kg</label>
+							<select class="selectpicker" id="unitSelector">
+								{foreach from=$units item=$unit}
+									<option value="{$unit->UNIT}:{$unit->CONVERSIONFACTOR}">{$unit->UNIT}</option>
+								{/foreach}
+							</select>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -288,19 +292,5 @@
 				$(this).parent().parent().prev().prev().remove();
 			}
 		});*/
-		
-		function refreshUnit() {
-			var foodId = $("#food").val();
-
-		    $.ajax({
-		        url: "/makeOrder/getUnit",
-		        type: "POST",
-		        dataType:"html",
-	    		data: { foodid: foodId },
-		        success: function(data) {
-		        	document.getElementById("unit").innerHTML = data;
-		        }
-		    });
-		}
 	</script>
 </section>

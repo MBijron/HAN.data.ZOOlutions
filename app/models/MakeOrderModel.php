@@ -17,9 +17,18 @@
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 
-		public function getUnit($foodid) {
-			$query = "	SELECT UNIT FROM FOOD WHERE FOODID = ?";
-			return $this->database->executeQuery($query, [$foodid])->fetchColumn();
+		public function getUnits() {
+			$query = "	SELECT UNIT FROM UNIT";
+			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
+		}
+
+		public function getAllowedUnits($foodId) {
+			$query = "	SELECT AU.UNIT, U.CONVERSIONFACTOR
+						FROM FOOD F
+							INNER JOIN ALLOWEDUNIT AU ON F.FOODID = AU.FOODID
+							INNER JOIN UNIT U ON U.UNIT = AU.UNIT
+						WHERE F.FOODID = ?";
+			return $this->database->executeQuery($query, [$foodId])->fetchAll(PDO::FETCH_OBJ);
 		}
 
 		public function makeOrderRequest($userId, $areaId, $ordername, $foodId, $quantity) {
@@ -29,7 +38,7 @@
 
 			for ($i=0; $i < count($foodId); $i++) {
 				$insertRows = " INSERT INTO ORDERREQUESTROW
-								VALUES (?, ?, ?, 0.00)";
+								VALUES (?, ?, 'kg', ?, 0.00)";
 				$this->database->executeQuery($insertRows, [$orderRequestId, $foodId[$i], $quantity[$i]]);
 			}
 		}

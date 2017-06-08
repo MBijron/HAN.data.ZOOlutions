@@ -227,9 +227,6 @@ footer {
   visibility: visible;
   opacity: 1; }
 
-.animals button {
-  margin-left: 20px; }
-
 .animals .animal-info-block {
   border: grey 2px solid;
   overflow: hidden;

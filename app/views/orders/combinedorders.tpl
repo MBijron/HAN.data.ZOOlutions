@@ -23,7 +23,7 @@
 										</tr>
 										<tr class="{$sanitizedName}">
 											<td><input type="hidden" value="{$orderitem->FOODNAME}" name="{$sanitizedName}_Foodname_1"></td>
-											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" 
+											<td><input type="number" value="" name="{$sanitizedName}_Quantity_1" min="0" max="{$orderitem->TOTALAMOUNT|intval}" step="any" 
 														class="{$sanitizedName}_Quantity form-control" onchange="updateCounter(this)"></td>
 											<td>
 												<select name="{$sanitizedName}_Supplier_1" class="form-control" required>

@@ -12,42 +12,48 @@
 /* =============== */
 /*  MAIN FUCNTIONS */
 /* =============== */
-	function refreshUnit() {
-		var foodId = $("#foodSelector").val();
+    function refreshUnits() {
+        var foodId = $("#foodSelector").val();
 
-	    $.ajax({
-	        url: "/makeOrder/getUnit",
-	        type: "POST",
-	        dataType:"html",
-    		data: { foodid: foodId },
-	        success: function(data) {
-	        	document.getElementById("unit").innerHTML = data;
-	        }
-	    });
-	}
+        $.ajax({
+            url: "/makeOrder/refreshUnits",
+            type: "POST",
+            data: { foodid: foodId },
+            dataType: "html",
+            success: function(data) {
+                document.getElementById("unitDiv").innerHTML = data;
+            }
+        });
+    }
 
 	function addFood() {
 		if ($("#quantityInput").val() != "" && $("#quantityInput").val() > 0) {
 
 			var selectedFood = $("#foodSelector option:selected").html();
 			var quantity = $("#quantityInput").val();
-			var unit = document.getElementById('unit').innerText;
+
+			var compleetUnit = $("#unitSelector").val();
+			var unit = compleetUnit.split(":")[0];
+			var conversionFactor = compleetUnit.split(":")[1];
+
+			var finalQuantity = quantity * conversionFactor;
+			
 			var index = 0;
 
 			if (foodArray.length > 0) {
 				for (fooditem in foodArray) {
 					if (foodArray[fooditem][FOODNAME] == selectedFood) {
-						foodArray[fooditem][FOODQUANTITY] = parseInt(quantity) + parseInt(foodArray[fooditem][FOODQUANTITY]);
+						foodArray[fooditem][FOODQUANTITY] = parseFloat(finalQuantity) + parseFloat(foodArray[fooditem][FOODQUANTITY]);
 					} else {
 						index++;
 					} 
 
 					if (index == foodArray.length) {
-						foodArray.push([selectedFood, quantity, $("#foodSelector").val(), unit]);
+						foodArray.push([selectedFood, finalQuantity, $("#foodSelector").val(), "kg"]);
 					}
 				}
 			} else {
-				foodArray.push([selectedFood, quantity, $("#foodSelector").val(), unit]);
+				foodArray.push([selectedFood, finalQuantity, $("#foodSelector").val(), "kg"]);
 			}
 
 			$.ajax({
@@ -109,6 +115,8 @@
 		}
 	}
 
+    window.onload = refreshUnits;
+
 </script>
 
 <section class="makeOrder">
@@ -136,23 +144,25 @@
 				<div class="row">
 					<div class="col-md-3">
 						<label for="makeOrderForm"><h2>Food</h2></label>
-						<select class="selectpicker" id="foodSelector" name="foodSelector" data-live-search="true" onchange="refreshUnit();">
+						<select class="selectpicker" id="foodSelector" name="foodSelector" onchange="refreshUnits();" data-live-search="true">
 							{foreach from=$food item=$foodname}
 								<option value="{$foodname->FOODID}">{$foodname->FOODNAME}</option>
 							{/foreach}
 						</select>
 					</div>
 					
-					<div class="col-md-4 col-md-offset-2">
+					<div class="col-md-7 col-md-offset-2">
 						<div class="row">
 							<div class="col-xs-12">
 								<label for="makeOrderForm"><h2>Quantity</h2></label>
 							</div>
 							<div class="col-xs-8">
-								<input type="number" name="quantity" class="form-control" id="quantityInput" min="1">
+								<input type="number" name="quantity" class="form-control" id="quantityInput" min="1" step="any" max="999999">
 							</div>
-							<div class="col-xs-4">
-								<label for="makeOrderForm" id="unit">kg</label>
+							<div class="col-xs-4" id="unitDiv">
+								<select class="selectpicker" id="unitSelector">
+
+								</select>
 							</div>
 						</div>
 					</div>
@@ -218,7 +228,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-warning">
-							There's no supplies added to the order.
+							There are no supplies added to the order.
 						</div>
 					</div>
 					<div class="modal-footer">

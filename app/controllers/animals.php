@@ -8,6 +8,7 @@
 			}
 
 			$animalModel = $this->model('AnimalModel');
+
 			if($animalModel->areaExists($area))
 			{
 				$animals = $animalModel->getAnimalsOfArea($area);
@@ -29,8 +30,12 @@
 			if (!isset($_SESSION['user'])) {
 				header("Location: /login?logout=false");
 			}
+
+			$makeOrderModel = $this->model('makeOrderModel');
+			$units = $makeOrderModel->getUnits();
 			
 			$animalModel = $this->model('AnimalModel');
+
 			if($animalModel->animalExists($animalId))
 			{
 				$securityModel = $this->model('SecurityModel');
@@ -43,7 +48,7 @@
 				$menuModel = $this->model('MenuModel');
 				$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 				$this->view('general/backtotop');
-				$this->view('animals/details', ['animal' => $animal, 'nutrition' => $nutrition, 'food' => $food, 'veterinary' => $veterinary, 'diagnosis' => $diagnosis, 'medicine' => $medicine, 'token' => $securityModel->generateToken()]);
+				$this->view('animals/details', ['animal' => $animal, 'nutrition' => $nutrition, 'food' => $food, 'veterinary' => $veterinary, 'diagnosis' => $diagnosis, 'medicine' => $medicine, 'token' => $securityModel->generateToken(), 'units' => $units ]);
 				$this->view('general/footer');
 				$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 			}

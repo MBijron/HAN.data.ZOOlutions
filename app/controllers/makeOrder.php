@@ -12,9 +12,10 @@
 
 			$areas = $areaModel->getAreas();
 			$food = $makeOrderModel->getFood();
+			$units = $makeOrderModel->getUnits();
 
-			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
-			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user'] ]);
+			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food, 'units' => $units ]);
 			$this->view('general/footer');
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
@@ -29,16 +30,25 @@
 					$ordername = $_POST['ordername'];
 				}
 
-				$makeOrderModel = $this->model('makeOrderModel');
 				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $_POST['areaSelector'], $ordername, $_POST['foodId'], $_POST['foodQuantity']);
 
 				$this->redirect('ordersList');
 			}
 		}
 
-		public function getUnit() {
+		public function refreshUnits() {
 			$makeOrderModel = $this->model('makeOrderModel');
-			echo $makeOrderModel->getUnit($_POST['foodid']);
+			$allowedUnits = $makeOrderModel->getAllowedUnits($_POST['foodid']);
+
+			$string = "<select class='form-control' id='unitSelector'>";
+
+			foreach ($allowedUnits as $allowedUnit) {
+				$string = $string . "<option value='$allowedUnit->UNIT:$allowedUnit->CONVERSIONFACTOR'>" . $allowedUnit->UNIT . "</option>";
+			}
+
+			$string = $string . "</select>";
+
+			echo $string;
 		}
 	}
 ?>
