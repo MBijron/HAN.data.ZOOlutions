@@ -191,7 +191,7 @@
 								</div>
 								
 								<div class="col-xs-5">
-									<input type="number" class="form-control" name="quantity[]" id="quantity" 
+									<input type="number" class="form-control" name="quantity[]" id="quantity" min="0" max="{$orderitem->AMOUNTORDERED}" step="any" 
 											placeholder="{$orderitem->AMOUNTORDERED - $orderitem->AMOUNTDELIVERED|floatval}" required>
 								</div>
 

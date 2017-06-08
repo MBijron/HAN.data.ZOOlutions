@@ -35,14 +35,14 @@
 		}
 
 		public function markAsReceived($orderID, $permission) {
-			$query = $permission . "	UPDATE [ORDER]
+			$query = "	UPDATE [ORDER]
 						SET STATUS = 'Received', DELIVERYDATE = GETDATE()
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
 		public function markAsPayed($orderID, $permission) {
-			$query = $permission . "	UPDATE [ORDER]
+			$query = "	UPDATE [ORDER]
 						SET STATUS = 'Payed'
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
@@ -52,7 +52,7 @@
 			$this->markAsReceived($supplies[0][0]);
 
 			for ($i=0; $i < count($supplies); $i++) { 
-				$query = $permission . "	UPDATE ORDERROW
+				$query = "	UPDATE ORDERROW
 							SET AMOUNTDELIVERED = (SELECT AMOUNTDELIVERED FROM ORDERROW WHERE ORDERID = ? AND FOODID = ?) + ?
 							WHERE ORDERID = ? AND FOODID = ?";
 				$this->database->executeQuery($query, [ $supplies[$i][0], $supplies[$i][1], $supplies[$i][2], $supplies[$i][0], $supplies[$i][1] ]);
@@ -63,17 +63,17 @@
 		}
 
 		public function setNewDeliveryDate($orderID, $deliveryDate, $permission) {
-			$query = $permission . "	UPDATE [ORDER]
+			$query = "	UPDATE [ORDER]
 						SET DELIVERYDATE = ?, STATUS = 'Awaiting delivery'
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$deliveryDate, $orderID]);
 		}
 
 		public function createNewOrder($orderID, $employeeID, $name, $permission) {
-			$query = $permission . "	EXEC CombineIncompleteGoods ?, ?, ?";
+			$query = "EXEC CombineIncompleteGoods ?, ?, ?";
 			$this->database->executeQuery($query, [$orderID, $employeeID, $name]);
 
-			$query = $permission . "EXEC DeleteIncompleteGoods ?";
+			$query = "EXEC DeleteIncompleteGoods ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
