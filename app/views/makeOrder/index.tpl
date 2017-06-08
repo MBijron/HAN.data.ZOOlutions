@@ -87,6 +87,8 @@
 	    } else {
 	    	document.getElementById("orderTableBody").innerHTML = [''];
 	    }
+
+	    selectedRow = null;
 	}
 
 /* ================ */

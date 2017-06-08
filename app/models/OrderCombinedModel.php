@@ -16,22 +16,24 @@ class OrderCombinedModel extends model
 		$food = $this->getFoodList($itemArray);
 		foreach($food as $foodName => $quantity)
 		{
-			$query = $permission . 'EXEC dbo.RemoveFromOrderRequests ?, ?';
+			$query = 'EXEC dbo.RemoveFromOrderRequests ?, ?';
 			$result = $this->database->executeQuery($query, [ $foodName, $quantity ]);
 		}
 	}
 	
 	public function createOrder($supplierName, $items, $permission)
 	{
-		$query = $permission . 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
+		$query = 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
 					OUTPUT inserted.ORDERID
 					VALUES ((SELECT SUPPLIERID FROM SUPPLIER WHERE SUPPLIERNAME = ?), ?, ?, ?)';
-		$result = $this->database->executeQuery($query, [ $supplierName, date('Y-m-d', strtotime(date('Y-m-d'))), $items[0]->Date, 'Awaiting delivery' ])->fetch(PDO::FETCH_NUM)[0];
+		$stm = $this->database->executeQuery($query, [ $supplierName, date('Y-m-d', strtotime(date('Y-m-d'))), $items[0]->Date, 'Awaiting delivery' ]);
+		$result = $stm->fetch(PDO::FETCH_NUM)[0];
+
 		foreach($items as $item)
 		{
-			$subquery = 'INSERT INTO ORDERROW (ORDERID, FOODID, AMOUNTORDERED, AMOUNTDELIVERED)
-						VALUES (?, (SELECT FOODID FROM FOOD WHERE FOODNAME = ?), ?, 0)';
-			$this->database->executeQuery($subquery, [ $result, $item->Foodname, $item->Quantity ]);
+			$subquery = 'INSERT INTO ORDERROW (ORDERID, FOODID, UNIT, AMOUNTORDERED, AMOUNTDELIVERED)
+						VALUES (?, (SELECT FOODID FROM FOOD WHERE FOODNAME = ?), ?, ?, 0)';
+			$this->database->executeQuery($subquery, [ $result, $item->Foodname, 'kg', $item->Quantity ]);
 		}
 	}
 	
