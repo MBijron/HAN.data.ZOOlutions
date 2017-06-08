@@ -12,9 +12,10 @@
 
 			$areas = $areaModel->getAreas();
 			$food = $makeOrderModel->getFood();
+			$units = $makeOrderModel->getUnits();
 
-			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
-			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food]);
+			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user'] ]);
+			$this->view('makeOrder/index', ['areas' => $areas, 'food' => $food, 'units' => $units ]);
 			$this->view('general/footer');
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
@@ -36,9 +37,8 @@
 			}
 		}
 
-		public function getUnit() {
-			$makeOrderModel = $this->model('makeOrderModel');
-			echo $makeOrderModel->getUnit($_POST['foodid']);
+		public function getUnits() {
+			
 		}
 	}
 ?>
