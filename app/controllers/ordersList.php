@@ -27,15 +27,16 @@
 		{
 			if(isset($_POST) && count($_POST) > 0)
 			{
+				$roleModel = $this->model('RoleModel');
 				$orderCombinedModel = $this->model('OrderCombinedModel');
 				$sortedPostData = $orderCombinedModel->sortPostData();
 				$orderArray = $orderCombinedModel->getSupplierList($sortedPostData);
 				//$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
 				foreach($orderArray as $name => $items)
 				{
-					$orderCombinedModel->createOrder($name, $items);
+					$orderCombinedModel->createOrder($name, $items, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 				}
-				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
+				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 			}
 			$menuModel = $this->model('MenuModel');
 			$orderModel = $this->model('OrderModel');

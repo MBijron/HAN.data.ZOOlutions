@@ -42,24 +42,27 @@
 				for ($i=0; $i < count($_POST['foodID']); $i++) { 
 					$supplies[] = [ $_POST['orderID'], $_POST['foodID'][$i], $_POST['quantity'][$i] ];
 				}
-
+				
+				$roleModel = $this->model('RoleModel');	
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies);
+				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 
 				$this->redirect("ordersAtSuppliers");
 			}
 		}
 
 		public function markAsReceived($orderID) {
+			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-			$ordersAtSuppliersModel->markAsReceived($orderID);
+			$ordersAtSuppliersModel->markAsReceived($orderID, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 
 			$this->redirect("ordersAtSuppliers");
 		}
 
 		public function markAsPayed($orderID) {
+			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-			$ordersAtSuppliersModel->markAsPayed($orderID);
+			$ordersAtSuppliersModel->markAsPayed($orderID, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 
 			$this->redirect("ordersAtSuppliers");
 		}
@@ -67,17 +70,18 @@
 		public function fixIncompleteDelivery() {
 			$orderID = $_GET['orderID'];
 			$deliveryDate = $_POST['deliveryDate'];
+			$roleModel = $this->model('RoleModel');
 
 			if (isset($_POST['updateOrder'])) {
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate);
+				$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 
 				$this->redirect("ordersAtSuppliers");
 			}
 
 			if (isset($_POST['createNewOrder'])) {
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->createNewOrder($orderID, $_SESSION['user']->EMPLOYEEID, 'Incomplete order from: ' . $_POST['supplierName']);
+				$ordersAtSuppliersModel->createNewOrder($orderID, $_SESSION['user']->EMPLOYEEID, 'Incomplete order from: ' . $_POST['supplierName'], $roleModel->permission($_SESSION['user']->EMAILADDRESS));
 
 				$this->redirect("ordersList");
 			}
