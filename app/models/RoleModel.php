@@ -13,6 +13,6 @@ class RoleModel extends Controller
 	
 	public function permission($user)
 	{
-		return "EXECUTE AS USER = " . $user;
+		return "EXECUTE AS USER = '" . $user . "'";
 	}
-}
+} 
