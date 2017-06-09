@@ -14,7 +14,7 @@
 		public function getOrdersAtSuppliers() {
 			$query = "	SELECT O.ORDERID, O.SUPPLIERID, S.SUPPLIERNAME, O.DELIVERYDATE, O.STATUS FROM [ORDER] O
 						INNER JOIN SUPPLIER S ON O.SUPPLIERID = S.SUPPLIERID
-						ORDER BY O.DELIVERYDATE DESC";
+						ORDER BY O.STATUS DESC";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 
