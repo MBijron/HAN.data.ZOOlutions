@@ -62,10 +62,10 @@
 		{
 			if($this->validateToken())
 			{
-				if($_POST["date"] != null && $_POST["food"] != null && $_POST["amount"] != null && $_POST["animalid"] != null)
+				if($_POST["date"] != null && $_POST["food"] != null && $_POST["amount"] != null && $_POST["animalid"] != null && $_POST["unit"])
 				{
 					$animalModel = $this->model('AnimalModel');
-					$animalModel->addAnimalFood($_POST["animalid"], $_POST["food"], $_POST["amount"], $_POST["date"]);
+					$animalModel->addAnimalFood($_POST["animalid"], $_POST["food"], $_POST["amount"], $_POST["date"], $_POST["unit"]);
 					$this->redirect('animals/details/' . $_POST["animalid"]);
 				}
 				

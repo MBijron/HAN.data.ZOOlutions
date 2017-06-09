@@ -50,5 +50,20 @@
 
 			echo $string;
 		}
+		
+		public function refreshUnitsNoConversion() {
+			$makeOrderModel = $this->model('makeOrderModel');
+			$allowedUnits = $makeOrderModel->getAllowedUnits($_POST['foodid']);
+
+			$string = "<select class='form-control' id='unitSelector'>";
+
+			foreach ($allowedUnits as $allowedUnit) {
+				$string = $string . "<option value='$allowedUnit->UNIT'>" . $allowedUnit->UNIT . "</option>";
+			}
+
+			$string = $string . "</select>";
+
+			echo $string;
+		}
 	}
 ?>

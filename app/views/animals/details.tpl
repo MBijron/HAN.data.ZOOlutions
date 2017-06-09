@@ -147,7 +147,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="food">Select list:</label>
-							<select class="form-control selectpicker" id="food" name="food" data-live-search="true" required>
+							<select class="form-control selectpicker" id="food" name="food" onchange="refreshUnits();" data-live-search="true" required>
 								{foreach from=$food item=fooditem}
 									<option value="{$fooditem->FOODID}">{$fooditem->FOODNAME}</option>
 								{/foreach}
@@ -161,16 +161,12 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<div class="col-md-12">
-							<label for="amount" id="unitLabel">Unit</label>
-						</div>
-						<div class="col-md-12">
-							<select class="selectpicker" id="unitSelector">
-								{foreach from=$units item=$unit}
-									<option value="{$unit->UNIT}:{$unit->CONVERSIONFACTOR}">{$unit->UNIT}</option>
-								{/foreach}
-							</select>
-						</div>
+						<label for="amount" id="unitLabel">Unit</label>
+						<select class="form-control" id="unitSelector" name="unit">
+							{foreach from=$units item=$unit}
+								<option value="{$unit->UNIT}">{$unit->UNIT}</option>
+							{/foreach}
+						</select>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group pull-right">
@@ -269,6 +265,22 @@
 				{ href : '#fancybox-popup-form2' }
 			]);
 		});
+		
+		function refreshUnits() {
+        var foodId = $("#food").val();
+
+        $.ajax({
+            url: "/makeOrder/refreshUnitsNoConversion",
+            type: "POST",
+            data: { foodid: foodId },
+            dataType: "html",
+            success: function(data) {
+                document.getElementById("unitSelector").innerHTML = data;
+            }
+        });
+    }
+	
+	window.onload = refreshUnits;
 
 		/*
 		$('.add-button').click(function() {

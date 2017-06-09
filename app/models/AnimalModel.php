@@ -54,7 +54,7 @@ class AnimalModel extends model
 	
 	public function getAnimalNutrition($animalId)
 	{
-		$query = 'SELECT D.DIETSTART, D.AMOUNT, F.FOODNAME, F.UNIT, (IIF((SELECT MAX(DIETSTART) FROM DIET WHERE ANIMALID=D.ANIMALID)=D.DIETSTART, 1, 0)) AS currentDiet FROM DIET D INNER JOIN FOOD F ON D.FOODID=F.FOODID INNER JOIN ANIMAL A ON D.ANIMALID=A.ANIMALID WHERE A.ANIMALID=? ORDER BY D.DIETSTART DESC';
+		$query = 'SELECT D.DIETSTART, D.AMOUNT, F.FOODNAME, D.UNIT, (IIF((SELECT MAX(DIETSTART) FROM DIET WHERE ANIMALID=D.ANIMALID)=D.DIETSTART, 1, 0)) AS currentDiet FROM DIET D INNER JOIN FOOD F ON D.FOODID=F.FOODID INNER JOIN ANIMAL A ON D.ANIMALID=A.ANIMALID WHERE A.ANIMALID=? ORDER BY D.DIETSTART DESC';
 		$result = $this->database->executeQuery($query, [ $animalId ])->fetchAll(PDO::FETCH_OBJ);
 		return $result;
 	}
@@ -66,10 +66,10 @@ class AnimalModel extends model
 		return $result;
 	}
 	
-	public function addAnimalFood($animalId, $foodid, $foodamount, $startdate)
+	public function addAnimalFood($animalId, $foodid, $foodamount, $startdate, $unit)
 	{
-		$query = 'INSERT INTO DIET (ANIMALID, FOODID, DIETSTART, AMOUNT) VALUES (?, ?, ?, ?)';
-		$this->database->executeQuery($query, [$animalId, $foodid, $startdate, $foodamount]);
+		$query = 'INSERT INTO DIET (ANIMALID, FOODID, UNIT, DIETSTART, AMOUNT) VALUES (?, ?, ?, ?, ?)';
+		$this->database->executeQuery($query, [$animalId, $foodid, $unit, $startdate, $foodamount]);
 	}
 	
 	public function deleteAnimalFood($dietstart, $foodname, $amount, $animalid)
