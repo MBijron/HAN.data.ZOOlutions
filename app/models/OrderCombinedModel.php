@@ -32,8 +32,15 @@ class OrderCombinedModel extends model
 		foreach($items as $item)
 		{
 			$subquery = 'INSERT INTO ORDERROW (ORDERID, FOODID, UNIT, AMOUNTORDERED, AMOUNTDELIVERED)
-						VALUES (?, (SELECT FOODID FROM FOOD WHERE FOODNAME = ?), ?, ?, 0)';
-			$this->database->executeQuery($subquery, [ $result, $item->Foodname, 'kg', $item->Quantity ]);
+						VALUES 	(?, 
+								(SELECT FOODID FROM FOOD WHERE FOODNAME = ?), 
+								(	SELECT U.CONVERSIONUNIT
+									FROM UNIT U
+										INNER JOIN ALLOWEDUNIT AU ON U.UNIT = AU.UNIT
+										INNER JOIN FOOD F ON AU.FOODID = F.FOODID
+									WHERE F.FOODNAME = ?
+									GROUP BY U.CONVERSIONUNIT), ?, 0)';
+			$this->database->executeQuery($subquery, [ $result, $item->Foodname, $item->Foodname, $item->Quantity ]);
 		}
 	}
 	
