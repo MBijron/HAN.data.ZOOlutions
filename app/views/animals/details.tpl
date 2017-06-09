@@ -221,11 +221,27 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-5 selectable-table" id="medicineArray">
+						
+					</div>
+				</div>
+
 				<div class="row">
 					<div class="col-md-3">
 					</div>
 					<div class="col-md-3">
-						<td><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign add-button" aria-hidden="true"></i></button> <button type="button" class="btn btn-default pull-right"><i class="glyphicon glyphicon-minus-sign remove-button" aria-hidden="true"></i></button></td>
+						<td>
+							<button type="button" class="btn btn-default" onclick="addMedicine();">
+								<i class="glyphicon glyphicon-plus-sign add-button" aria-hidden="true"></i>
+							</button> 
+							<button type="button" class="btn btn-default pull-right" onclick="removeMedicine();">
+								<i class="glyphicon glyphicon-minus-sign remove-button" aria-hidden="true"></i>
+							</button>
+						</td>
 					</div>
 				</div>
 				<div class="row>
@@ -250,6 +266,66 @@
 		
 		
 	<script>
+		var medicines = new Array();
+		var selectedRow;
+
+		function addMedicine() {
+			if ($("#medicine option:selected").html() != "") {
+
+				var startdate = $("#startdate").val();
+				var enddate = $("#enddate").val();
+
+				medicines.push( [ $("#medicine option:selected").val(), $("#medicine option:selected").html(), startdate, enddate ] );
+
+				$.ajax({
+			        url: "/app/views/animals/addMedicine.php",
+			        type: "POST",
+			        dataType:"html",
+		    		data: { medicinearray: medicines },
+			        success: function(data) {
+				        document.getElementById("medicineArray").innerHTML = data;
+				    }
+			    });
+			} else {
+				alert("FOUT");
+			}
+		}
+
+		function removeMedicine() {
+			removeItem(medicines, selectedRow - 1);
+
+			if (medicines.length > 0) {
+				$.ajax({
+			        url: "/app/views/animals/addMedicine.php",
+			        type: "POST",
+			        dataType:"html",
+		    		data: { medicinearray: medicines },
+			        success: function(data) {
+				        document.getElementById("medicineArray").innerHTML = data;
+				    }
+			    });
+		    } else {
+		    	document.getElementById("medicineArray").innerHTML = [''];
+		    }
+
+		    selectedRow = null;
+		}
+
+		function removeItem(array, key) {
+		   if (!array.hasOwnProperty(key))
+		      return;
+		   if (isNaN(parseInt(key)) || !(array instanceof Array))
+		      delete array[key];
+		   else
+		      array.splice(key, 1);
+
+		  return array;
+		}
+
+		function setSelectedRow(row) {
+			selectedRow = row.rowIndex;
+		}
+	
 		$('.add-diet').click(function () {
 			$.fancybox([
 				{ href : '#fancybox-popup-form' }
