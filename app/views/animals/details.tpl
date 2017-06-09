@@ -44,91 +44,87 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="col-md-12">
-					<h2>Feeding information</h2>
-				</div>
-
-				<div class="col-md-12">
-					<div class="animal-info-block">
-						<div class="animal-info-text">
-							<div class="selectable-table">
-								<table class="table selectable-table" id="nutrition-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}">
-									<thead>
-										<th>From</th>
-										<th>Food</th>
-										<th>Quantity</th>
-									</thead>
-									<tbody>
-										{foreach from=$nutrition item=dietitem}
-										{assign "markupstart" ""}
-										{assign "markupend" ""}
-										{if $dietitem->currentDiet == 1}
-											{assign "markupstart" "<b>"}
-											{assign "markupend" "</b>"}
-										{/if}
-											<tr class="clickable-row">
-												<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
-												<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
-												<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}/d{$markupend}</td>
-											</tr>
-										{/foreach}
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-
-					<button type="button" class="btn btn-default add-diet"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-					<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
-						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
-					</button>
-				</div>
+				<h2>Feeding information</h2>
 			</div>
 
 			<div class="col-md-12">
-				<div class="col-md-12">
-					<h2>Veterinary record</h2>
-				</div>
-
-				<div class="col-md-12">
-					<div class="animal-info-block">
-						<div class="animal-info-text">
-							<div class="selectable-table">
-								<table class="table selectable-table" id="veterinary-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}, prescriptionid: {$veterinaryrecord->PRESCRIPTIONID}">
-									<thead>
-										<th>Date</th>
-										<th>Vet</th>
-										<th>Diagnosis</th>
-										<th>Prescription</th>
-										<th>Period</th>
-										<th>Notes</th>
-									</thead>
-									<tbody>
-										{foreach from=$veterinary item=veterinaryrecord}
-											{assign "markup" ""}
-											{if $veterinaryrecord->ENDPRESCRIPTION != null}
-												{assign "markup" "-"}
-											{/if}
-											<tr class="clickable-row">
-												<td>{$veterinaryrecord->RECORDDATE}</td>
-												<td>{$veterinaryrecord->FIRSTNAME} {$veterinaryrecord->LASTNAME}</td>
-												<td>{$veterinaryrecord->DIAGNOSIS}</td>
-												<td>{$veterinaryrecord->MEDICINENAME}</td>
-												<td>{$veterinaryrecord->STARTPRESCRIPTION} {$markup} {$veterinaryrecord->ENDPRESCRIPTION}</td>
-												<td>{$veterinaryrecord->NOTES}</td>
-											</tr>
-										{/foreach}
-									</tbody>
-								</table>
-							</div>
+				<div class="animal-info-block">
+					<div class="animal-info-text">
+						<div class="selectable-table">
+							<table class="table selectable-table" id="nutrition-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}">
+								<thead>
+									<th>From</th>
+									<th>Food</th>
+									<th>Quantity</th>
+								</thead>
+								<tbody>
+									{foreach from=$nutrition item=dietitem}
+									{assign "markupstart" ""}
+									{assign "markupend" ""}
+									{if $dietitem->currentDiet == 1}
+										{assign "markupstart" "<b>"}
+										{assign "markupend" "</b>"}
+									{/if}
+										<tr class="clickable-row">
+											<td>{$markupstart}{$dietitem->DIETSTART}{$markupend}</td>
+											<td>{$markupstart}{$dietitem->FOODNAME}{$markupend}</td>
+											<td>{$markupstart}{$dietitem->AMOUNT} {$dietitem->UNIT}/d{$markupend}</td>
+										</tr>
+									{/foreach}
+								</tbody>
+							</table>
 						</div>
 					</div>
-					
-					<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-					<button type="submit" class="btn btn-default submit remove-veterinary" data-redirect-url="/animals/removeveterinary" data-table-ref="veterinary-table">
-						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
-					</button>
 				</div>
+
+				<button type="button" class="btn btn-default add-diet"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
+					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
+				</button>
+			</div>
+
+			<div class="col-md-12">
+				<h2>Veterinary record</h2>
+			</div>
+
+			<div class="col-md-12">
+				<div class="animal-info-block">
+					<div class="animal-info-text">
+						<div class="selectable-table">
+							<table class="table selectable-table" id="veterinary-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}, prescriptionid: {$veterinaryrecord->PRESCRIPTIONID}">
+								<thead>
+									<th>Date</th>
+									<th>Vet</th>
+									<th>Diagnosis</th>
+									<th>Prescription</th>
+									<th>Period</th>
+									<th>Notes</th>
+								</thead>
+								<tbody>
+									{foreach from=$veterinary item=veterinaryrecord}
+										{assign "markup" ""}
+										{if $veterinaryrecord->ENDPRESCRIPTION != null}
+											{assign "markup" "-"}
+										{/if}
+										<tr class="clickable-row">
+											<td>{$veterinaryrecord->RECORDDATE}</td>
+											<td>{$veterinaryrecord->FIRSTNAME} {$veterinaryrecord->LASTNAME}</td>
+											<td>{$veterinaryrecord->DIAGNOSIS}</td>
+											<td>{$veterinaryrecord->MEDICINENAME}</td>
+											<td>{$veterinaryrecord->STARTPRESCRIPTION} {$markup} {$veterinaryrecord->ENDPRESCRIPTION}</td>
+											<td>{$veterinaryrecord->NOTES}</td>
+										</tr>
+									{/foreach}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<button type="submit" class="btn btn-default submit remove-veterinary" data-redirect-url="/animals/removeveterinary" data-table-ref="veterinary-table">
+					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
+				</button>
 			</div>
 		</div>
 	</div>
