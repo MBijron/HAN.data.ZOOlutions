@@ -27,7 +27,6 @@
 			$items = [
 				"Areas" => $areaNames,
 				'Make Order' => 'makeOrder',
-				'Invoices' => 'invoices',
 				'Orders list' => 'ordersList',
 				'Orders at Suppliers' => 'ordersAtSuppliers'
 			];

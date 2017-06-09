@@ -26,10 +26,10 @@
 						{/foreach}
 					</tbody>
 				</table>
-
-				<a href="/ordersList/combined"><button class="btn btn-default">Combine orders</button></a>
-				<button class="submit float-right btn btn-default" data-table-ref="orderrequest-table">Details</button>
 			</div>
+
+			<a href="/ordersList/combined"><button class="btn btn-default">Combine orders</button></a>
+			<button class="submit float-right btn btn-default" data-table-ref="orderrequest-table">Details</button>
 		</div>
 	</div>
 </section>
