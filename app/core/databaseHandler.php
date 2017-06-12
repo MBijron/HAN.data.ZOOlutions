@@ -15,6 +15,11 @@ class databaseHandler
 	{
 		try
 		{
+			//$authModel = $this->model('AuthModel');
+			//if($authModel != null && $authModel->isLoggedIn() && $authModel != '')
+			//{
+			//	$query = "EXECUTE AS USER = '" . $_SESSION['user']->EMAILADDRESS . "' " . $query;
+			//}
 			if(isset($preparedArray))
 			{
 				$result = self::$db->prepare($query);
@@ -30,5 +35,18 @@ class databaseHandler
 			ExceptionHandler::ThrowException('Something went wrong with executing a query');
 		}
 		return $result;
+	}
+	
+	protected function model($model)
+	{
+		if(file_exists('app/models/'.$model.'.php'))
+		{
+			require_once 'app/models/'.$model.'.php';
+			return new $model();
+		}
+		else
+		{
+			ExceptionHandler::ThrowException('Could not load model: app/models/'.$model.'.php');
+		}
 	}
 }
