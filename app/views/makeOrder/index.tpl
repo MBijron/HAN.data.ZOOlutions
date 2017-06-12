@@ -72,6 +72,11 @@
 
 	function removeFood() {
 
+		if(selectedRow == null)
+		{
+			showNoRowSelectedError()
+			return;
+		}
 		removeItem(foodArray, selectedRow - 1);
 
 		if (foodArray.length > 0) {
