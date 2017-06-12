@@ -82,30 +82,35 @@
 				});
 				function updateCounter(selector)
 				{
-					var total = 0;
+					var total = new Big(0);
 					var rowClass = $($(selector).parent().parent()).attr('class');
-					var maxAmount = parseFloat($($(selector).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).text())
-					var currentAmount = parseFloat($(selector).val());
-					console.log(currentAmount);
+					var maxAmount = new Big(parseFloat($($(selector).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).text()));
+					var currentAmount = new Big(parseFloat($(selector).val()));
 					$(selector).parent().parent().parent().children('.' + rowClass).each(function(index, item){
 						var input = $(item).find('.' + rowClass + '_Quantity');
 						if(input.length)
 						{
 							if(input.val() != '')
 							{
-								total += parseFloat(input.val());
+								total = total.plus(parseFloat(input.val()));
 							}
 						}
 					});
-					if(total > maxAmount)
+					if(total.gt(maxAmount))
 					{
-						currentAmount -= total - maxAmount;
-						$(selector).val(currentAmount)
-						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(maxAmount);
+						//currentAmount = currentAmount.minus(total).minus(maxAmount).times(-1);
+						currentAmount = total.minus(maxAmount).minus(currentAmount).times(-1);
+						console.log ('total: ' + total.toString() + '| maxAmount: ' + maxAmount.toString() + '| currentAmount: ' + currentAmount.toString());
+						$(selector).val(currentAmount.toString())
+						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(maxAmount.toString());
+					}
+					else if(total.lt(0))
+					{
+						$(selector).val(0)
 					}
 					else
 					{
-						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(total);
+						$($(selector).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html(total.toString());
 					}
 				}
 			</script>
