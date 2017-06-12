@@ -89,35 +89,30 @@
 		{
 			if($this->validateToken())
 			{
-				if($_POST["diagnosis"] != null || $_POST["medicine"] != null && $_POST["startdate"] != null && $_POST["enddate"] != null)
-				{	
-					$animalModel = $this->model('AnimalModel');
-					if($_POST["medicine"] == 0){
-						$medicine = null;
-					} else {
-						$medicine = $_POST["medicine"];
-					}
-					$animalModel->addVeterinary($_POST["animalid"], $_POST["diagnosis"], $medicine, $_POST["startdate"], $_POST["enddate"], $_POST["notes"], $_SESSION["user"]->EMPLOYEEID);
-					$this->redirect('animals/details/' . $_POST["animalid"]);
+				$diagnose = '';
+
+				if ($_POST["diagnosis"] == '0') {
+					$diagnose = null;
+				} else {
+					$diagnose = $_POST['diagnosis'];
 				}
-				
+
+				$animalModel = $this->model('AnimalModel');
+				$animalModel->addVeterinary($_POST["animalid"], $diagnose, $_POST['medicineId'], 
+											$_POST["startdate"], $_POST["enddate"], $_POST["notes"], $_SESSION["user"]->EMPLOYEEID);
+				$this->redirect('animals/details/' . $_POST["animalid"]);				
 			}
 		}
 		
-		public function removeveterinary()
+		public function removeveterinary($recordIdAndAnimalId)
 		{
-			if($this->validateToken())
-			{
-				if(isset($_POST["prescriptionid"]) && isset($_POST["animalid"]) && isset($_POST["Date"]))
-				{
-					echo $_POST["prescriptionid"];
-					echo $_POST["animalid"];
-					echo $_POST["Date"];
-					$animalModel = $this->model('AnimalModel');
-					//$animalModel->removeVeterinary($_POST["animalid"], $_POST["Date"], $_POST["prescriptionid"]);
-					//$this->redirect('animals/details/' . $_POST["animalid"]);
-				}
-				
-			}
+			$recordIdAndAnimalId = explode(":", $recordIdAndAnimalId);
+			$recordId = $recordIdAndAnimalId[0];
+			$animalId = $recordIdAndAnimalId[1];
+			$prescriptionId = $recordIdAndAnimalId[2];
+
+			$animalModel = $this->model('AnimalModel');
+			$animalModel->removeVeterinary($recordId, $prescriptionId);
+			$this->redirect('animals/details/' . $animalId);
 		}
 	}

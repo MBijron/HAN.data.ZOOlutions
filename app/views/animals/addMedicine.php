@@ -15,6 +15,9 @@
 					<td>" . $medicine[1] . "</td>
 					<td>" . $medicine[2] . "</td>
 					<td>" . $medicine[3] . "</td>
+					<input type='hidden' name='startdate[]' value=" . $medicine[2] . ">
+					<input type='hidden' name='enddate[]' value=" . $medicine[3] . ">
+					<input type='hidden' name='medicineId[]' value=" . $medicine[0] . ">
 				</tr>";
 	}
 

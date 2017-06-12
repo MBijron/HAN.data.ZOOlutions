@@ -91,7 +91,8 @@
 				<div class="animal-info-block">
 					<div class="animal-info-text">
 						<div class="selectable-table">
-							<table class="table selectable-table" id="veterinary-table" data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}, prescriptionid: {$veterinaryrecord->PRESCRIPTIONID}">
+							<table class="table selectable-table" id="veterinary-table" 
+									data-extra-fields="token: {$token}, animalid: {$animal->ANIMALID}">
 								<thead>
 									<th>Date</th>
 									<th>Vet</th>
@@ -104,9 +105,10 @@
 									{foreach from=$veterinary item=veterinaryrecord}
 										{assign "markup" ""}
 										{if $veterinaryrecord->ENDPRESCRIPTION != null}
-											{assign "markup" "-"}
+											{assign "markup" ":"}
 										{/if}
-										<tr class="clickable-row">
+										<tr class="clickable-row" onclick="updateRecordId(this);" 
+											value="{$veterinaryrecord->VETERINARYRECORDID}:{$animal->ANIMALID}:{$veterinaryrecord->PRESCRIPTIONID}">
 											<td>{$veterinaryrecord->RECORDDATE}</td>
 											<td>{$veterinaryrecord->FIRSTNAME} {$veterinaryrecord->LASTNAME}</td>
 											<td>{$veterinaryrecord->DIAGNOSIS}</td>
@@ -122,7 +124,7 @@
 				</div>
 				
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-				<button type="submit" class="btn btn-default submit remove-veterinary" data-redirect-url="/animals/removeveterinary" data-table-ref="veterinary-table">
+				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
 			</div>
@@ -247,7 +249,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<label for="notes">Notes</label>
-						<input type="text" class="form-control" id="notes" name="notes">
+						<input type="text" class="form-control" id="notes" name="notes" maxlength="256">
 					</div>
 				</div>
 				<div class="row">
@@ -263,7 +265,7 @@
 		</div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="noDiagnoseAlert" role="dialog">
+		<div class="modal fade" id="noMedicineAlert" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -272,7 +274,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-warning">
-							Please select a diagnosis.
+							Please select a medicine.
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -282,12 +284,50 @@
 			</div>
 		</div>
     </div>
+
+    <!-- Modal -->
+	<div class="modal fade" id="noRowSelected" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">No selection</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning">
+						Please select a row.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Oke</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 		
 		
 	<script>
 		var medicines = new Array();
 		var selectedRow;
+		var veterinaryrecordID;
+
+		function updateRecordId(row) {
+			veterinaryrecordID = row.getAttribute('value');
+		}
+
+		function removeVeterinaryRecords() {
+			sp = veterinaryrecordID.split(":");
+			veterinaryrecordID = sp[0];
+			animalId = sp[1];
+			prescriptionId = sp[2];
+
+			if (veterinaryrecordID != null) {
+				$.redirect('/animals/removeveterinary/' + veterinaryrecordID + ":" + animalId + ":" + prescriptionId);
+			} else {
+				$("#noRowSelected").modal();
+			}
+		}
 
 		function addMedicine() {
 			if ($("#medicine option:selected").html() != "") {
@@ -308,7 +348,7 @@
 				    }
 			    });
 			} else {
-				$("#noDiagnoseAlert").modal();
+				$("#noMedicineAlert").modal();
 			}
 		}
 
