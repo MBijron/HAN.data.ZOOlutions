@@ -19,6 +19,10 @@
 										<td>{$animal->ANIMALNAME}</td>
 									</tr>
 									<tr>
+										<td>Animal ID</td>
+										<td>{$animal->ANIMALID}</td>
+									</tr>
+									<tr>
 										<td>Gender</td>
 										<td>{$animal->GENDER}</td>
 									</tr>
@@ -124,7 +128,7 @@
 				</div>
 				
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="this.disabled=true; this.value='Sending…'; removeVeterinaryRecords();" data-table-ref="veterinary-table">
+				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
 			</div>
@@ -281,6 +285,26 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="noMedicineRowSelected" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">No selection</h4>
+							</div>
+							<div class="modal-body">
+								<div class="alert alert-warning">
+									Please select a row.
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Oke</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
 		</div>
 
@@ -304,26 +328,6 @@
 			</div>
 		</div>
     </div>
-
-    <!-- Modal -->
-	<div class="modal fade" id="noRowSelected" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">No selection</h4>
-				</div>
-				<div class="modal-body">
-					<div class="alert alert-warning">
-						Please select a row.
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Oke</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 		
 		
@@ -344,8 +348,6 @@
 
 			if (veterinaryrecordID != null) {
 				$.redirect('/animals/removeveterinary/' + veterinaryrecordID + ":" + animalId + ":" + prescriptionId);
-			} else {
-				$("#noRowSelected").modal();
 			}
 		}
 
@@ -384,20 +386,24 @@
 		function removeMedicine() {
 			removeItem(medicines, selectedRow - 1);
 
-			if (medicines.length > 0) {
-				$.ajax({
-			        url: "/app/views/animals/addMedicine.php",
-			        type: "POST",
-			        dataType:"html",
-		    		data: { medicinearray: medicines },
-			        success: function(data) {
-				        document.getElementById("medicineArray").innerHTML = data;
-				        $.fancybox.update();
-				    }
-			    });
-		    } else {
-		    	document.getElementById("medicineArray").innerHTML = [''];
-		    }
+			if (selectedRow != null) {
+				if (medicines.length > 0) {
+					$.ajax({
+				        url: "/app/views/animals/addMedicine.php",
+				        type: "POST",
+				        dataType:"html",
+			    		data: { medicinearray: medicines },
+				        success: function(data) {
+					        document.getElementById("medicineArray").innerHTML = data;
+					        $.fancybox.update();
+					    }
+				    });
+			    } else {
+			    	document.getElementById("medicineArray").innerHTML = [''];
+			    }
+			} else {
+				$("#noMedicineRowSelected").modal();
+			}
 
 		    selectedRow = null;
 		}
