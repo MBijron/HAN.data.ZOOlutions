@@ -272,7 +272,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="alert alert-warning">
-									Please select a start and/or enddate.
+									Please select a startdate.
 								</div>
 							</div>
 							<div class="modal-footer">
