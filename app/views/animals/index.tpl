@@ -1,7 +1,7 @@
 <section class="animals">
 	<div class="container">
 		<div class="row">
-		<h1>All animals of the {$area} area</h1>
+		<h1>All animals of the {$area|capitalize} area</h1>
 			{foreach from=$animals item=$animal}
 					<div class="animal-info-block">
 						<div class="col-sm-3 animal-info-image hidden-sm hidden-xs">

@@ -142,7 +142,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label for="food">Select list:</label>
+							<label for="food">Select food:</label>
 							<select class="form-control selectpicker" id="food" name="food" onchange="refreshUnits();" data-live-search="true" required>
 								{foreach from=$food item=fooditem}
 									<option value="{$fooditem->FOODID}">{$fooditem->FOODNAME}</option>
@@ -153,7 +153,7 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="amount">Amount</label>
-							<input type="numeric" class="form-control" id="amount" name="amount" required>
+							<input type="number" class="form-control" id="amount" name="amount" min="0" max="9999" step="any" required>
 						</div>
 					</div>
 					<div class="col-md-2">
@@ -166,7 +166,7 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group pull-right">
-							<button type="submit" for="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+							<button type="submit" for="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></button>
 						</div>
 					</div>
 				</div>
@@ -253,7 +253,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group pull-right" style="padding-top: 10px">
-							<button type="submit" for="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+							<button type="submit" for="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></button>
 						</div>
 					</div>
 				</div>

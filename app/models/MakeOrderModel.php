@@ -18,12 +18,12 @@
 		}
 
 		public function getUnits() {
-			$query = "	SELECT UNIT FROM UNIT";
+			$query = "	SELECT UPPER(LEFT(UNIT,1))+LOWER(SUBSTRING(UNIT,2,LEN(UNIT))) AS UNIT FROM UNIT";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 
 		public function getAllowedUnits($foodId) {
-			$query = "	SELECT AU.UNIT, U.CONVERSIONFACTOR
+			$query = "	SELECT UPPER(LEFT(AU.UNIT,1))+LOWER(SUBSTRING(AU.UNIT,2,LEN(AU.UNIT))) AS UNIT, U.CONVERSIONFACTOR
 						FROM FOOD F
 							INNER JOIN ALLOWEDUNIT AU ON F.FOODID = AU.FOODID
 							INNER JOIN UNIT U ON U.UNIT = AU.UNIT

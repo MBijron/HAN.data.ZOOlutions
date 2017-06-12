@@ -12,8 +12,7 @@
 		}
 
 		public function getAreas() {
-			$query = "	SELECT * FROM AREA
-						ORDER BY AREANAME";
+			$query = "SELECT AREAID, UPPER(LEFT(AREANAME,1))+LOWER(SUBSTRING(AREANAME,2,LEN(AREANAME))) AS AREANAME FROM AREA ORDER BY AREANAME";
 			return $this->database->executeQuery($query)->fetchAll(PDO::FETCH_OBJ);
 		}
 	}
