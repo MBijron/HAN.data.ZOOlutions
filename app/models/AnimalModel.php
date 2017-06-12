@@ -92,21 +92,29 @@ class AnimalModel extends model
 		return $result;
 	}
 	
-	public function addVeterinary($animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employee)
+	public function addVeterinary($animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employeeId)
 	{
-		$query = 'EXEC SP_InsertVeterinaryRecords ?, ?, ?, ?, ?, ?, ?';
-		$this->database->executeQuery($query, [$animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employee]);
+		$query = "	INSERT INTO VETERINARYRECORD OUTPUT inserted.VETERINARYRECORDID
+					VALUES (?, GETDATE(), ?, ?, ?)";
+		$veterinaryRecordId = $this->database->executeQuery($query, [$animalid, $employeeId, $diagnosis, $notes])->fetchColumn();
+
+		for ($i=0; $i < count($medicine); $i++) {
+			$insertMedicineRecords = " INSERT INTO PRESCRIPTION
+							VALUES (?, ?, ?, ?)";
+			$this->database->executeQuery($insertMedicineRecords, [ $veterinaryRecordId, $medicine[$i], $startdate[$i], $enddate[$i] ]);
+		}
 	}
 	
-	public function removeVeterinary($animalid, $recorddate, $prescriptionid)
+	public function removeVeterinary($recordId, $prescriptionId)
 	{
-		$query = 'EXEC SP_DeleteVeterinaryRecord ?, ?, ?';
-		$this->database->executeQuery($query, [$prescriptionid, $animalid, $recorddate]);
+		$query = "	DELETE FROM PRESCRIPTION WHERE VETERINARYRECORDID = ? AND PRESCRIPTIONID = ?
+					DELETE FROM VETERINARYRECORD WHERE VETERINARYRECORDID = ?";
+		$this->database->executeQuery($query, [ $recordId, $prescriptionId, $recordId ]);
 	}
 	
 	public function getVeterinaryRecord($id)
 	{
-		$query = 'SELECT VR.RECORDDATE, E.FIRSTNAME, E.LASTNAME, D.DIAGNOSIS, M.MEDICINENAME, P.STARTPRESCRIPTION, P.ENDPRESCRIPTION, VR.NOTES FROM VETERINARYRECORD VR LEFT JOIN PRESCRIPTION P ON VR.VETERINARYRECORDID=P.VETERINARYRECORDID LEFT JOIN MEDICINE M ON P.MEDICINEID=M.MEDICINEID INNER JOIN EMPLOYEE E ON VR.EMPLOYEEID=E.EMPLOYEEID LEFT JOIN DIAGNOSIS D ON VR.DIAGNOSISID=D.DIAGNOSISID WHERE VR.ANIMALID=?';
+		$query = 'SELECT VR.VETERINARYRECORDID, VR.RECORDDATE, E.FIRSTNAME, E.LASTNAME, D.DIAGNOSIS, M.MEDICINENAME, P.PRESCRIPTIONID, P.STARTPRESCRIPTION, P.ENDPRESCRIPTION, VR.NOTES FROM VETERINARYRECORD VR LEFT JOIN PRESCRIPTION P ON VR.VETERINARYRECORDID=P.VETERINARYRECORDID LEFT JOIN MEDICINE M ON P.MEDICINEID=M.MEDICINEID INNER JOIN EMPLOYEE E ON VR.EMPLOYEEID=E.EMPLOYEEID LEFT JOIN DIAGNOSIS D ON VR.DIAGNOSISID=D.DIAGNOSISID WHERE VR.ANIMALID=?';
 		$result = $this->database->executeQuery($query, [ $id ])->fetchAll(PDO::FETCH_OBJ);
 		return $result;
 	}
