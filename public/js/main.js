@@ -89,6 +89,10 @@ $(document).ready(function() {
 	});
 	
 	$('.submit').click(function() {
+		//disable the pressed button
+		this.disabled=true;
+		this.value='Sending…';
+		var value = this.value;
 		//initialize some variables
 		var items = [];
 		var headers = [];
@@ -110,6 +114,9 @@ $(document).ready(function() {
 		if(items.length <= 0)
 		{
 			$("#noSelectedRowAlert").modal();
+			this.disabled=false;
+			this.value=value;
+			return;
 		}
 		
 		//create and fill an object with all the data from the table

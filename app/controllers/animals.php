@@ -79,7 +79,7 @@
 				if(isset($_POST["From"]) && isset($_POST["Food"]) && isset($_POST["Quantity"]) && isset($_POST["animalid"]))
 				{
 					$animalModel = $this->model('AnimalModel');
-					$animalModel->deleteAnimalFood($_POST["From"], $_POST["Food"], intval($_POST["Quantity"]), $_POST["animalid"]);
+					$animalModel->deleteAnimalFood($_POST["From"], $_POST["Food"], floatval($_POST["Quantity"]), $_POST["animalid"]);
 					$this->redirect('animals/details/' . $_POST["animalid"]);
 				}
 			}

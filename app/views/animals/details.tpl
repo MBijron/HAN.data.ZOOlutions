@@ -77,7 +77,7 @@
 					</div>
 				</div>
 
-				<button type="button" class="btn btn-default add-diet"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default add-diet" ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 				<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
@@ -124,7 +124,7 @@
 				</div>
 				
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
+				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="this.disabled=true; this.value='Sending…'; removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
 			</div>
@@ -139,7 +139,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="date">Date</label>
-							<input type="date" class="form-control" id="date" name="date" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}" required>
+							<input type="date" class="form-control" id="date" name="date" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}" max="{'+7525 days'|date_format:'%Y-%m-%d'}" required>
 						</div>
 					</div>
 					<div class="col-md-6">
