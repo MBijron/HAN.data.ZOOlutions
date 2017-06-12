@@ -16,6 +16,10 @@
 											<td>{$animal->ANIMALNAME}</td>
 										</tr>
 										<tr>
+											<td>Animal ID</td>
+											<td>{$animal->ANIMALID}</td>
+										</tr>
+										<tr>
 											<td>Gender</td>
 											<td>{$animal->GENDER}</td>
 										</tr>
