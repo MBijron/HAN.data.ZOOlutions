@@ -90,6 +90,7 @@
 			if($this->validateToken())
 			{
 				$diagnose = '';
+				$enddates = $_POST['enddate'];
 
 				if ($_POST["diagnosis"] == '0') {
 					$diagnose = null;
@@ -97,10 +98,16 @@
 					$diagnose = $_POST['diagnosis'];
 				}
 
+				for ($i=0; $i < count($enddates); $i++) {
+					if (empty($enddates[$i])) {
+						$enddates[$i] = null;
+					}
+				}
+
 				$animalModel = $this->model('AnimalModel');
 				$animalModel->addVeterinary($_POST["animalid"], $diagnose, $_POST['medicineId'], 
-											$_POST["startdate"], $_POST["enddate"], $_POST["notes"], $_SESSION["user"]->EMPLOYEEID);
-				$this->redirect('animals/details/' . $_POST["animalid"]);				
+											$_POST["startdate"], $enddates, $_POST["notes"], $_SESSION["user"]->EMPLOYEEID);
+				$this->redirect('animals/details/' . $_POST["animalid"]);
 			}
 		}
 		

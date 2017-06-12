@@ -181,7 +181,7 @@
 	<div id="fancybox-popup-form2" style="display: none;">
 		<h2>Add an item to the veterinaryrecords of {$animal->ANIMALNAME}</h2>
         <div class="container">
-			<form action="/animals/addveterinary" method="post" name="submit">
+			<form action="/animals/addveterinary" method="post" name="submit" id="veterinaryRecordForm">
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
@@ -261,6 +261,26 @@
 				</div>
 				<input type="hidden" value="{$token}" name="token">
 				<input type="hidden" value="{$animal->ANIMALID}" name="animalid">
+
+				<!-- Modal -->
+				<div class="modal fade" id="wrongDateValue" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">No start or enddate</h4>
+							</div>
+							<div class="modal-body">
+								<div class="alert alert-warning">
+									Please select a start and/or enddate.
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Oke</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
 		</div>
 
@@ -328,6 +348,15 @@
 				$("#noRowSelected").modal();
 			}
 		}
+
+		$('#veterinaryRecordForm').submit(function() {
+			if ($("#startdate").val() == '') {
+		    	$("#wrongDateValue").modal();
+			    return false;
+		    } else {
+			    return true;
+			}
+		});
 
 		function addMedicine() {
 			if ($("#medicine option:selected").html() != "") {
