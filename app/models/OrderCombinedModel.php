@@ -11,7 +11,7 @@ class OrderCombinedModel extends model
 		
 	}
 	
-	public function RemoveFoodFromOrderRequest($itemArray, $permission)
+	public function RemoveFoodFromOrderRequest($itemArray)
 	{
 		$food = $this->getFoodList($itemArray);
 		foreach($food as $foodName => $quantity)
@@ -21,7 +21,7 @@ class OrderCombinedModel extends model
 		}
 	}
 	
-	public function createOrder($supplierName, $items, $permission)
+	public function createOrder($supplierName, $items)
 	{
 		$query = 'INSERT INTO [ORDER] (SUPPLIERID, ORDERDATE, DELIVERYDATE, [STATUS])
 					OUTPUT inserted.ORDERID

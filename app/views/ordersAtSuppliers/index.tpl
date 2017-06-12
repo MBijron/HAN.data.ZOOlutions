@@ -50,8 +50,8 @@
 							{assign "markupend" ""}
 
 							{if $order->STATUS == 'Incomplete delivery'}
-								{assign "markupstart" "<p style='color:red;'>"}
-								{assign "markupend" "</p>"}
+								{assign "markupstart" "<span style='color:red;'>"}
+								{assign "markupend" "</span>"}
 							{/if}
 							<tr class="clickable-row" onclick="setSelectedRow(this);" value="{$order->ORDERID}"
 									data-redirect-url="/ordersAtSuppliers/details/{$order->ORDERID}?checkOrder=false">
