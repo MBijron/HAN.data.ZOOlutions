@@ -27,7 +27,7 @@
     }
 
 	function addFood() {
-		if ($("#quantityInput").val() != "" && $("#quantityInput").val() > 0) {
+		if ($("#quantityInput").val() != "" && $("#quantityInput").val() > 0 && $('#makeOrderForm').valid()) {
 
 			var selectedFood = $("#foodSelector option:selected").html();
 			var quantity = $("#quantityInput").val();

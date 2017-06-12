@@ -13,6 +13,7 @@ $js_bundle = [
 $library_bundle = [
 	'jquery',
 	'jquery.redirect',
+	'jquery.validation',
 	'krumo',
 	'bootstrap',
 	'font awesome',
