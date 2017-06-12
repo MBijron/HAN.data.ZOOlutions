@@ -9,7 +9,7 @@
 						</div>
 						<div class="col-sm-9">
 							<div class="animal-info-text">
-								<table class="table">
+								<table class="table" style="table-layout:fixed;">
 									<tbody>
 										<tr>
 											<td>Animal name</td>
