@@ -1,4 +1,4 @@
-<footer>
+<footer style="padding-bottom: 20px;">
 	<div class="container page-footer">
 		<div class="row">
 			<div class="col-sm-12 text-center">

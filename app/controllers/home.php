@@ -10,6 +10,7 @@
 				$menuModel = $this->model('MenuModel');
 				$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user'] ]);
 				$this->view('general/slider');
+				$this->view('general/footer');
 			}
 		}
 	}
