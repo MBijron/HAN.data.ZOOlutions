@@ -128,7 +128,7 @@
 				<div class="row">
 					<div class="form-inline col-md-12">
 						<label for="makeOrderForm"><h2>Order name</h2></label>
-						<input type="text" name="ordername" class="form-control" id="ordername" placeholder="Order name">
+						<input type="text" name="ordername" class="form-control" id="ordername" placeholder="Order name" pattern="[A-Za-z0-9]">
 					</div>
 				</div>
 
@@ -159,7 +159,7 @@
 								<label for="makeOrderForm"><h2>Quantity</h2></label>
 							</div>
 							<div class="col-xs-8">
-								<input type="number" name="quantity" class="form-control" id="quantityInput" min="1" step="any" max="999999">
+								<input type="number" name="quantity" class="form-control" id="quantityInput" min="0.01" step="0.01" max="999999">
 							</div>
 							<div class="col-xs-4" id="unitDiv">
 								<select class="selectpicker" id="unitSelector">

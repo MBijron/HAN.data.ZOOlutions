@@ -155,7 +155,7 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="amount">Amount</label>
-							<input type="number" class="form-control" id="amount" name="amount" min="0" max="9999" step="any" required>
+							<input type="number" class="form-control" id="amount" name="amount" min="0.01" max="9999" step="0.01" required>
 						</div>
 					</div>
 					<div class="col-md-2">
