@@ -52,8 +52,8 @@
 								{assign "markupend" ""}
 
 								{if $order->STATUS == 'Incomplete delivery'}
-									{assign "markupstart" "<p style='color:red;'>"}
-									{assign "markupend" "</p>"}
+									{assign "markupstart" "<span style='color:red;'>"}
+									{assign "markupend" "</span>"}
 								{/if}
 								<tr>
 									<td>{$order->ORDERDATE}</td>
@@ -86,8 +86,8 @@
 								{assign "missingSupplies" $row->AMOUNTORDERED - $row->AMOUNTDELIVERED}
 
 								{if $row->AMOUNTDELIVERED < $row->AMOUNTORDERED AND $missingSupplies != 0}
-									{assign "markupstart" "<p style='color:red;'>"}
-									{assign "markupend" "</p>"}
+									{assign "markupstart" "<span style='color:red;'>"}
+									{assign "markupend" "</span>"}
 								{/if}
 								<tr>
 									<td>{$row->FOODNAME}										</td>
@@ -191,7 +191,7 @@
 								</div>
 								
 								<div class="col-xs-5">
-									<input type="number" class="form-control" name="quantity[]" id="quantity" min="0" max="{$orderitem->AMOUNTORDERED}" step="any" 
+									<input type="number" class="form-control" name="quantity[]" id="quantity" min="0" step="any" 
 											placeholder="{$orderitem->AMOUNTORDERED - $orderitem->AMOUNTDELIVERED|floatval}" required>
 								</div>
 
