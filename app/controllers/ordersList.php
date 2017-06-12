@@ -36,10 +36,10 @@
 
 				foreach($orderArray as $name => $items)
 				{
-					$orderCombinedModel->createOrder($name, $items, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+					$orderCombinedModel->createOrder($name, $items);
 				}
 
-				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
 			}
 
 			$menuModel = $this->model('MenuModel');
