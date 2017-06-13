@@ -82,7 +82,11 @@ class OrderCombinedModel extends model
 				{
 					$orderArray[$value->Supplier] = [];
 				}
-				array_push($orderArray[$value->Supplier], $value);
+				if(!array_key_exists($value->Date, $orderArray[$value->Supplier]))
+				{
+					$orderArray[$value->Supplier][$value->Date] = [];
+				}
+				array_push($orderArray[$value->Supplier][$value->Date], $value);
 			}
 		}
 		return $orderArray;

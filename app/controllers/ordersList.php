@@ -32,14 +32,19 @@
 				$orderCombinedModel = $this->model('OrderCombinedModel');
 				$sortedPostData = $orderCombinedModel->sortPostData();
 				$orderArray = $orderCombinedModel->getSupplierList($sortedPostData);
-
-				// $orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
-
-				foreach($orderArray as $name => $items)
+				//krumo($sortedPostData);
+				//krumo($orderArray);
+				
+				foreach($orderArray as $supplier => $itemsAtDate)
 				{
-					$orderCombinedModel->createOrder($name, $items);
+					foreach($itemsAtDate as $items)
+					{
+						//krumo($items);
+						$orderCombinedModel->createOrder($supplier, $items);
+					}
+					//$orderCombinedModel->createOrder($name, $items);
 				}
-
+				//die();
 				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
 				$this->redirect('ordersAtSuppliers');
 			}
