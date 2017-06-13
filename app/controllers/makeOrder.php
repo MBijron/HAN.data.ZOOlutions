@@ -43,7 +43,7 @@
 			$string = "<select class='form-control' id='unitSelector'>";
 
 			foreach ($allowedUnits as $allowedUnit) {
-				$string = $string . "<option value='$allowedUnit->UNIT:$allowedUnit->CONVERSIONFACTOR'>" . $allowedUnit->UNIT . "</option>";
+				$string = $string . "<option value='$allowedUnit->CONVERSIONFACTOR'>" . $allowedUnit->UNIT . "</option>";
 			}
 
 			$string = $string . "</select>";
@@ -64,6 +64,13 @@
 			$string = $string . "</select>";
 
 			echo $string;
+		}
+
+		public function getAllowedUnit() {
+			$makeOrderModel = $this->model('makeOrderModel');
+			$allowedUnit = $makeOrderModel->getAllowedUnit($_POST['foodid']);
+
+			echo $allowedUnit;
 		}
 	}
 ?>

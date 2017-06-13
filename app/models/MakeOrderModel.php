@@ -38,14 +38,29 @@
 
 			for ($i=0; $i < count($foodId); $i++) {
 				$insertRows = " INSERT INTO ORDERREQUESTROW
-								VALUES (?, ?, 'kg', ?, 0.00)";
-				$this->database->executeQuery($insertRows, [$orderRequestId, $foodId[$i], $quantity[$i]]);
+								VALUES (?, ?, 
+										(SELECT CONVERSIONUNIT FROM UNIT U
+										INNER JOIN ALLOWEDUNIT AU ON U.UNIT = AU.UNIT
+										INNER JOIN FOOD F ON F.FOODID = AU.FOODID
+										WHERE F.FOODID = ?
+										GROUP BY CONVERSIONUNIT), 
+										?, 0.00)";
+				$this->database->executeQuery($insertRows, [$orderRequestId, $foodId[$i], $foodId[$i], $quantity[$i]]);
 			}
 		}
 
 		public function getAreaName($areaId) {
 			$query = "	SELECT AREANAME FROM AREA WHERE AREAID = ?";
 			return $this->database->executeQuery($query, [$areaId])->fetchColumn();
+		}
+
+		public function getAllowedUnit($foodId) {
+			$query = "	SELECT CONVERSIONUNIT FROM UNIT U
+						INNER JOIN ALLOWEDUNIT AU ON U.UNIT = AU.UNIT
+						INNER JOIN FOOD F ON F.FOODID = AU.FOODID
+						WHERE F.FOODID = ?
+						GROUP BY CONVERSIONUNIT";
+			return $this->database->executeQuery($query, [$foodId])->fetchColumn();
 		}
 	}
 ?>
