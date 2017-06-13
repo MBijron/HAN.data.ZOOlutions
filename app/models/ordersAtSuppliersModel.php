@@ -61,12 +61,30 @@
 			$sp = "EXEC CheckGoods ?";
 			$this->database->executeQuery($sp, [ $supplies[0][0] ]);
 		}
+		
+		public function checkOtherOrder($supplierName, $deliveryDate) {
+			$query = "IF EXISTS(SELECT 1 FROM [ORDER] O INNER JOIN SUPPLIER S ON S.SUPPLIERID=O.SUPPLIERID WHERE S.SUPPLIERNAME=? AND O.DELIVERYDATE=?)
+					  BEGIN
+						SELECT 1 AS VALUE
+					  END
+					  ELSE
+					  BEGIN
+						SELECT 0 AS VALUE
+					  END";
+			return $this->database->executeQuery($query, [$supplierName, $deliveryDate])->fetchObject();
+		}
 
-		public function setNewDeliveryDate($orderID, $deliveryDate, $permission) {
-			$query = "	UPDATE [ORDER]
-						SET DELIVERYDATE = ?, STATUS = 'Awaiting delivery'
-						WHERE ORDERID = ?";
-			$this->database->executeQuery($query, [$deliveryDate, $orderID]);
+		public function setNewDeliveryDate($orderID, $deliveryDate, $supplierName) {
+			$checkOtherOrder = $this->checkOtherOrder($supplierName, $deliveryDate);
+			if($checkOtherOrder->VALUE == 0){
+				$query = "	UPDATE [ORDER]
+							SET DELIVERYDATE = ?, STATUS = 'Awaiting delivery'
+							WHERE ORDERID = ?";
+				$this->database->executeQuery($query, [$deliveryDate, $orderID]);
+			} else {
+				$query = "EXEC CombineDeliveries ?, ?, ?";
+				$this->database->executeQuery($query, [$orderID, $deliveryDate, $supplierName]);
+			}
 		}
 
 		public function createNewOrder($orderID, $employeeID, $name, $permission) {
