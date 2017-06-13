@@ -94,13 +94,16 @@ class AnimalModel extends model
 	
 	public function addVeterinary($animalid, $diagnosis, $medicine, $startdate, $enddate, $notes, $employeeId)
 	{
-		$query = "	INSERT INTO VETERINARYRECORD OUTPUT inserted.VETERINARYRECORDID
+		$query = "	INSERT INTO VETERINARYRECORD
 					VALUES (?, GETDATE(), ?, ?, ?)";
-		$veterinaryRecordId = $this->database->executeQuery($query, [$animalid, $employeeId, $diagnosis, $notes])->fetchColumn();
+		$this->database->executeQuery($query, [$animalid, $employeeId, $diagnosis, $notes]);
+
+		$getId = "SELECT MAX(VETERINARYRECORDID) FROM VETERINARYRECORD";
+		$veterinaryRecordId = $this->database->executeQuery($getId)->fetchColumn();
 
 		for ($i=0; $i < count($medicine); $i++) {
 			$insertMedicineRecords = " INSERT INTO PRESCRIPTION
-							VALUES (?, ?, ?, ?)";
+										VALUES (?, ?, ?, ?)";
 			$this->database->executeQuery($insertMedicineRecords, [ $veterinaryRecordId, $medicine[$i], $startdate[$i], $enddate[$i] ]);
 		}
 	}

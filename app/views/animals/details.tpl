@@ -118,7 +118,7 @@
 											<td>{$veterinaryrecord->DIAGNOSIS}</td>
 											<td>{$veterinaryrecord->MEDICINENAME}</td>
 											<td>{$veterinaryrecord->STARTPRESCRIPTION} {$markup} {$veterinaryrecord->ENDPRESCRIPTION}</td>
-											<td>{$veterinaryrecord->NOTES}</td>
+											<td style="max-width: 200px; overflow: auto;">{$veterinaryrecord->NOTES}</td>
 										</tr>
 									{/foreach}
 								</tbody>
@@ -128,6 +128,9 @@
 				</div>
 				
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default change-vetRec">
+					<span>Change</span>
+				</button>
 				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
