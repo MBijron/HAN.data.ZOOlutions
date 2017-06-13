@@ -70,11 +70,9 @@
 		public function fixIncompleteDelivery() {
 			$orderID = $_GET['orderID'];
 			$deliveryDate = $_POST['deliveryDate'];
-			$roleModel = $this->model('RoleModel');
-
 			if (isset($_POST['updateOrder'])) {
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+				$ordersAtSuppliersModel->setNewDeliveryDate($orderID, $deliveryDate, $_POST['supplierName']);
 
 				$this->redirect("ordersAtSuppliers");
 			}
