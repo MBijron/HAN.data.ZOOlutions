@@ -23,14 +23,16 @@
 		public function addFood() {
 			if ($this->validateToken()) {
 				date_default_timezone_set('Europe/Amsterdam');
+
 				$makeOrderModel = $this->model('makeOrderModel');
+
 				if (!isset($_POST['ordername']) || trim($_POST['ordername']) == '') {
 					$ordername = $makeOrderModel->getAreaName($_POST['areaSelector']) . " " . date('h:i:s');
 				} else {
 					$ordername = $_POST['ordername'];
 				}
 
-				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $_POST['areaSelector'], $ordername, $_POST['foodId'], $_POST['foodQuantity']);
+				$makeOrderModel->makeOrderRequest($_SESSION['user']->EMPLOYEEID, $_POST['areaSelector'], $ordername, $_POST['foodId'], $_POST['foodQuantity'], $_POST['unit']);
 
 				$this->redirect('ordersList');
 			}

@@ -53,7 +53,7 @@
 		var conversionFactor = $("#unitSelector").val();
 		var finalQuantity = quantity * conversionFactor;
 
-		var allowedUnit = data;
+		var allowedUnit = data.replace(/\s+/g, '');
 			
 		var index = 0;
 

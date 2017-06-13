@@ -31,7 +31,7 @@
 			return $this->database->executeQuery($query, [$foodId])->fetchAll(PDO::FETCH_OBJ);
 		}
 
-		public function makeOrderRequest($userId, $areaId, $ordername, $foodId, $quantity) {
+		public function makeOrderRequest($userId, $areaId, $ordername, $foodId, $quantity, $unit) {
 			$query = "	INSERT INTO ORDERREQUEST OUTPUT inserted.ORDERREQUESTID
 						VALUES (?, ?, GETDATE(), '0', ?)";
 			$orderRequestId = $this->database->executeQuery($query, [$userId, $areaId, $ordername])->fetchColumn();
@@ -39,13 +39,14 @@
 			for ($i=0; $i < count($foodId); $i++) {
 				$insertRows = " INSERT INTO ORDERREQUESTROW
 								VALUES (?, ?, 
-										(SELECT CONVERSIONUNIT FROM UNIT U
-										INNER JOIN ALLOWEDUNIT AU ON U.UNIT = AU.UNIT
-										INNER JOIN FOOD F ON F.FOODID = AU.FOODID
-										WHERE F.FOODID = ?
-										GROUP BY CONVERSIONUNIT), 
-										?, 0.00)";
-				$this->database->executeQuery($insertRows, [$orderRequestId, $foodId[$i], $foodId[$i], $quantity[$i]]);
+								(SELECT CONVERSIONUNIT FROM UNIT U
+								INNER JOIN ALLOWEDUNIT AU ON U.UNIT = AU.UNIT
+								INNER JOIN FOOD F ON F.FOODID = AU.FOODID
+								WHERE F.FOODID = ?
+								GROUP BY CONVERSIONUNIT), 
+								?, 0.00)";
+				
+				$this->database->executeQuery($insertRows, [ $orderRequestId, $foodId[$i], $foodId[$i], $quantity[$i] ]);
 			}
 		}
 
