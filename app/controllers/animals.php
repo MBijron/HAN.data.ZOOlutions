@@ -104,9 +104,16 @@
 					}
 				}
 
-				$animalModel = $this->model('AnimalModel');
-				$animalModel->addVeterinary($_POST["animalid"], $diagnose, $_POST['medicineId'], 
-											$_POST["startdate"], $enddates, $_POST['notes'], $_SESSION["user"]->EMPLOYEEID);
+				if ($_POST['buttonChanger'] == 0) {
+					$animalModel = $this->model('AnimalModel');
+					$animalModel->updateVeterinary( $_POST['veterinaryrecordID'], $_POST['prescriptionId'], $diagnose, $_POST['medicineId'], 
+													$_POST["startdate"], $enddates, $_POST['notes'], $_SESSION["user"]->EMPLOYEEID );
+				} else {
+					$animalModel = $this->model('AnimalModel');
+					$animalModel->addVeterinary($_POST["animalid"], $diagnose, $_POST['medicineId'], 
+												$_POST["startdate"], $enddates, $_POST['notes'], $_SESSION["user"]->EMPLOYEEID);
+				}
+
 				$this->redirect('animals/details/' . $_POST["animalid"]);
 			}
 		}
