@@ -64,13 +64,22 @@
 					var rowClass = $($(this).parent().parent().prev().prev()).attr('class');
 					//get the form to duplicate
 					var form = '<tr class="'+rowClass+'">' + $($(this).parent().parent().prev().prev()).html() + '</tr>';
-					//get the amount of input fiels allready present to determain the new class names
-					var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
-					//add one to all classnames
-					var 
-					form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1)).replace(rowClass+'_Foodname_'+childrenCount, rowClass+'_Foodname_'+(childrenCount + 1));
-					//add the new form
-					$($(this).parent().parent().prev().prev()).after(form);
+					var maxAmount = new Big(parseFloat($($(this).parent().parent().parent().find('.' + rowClass + '_MAX_AMOUNT')).html()));
+					var currentAmount = new Big(parseFloat($($(this).parent().parent().parent().find('.' + rowClass + '_ORDER_COUNTER')).html()));
+					var lastAmount = $($(this).parent().parent().prev().prev().find('.' + rowClass + '_Quantity')).val()
+					if(maxAmount.minus(currentAmount).toString() != 0 && lastAmount != '' && lastAmount != 0)
+					{
+						//get the amount of input fiels allready present to determain the new class names
+						var childrenCount = $(this).parent().parent().parent().children('.'+rowClass).length - 3;
+						//add one to all classnames
+						var form = form.replace(rowClass+'_Supplier_'+childrenCount, rowClass+'_Supplier_'+(childrenCount + 1)).replace(rowClass+'_Date_'+childrenCount, rowClass+'_Date_'+(childrenCount + 1)).replace(rowClass+'_Quantity_'+childrenCount, rowClass+'_Quantity_'+(childrenCount + 1)).replace(rowClass+'_Foodname_'+childrenCount, rowClass+'_Foodname_'+(childrenCount + 1));
+						//add the new form
+						$($(this).parent().parent().prev().prev()).after(form);
+						//set the value to the remaining amount to be ordered
+						$($(this).parent().parent().prev().prev().find('.' + rowClass + '_Quantity')).val(maxAmount.minus(currentAmount).toString())
+						//trigger an update of the total counter
+						updateCounter($(this).parent().parent().prev().prev().find('.' + rowClass + '_Quantity'));
+					}
 				});
 				$('.remove-button').click(function() {
 					var rowClass = $($(this).parent().parent().prev().prev()).attr('class');
@@ -79,6 +88,7 @@
 					{
 						$(this).parent().parent().prev().prev().remove();
 					}
+					updateCounter($(this).parent().parent().prev().prev().find('.' + rowClass + '_Quantity'));
 				});
 				function updateCounter(selector)
 				{
