@@ -26,48 +26,62 @@
         });
     }
 
+    function getAllowedUnit(foodId) {
+    	$.ajax({
+            url: "/makeOrder/getAllowedUnit/",
+            type: "POST",
+            data: { foodid: foodId },
+            dataType: "html",
+            success: function(data) {
+                addFoodToTable(data);
+            }
+        });
+    }
+
 	function addFood() {
 		if ($("#quantityInput").val() != "" && $("#quantityInput").val() > 0 && $('#makeOrderForm').valid()) {
-
-			var selectedFood = $("#foodSelector option:selected").html();
-			var quantity = $("#quantityInput").val();
-
-			var compleetUnit = $("#unitSelector").val();
-			var unit = compleetUnit.split(":")[0];
-			var conversionFactor = compleetUnit.split(":")[1];
-
-			var finalQuantity = quantity * conversionFactor;
-			
-			var index = 0;
-
-			if (foodArray.length > 0) {
-				for (fooditem in foodArray) {
-					if (foodArray[fooditem][FOODNAME] == selectedFood) {
-						foodArray[fooditem][FOODQUANTITY] = parseFloat(finalQuantity) + parseFloat(foodArray[fooditem][FOODQUANTITY]);
-					} else {
-						index++;
-					} 
-
-					if (index == foodArray.length) {
-						foodArray.push([selectedFood, finalQuantity, $("#foodSelector").val(), "kg"]);
-					}
-				}
-			} else {
-				foodArray.push([selectedFood, finalQuantity, $("#foodSelector").val(), "kg"]);
-			}
-
-			$.ajax({
-		        url: "/app/views/makeOrder/addFoodToTable.php",
-		        type: "POST",
-		        dataType:"html",
-        		data: { foodarray: foodArray },
-		        success: function(data) {
-			        document.getElementById("orderTableBody").innerHTML = data;
-			    }
-		    });
+			getAllowedUnit($("#foodSelector").val());
 		} else {
 			$("#noQuantityAlert").modal();
 		}
+	}
+
+	function addFoodToTable(data) {
+		var selectedFood = $("#foodSelector option:selected").html();
+		var quantity = $("#quantityInput").val();
+
+		var conversionFactor = $("#unitSelector").val();
+		var finalQuantity = quantity * conversionFactor;
+
+		var allowedUnit = data;
+			
+		var index = 0;
+
+		if (foodArray.length > 0) {
+			for (fooditem in foodArray) {
+				if (foodArray[fooditem][FOODNAME] == selectedFood) {
+					foodArray[fooditem][FOODQUANTITY] = parseFloat(finalQuantity) + parseFloat(foodArray[fooditem][FOODQUANTITY]);
+				} else {
+					index++;
+				}
+
+				if (index == foodArray.length) {
+					foodArray.push([ selectedFood, finalQuantity, $("#foodSelector").val(), allowedUnit ]);
+				}
+			}
+		} else {
+			foodArray.push([ selectedFood, finalQuantity, $("#foodSelector").val(), allowedUnit ]);
+		}
+
+		$.ajax({
+	        url: "/app/views/makeOrder/addFoodToTable.php",
+	        type: "POST",
+	        dataType:"html",
+    		data: { foodarray: foodArray },
+	        success: function(data) {
+		        document.getElementById("orderTableBody").innerHTML = data;
+		    }
+	    });
 	}
 
 	function removeFood() {
