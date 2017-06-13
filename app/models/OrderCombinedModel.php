@@ -11,6 +11,13 @@ class OrderCombinedModel extends model
 		
 	}
 	
+	public function canCombineOrders()
+	{
+		$query = 'SELECT COUNT(*) FROM ORDERREQUEST WHERE ORDERREQUESTSTATUS=0';
+		$result = $this->database->executeQuery($query)->fetch(PDO::FETCH_NUM);
+		return $result[0] > 0;
+	}
+	
 	public function RemoveFoodFromOrderRequest($itemArray)
 	{
 		$food = $this->getFoodList($itemArray);

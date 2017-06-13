@@ -5,9 +5,10 @@
 		{
 			$menuModel = $this->model('MenuModel');
 			$orderModel = $this->model('OrderModel');
+			$combinedOrderModel = $this->model('OrderCombinedModel');
 			$this->view('general/menu', ['menu_items' => $menuModel->items, 'userInfo' => $_SESSION['user']]);
 			$this->view('general/backtotop');
-			$this->view('orders/orderlist', ['orderrequests' => $orderModel->getOrderRequests()]);
+			$this->view('orders/orderlist', ['orderrequests' => $orderModel->getOrderRequests(), 'can_combine_orders' => $combinedOrderModel->canCombineOrders()]);
 			$this->view('general/footer');
 			$this->view('general/copyright', ['end_date' => date('Y') + 1]);
 		}
@@ -40,6 +41,7 @@
 				}
 
 				$orderCombinedModel->RemoveFoodFromOrderRequest($sortedPostData);
+				$this->redirect('ordersAtSuppliers');
 			}
 
 			$menuModel = $this->model('MenuModel');
