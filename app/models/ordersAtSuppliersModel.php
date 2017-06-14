@@ -34,21 +34,21 @@
 			return $this->database->executeQuery($query, [$id])->fetchAll(PDO::FETCH_OBJ);
 		}
 
-		public function markAsReceived($orderID, $permission) {
+		public function markAsReceived($orderID) {
 			$query = "	UPDATE [ORDER]
 						SET STATUS = 'Received', DELIVERYDATE = GETDATE()
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
-		public function markAsPayed($orderID, $permission) {
+		public function markAsPayed($orderID) {
 			$query = "	UPDATE [ORDER]
 						SET STATUS = 'Payed'
 						WHERE ORDERID = ?";
 			$this->database->executeQuery($query, [$orderID]);
 		}
 
-		public function insertDeliveredSupplies($supplies, $permission) {
+		public function insertDeliveredSupplies($supplies) {
 			$this->markAsReceived($supplies[0][0]);
 
 			for ($i=0; $i < count($supplies); $i++) { 
@@ -87,7 +87,7 @@
 			}
 		}
 
-		public function createNewOrder($orderID, $employeeID, $name, $permission) {
+		public function createNewOrder($orderID, $employeeID, $name) {
 			$query = "EXEC CombineIncompleteGoods ?, ?, ?";
 			$this->database->executeQuery($query, [$orderID, $employeeID, $name]);
 

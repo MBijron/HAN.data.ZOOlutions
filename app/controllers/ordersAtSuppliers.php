@@ -45,7 +45,7 @@
 				
 				$roleModel = $this->model('RoleModel');	
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies);
 
 				$this->redirect("ordersAtSuppliers");
 			}
@@ -54,7 +54,7 @@
 		public function markAsReceived($orderID) {
 			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-			$ordersAtSuppliersModel->markAsReceived($orderID, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+			$ordersAtSuppliersModel->markAsReceived($orderID);
 
 			$this->redirect("ordersAtSuppliers");
 		}
@@ -62,7 +62,7 @@
 		public function markAsPayed($orderID) {
 			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-			$ordersAtSuppliersModel->markAsPayed($orderID, $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+			$ordersAtSuppliersModel->markAsPayed($orderID);
 
 			$this->redirect("ordersAtSuppliers");
 		}
@@ -79,7 +79,7 @@
 
 			if (isset($_POST['createNewOrder'])) {
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
-				$ordersAtSuppliersModel->createNewOrder($orderID, $_SESSION['user']->EMPLOYEEID, 'Incomplete order from: ' . $_POST['supplierName'], $roleModel->permission($_SESSION['user']->EMAILADDRESS));
+				$ordersAtSuppliersModel->createNewOrder($orderID, $_SESSION['user']->EMPLOYEEID, 'Incomplete order from: ' . $_POST['supplierName']);
 
 				$this->redirect("ordersList");
 			}

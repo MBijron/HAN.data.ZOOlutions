@@ -112,13 +112,13 @@
 											{assign "markup" ":"}
 										{/if}
 										<tr class="clickable-row" onclick="updateRecordId(this);" 
-											value="{$veterinaryrecord->VETERINARYRECORDID}:{$animal->ANIMALID}:{$veterinaryrecord->PRESCRIPTIONID}">
+			value="{$veterinaryrecord->VETERINARYRECORDID}:{$animal->ANIMALID}:{$veterinaryrecord->PRESCRIPTIONID}:{$veterinaryrecord->DIAGNOSISID}:{$veterinaryrecord->MEDICINEID}:{$veterinaryrecord->NOTES}:{$veterinaryrecord->STARTPRESCRIPTION}:{$veterinaryrecord->ENDPRESCRIPTION}:{$veterinaryrecord->MEDICINENAME}">
 											<td>{$veterinaryrecord->RECORDDATE}</td>
 											<td>{$veterinaryrecord->FIRSTNAME} {$veterinaryrecord->LASTNAME}</td>
 											<td>{$veterinaryrecord->DIAGNOSIS}</td>
 											<td>{$veterinaryrecord->MEDICINENAME}</td>
 											<td>{$veterinaryrecord->STARTPRESCRIPTION} {$markup} {$veterinaryrecord->ENDPRESCRIPTION}</td>
-											<td>{$veterinaryrecord->NOTES}</td>
+											<td style="max-width: 200px; overflow: auto;">{$veterinaryrecord->NOTES}</td>
 										</tr>
 									{/foreach}
 								</tbody>
@@ -128,6 +128,9 @@
 				</div>
 				
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default change-vetRec">
+					<span class="glyphicon glyphicon-edit" area-hidden="true"></span>
+				</button>
 				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
@@ -305,6 +308,10 @@
 						</div>
 					</div>
 				</div>
+
+				<input type="hidden" name="buttonChanger" id="buttonChanger" value="">
+				<input type="hidden" name="prescriptionId" id="prescriptionId" value="">
+				<input type="hidden" name="veterinaryrecordID" id="veterinaryrecordID" value="">
 			</form>
 		</div>
 
@@ -328,7 +335,7 @@
 			</div>
 		</div>
     </div>
-	
+
 		
 		
 	<script>
@@ -422,6 +429,42 @@
 		function setSelectedRow(row) {
 			selectedRow = row.rowIndex;
 		}
+
+		$('.change-vetRec').click(function () {
+			$.fancybox([
+				{ href : '#fancybox-popup-form2' }
+			]);
+
+			var sp = veterinaryrecordID.split(":");
+			var diagnosisId = sp[3];
+			var medicineId = sp[4];
+			var notes = sp[5];
+			var startdate = sp[6];
+			var enddate = sp[7];
+			var medicineName = sp[8];
+
+			$("#buttonChanger").val(0);
+			$("#veterinaryrecordID").val(sp[0]);
+			$("#prescriptionId").val(sp[2]);
+
+			$('select[name=diagnosis]').val(diagnosisId);
+			$("#notes").val(notes);
+
+			$('.selectpicker').selectpicker('refresh');
+
+			medicines.push( [ medicineId, medicineName, startdate, enddate ] );
+
+			$.ajax({
+		        url: "/app/views/animals/addMedicine.php",
+		        type: "POST",
+		        dataType:"html",
+	    		data: { medicinearray: medicines },
+		        success: function(data) {
+			        document.getElementById("medicineArray").innerHTML = data;
+			        $.fancybox.update();
+			    }
+		    });
+		});
 	
 		$('.add-diet').click(function () {
 			$.fancybox([
@@ -433,6 +476,8 @@
 			$.fancybox([
 				{ href : '#fancybox-popup-form2' }
 			]);
+
+			$("#buttonChanger").val(1);
 		});
 		
 		function refreshUnits() {
