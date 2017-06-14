@@ -43,7 +43,6 @@
 					$supplies[] = [ $_POST['orderID'], $_POST['foodID'][$i], $_POST['quantity'][$i] ];
 				}
 				
-				$roleModel = $this->model('RoleModel');	
 				$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
 				$ordersAtSuppliersModel->insertDeliveredSupplies($supplies);
 
@@ -52,7 +51,6 @@
 		}
 
 		public function markAsReceived($orderID) {
-			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
 			$ordersAtSuppliersModel->markAsReceived($orderID);
 
@@ -60,7 +58,6 @@
 		}
 
 		public function markAsPayed($orderID) {
-			$roleModel = $this->model('RoleModel');
 			$ordersAtSuppliersModel = $this->model('ordersAtSuppliersModel');
 			$ordersAtSuppliersModel->markAsPayed($orderID);
 
