@@ -27,7 +27,9 @@
 					</tbody>
 				</table>
 			</div>
+			{visible_for users="administration"}
 			<a href="/ordersList/combined"><button class="btn btn-default" {if !$can_combine_orders}disabled title="there are no orders to combine"{/if}>Combine orders</button></a>
+			{/visible_for}
 			<button class="submit float-right btn btn-default" data-table-ref="orderrequest-table">Details</button>
 		</div>
 	</div>

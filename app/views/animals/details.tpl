@@ -80,11 +80,12 @@
 						</div>
 					</div>
 				</div>
-
-				<button type="button" class="btn btn-default add-diet" ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
-				<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
-					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
-				</button>
+				{visible_for users="headkeeper, vet"}
+					<button type="button" class="btn btn-default add-diet" ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+					<button type="submit" class="btn btn-default submit remove-diet" data-redirect-url="/animals/removefood" data-table-ref="nutrition-table">
+						<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
+					</button>
+				{/visible_for}
 			</div>
 
 			<div class="col-md-12">
@@ -126,7 +127,7 @@
 						</div>
 					</div>
 				</div>
-				
+				{visible_for users="vet"}
 				<button type="button" class="btn btn-default add-veterinary"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
 				<button type="button" class="btn btn-default change-vetRec">
 					<span class="glyphicon glyphicon-edit" area-hidden="true"></span>
@@ -134,6 +135,7 @@
 				<button type="submit" class="btn btn-default submit remove-veterinary" onclick="removeVeterinaryRecords();" data-table-ref="veterinary-table">
 					<span class="glyphicon glyphicon-minus-sign" area-hidden="true"></span>
 				</button>
+				{/visible_for}
 			</div>
 		</div>
 	</div>

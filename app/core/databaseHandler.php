@@ -15,11 +15,11 @@ class databaseHandler
 	{
 		try
 		{
-			//$authModel = $this->model('AuthModel');
-			//if($authModel != null && $authModel->isLoggedIn() && $authModel != '')
-			//{
-			//	$query = "EXECUTE AS USER = '" . $_SESSION['user']->EMAILADDRESS . "' " . $query;
-			//}
+			$authModel = $this->model('AuthModel');
+			if($authModel != null && $authModel->isLoggedIn() && $authModel != '')
+			{
+				$query = "EXECUTE AS USER = '" . strtolower($_SESSION['user']->EMAILADDRESS) . "'; " . $query . "; REVERT";
+			}
 			if(isset($preparedArray))
 			{
 				$result = self::$db->prepare($query);

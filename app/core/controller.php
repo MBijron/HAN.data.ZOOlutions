@@ -10,6 +10,7 @@
 			$this->smarty->registerPlugin('function', 'generate_token', [$this, 'smarty_generate_token']);
 			$this->smarty->registerPlugin('function', 'generate_token_raw', [$this, 'smarty_generate_raw_token']);
 			$this->smarty->registerPlugin('block', 'require_user_level', [$this, 'smarty_require_user_level']);
+			$this->smarty->registerPlugin('block', 'visible_for', [$this, 'smarty_visible_for']);
 		}
 		
 		protected function model($model, $params = [])
@@ -239,6 +240,46 @@
 		public function smarty_generate_raw_token()
 		{
 			return $this->generateToken();
+		}
+		
+		public function smarty_visible_for($params, $content, $smarty, &$repeat)
+		{
+			if(isset($content))
+			{
+				//set all arguments to default values
+				$users = isset($params['users'])? $params['users'] : null;
+				
+				//check if the level argument is at least set and numeric
+				if($users == null)
+				{
+					ExceptionHandler::ThrowException('visible_for requires at users to be set');
+				}
+				if(strpos($users, ',') !== false)
+				{
+					$users = explode(',', $users);
+				}
+				else
+				{
+					$users = [ $users ];
+				}
+				
+				$authModel = $this->model('AuthModel');
+				if($authModel != null && $authModel->isLoggedIn() && $authModel != '')
+				{
+					if($_SESSION['user']->ROLENAME == 'Owner')
+					{
+						return $content;
+					}
+					foreach($users as $user)
+					{
+						if(trim(strtolower($user)) == strtolower($_SESSION['user']->ROLENAME))
+						{
+							return $content;
+						}
+					}
+				}
+				return '';
+			}
 		}
 		
 		public function smarty_require_user_level($params, $content, $smarty, &$repeat)
