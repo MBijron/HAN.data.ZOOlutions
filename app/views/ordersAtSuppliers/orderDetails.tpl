@@ -123,7 +123,7 @@
 							<input type="date" class="form-control" name="deliveryDate" value="{$smarty.now|date_format:'%Y-%m-%d'}" min="{$smarty.now|date_format:'%Y-%m-%d'}">
 						</div>
 
-						<div class="col-xs-12">
+						<div class="col-xs-12" style="padding-bottom: 20px;">
 							<button type="submit" class="btn btn-default" name="updateOrder">
 								<span class="glyphicon glyphicon-floppy-save"></span> Update the current order with a new delivery date
 							</button>
